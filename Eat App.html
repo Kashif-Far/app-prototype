@@ -9189,7 +9189,7 @@ body.dashboard-embed-open {
         document.getElementById('authOverlay')?.classList.remove('open');
         document.getElementById('authModal')?.classList.remove('open');
         document.getElementById('authModal')?.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('eats-auth-onboarding-open');
+        document.body.classList.remove('eats-auth-onboarding-open', 'eats-auth-skip-mode');
         if (typeof window.closeCustomerSettingsModal === 'function') window.closeCustomerSettingsModal();
       }
 
@@ -22878,6 +22878,7 @@ dGV4dD4KPC9zdmc+Cg==
       </button>
       <button class="icon-btn close-auth" type="button" aria-label="Close sign in"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-close-x"></use></svg>
       </button>
+      <button class="auth-skip" type="button" data-auth-skip>Skip</button>
     </div>
 
     <div class="modal-body">
@@ -22911,7 +22912,7 @@ dGV4dD4KPC9zdmc+Cg==
         <button class="primary-action" data-next="profile" type="button">Verify</button>
         <p class="resend-copy">Did not get the code?
           <button class="resend-action" id="resendCodeBtn" type="button" disabled>
-            Resend in <span id="resendCountdown">26</span>s
+            Resend in&nbsp;<span id="resendCountdown">26</span>s
           </button>
         </p>
       </div>
@@ -24414,12 +24415,72 @@ dGV4dD4KPC9zdmc+Cg==
     </header>
     <div class="app-theme-options" role="listbox" aria-label="Theme preference">
       <button type="button" class="active" data-theme-choice="system" aria-selected="true">System default</button>
+      <button type="button" class="app-theme-quick-signin" data-app-quick-signin>Sign in instantly</button>
       <button type="button" data-theme-choice="light" aria-selected="false">Light</button>
       <button type="button" data-theme-choice="dark" aria-selected="false">Dark</button>
       <button type="button" data-theme-choice="liquid-glass" aria-selected="false">Liquid Glass</button>
       <button type="button" data-theme-choice="android" aria-selected="false">Android</button>
     </div>
+    <button class="app-onboarding-launch" type="button" data-app-onboarding-open>Onboarding</button>
     <button class="app-tutorial-launch" type="button" data-app-tutorial-open>Flow guides</button>
+  </div>
+</section>
+
+<section id="eatsFirstOnboarding" class="eats-first-onboarding" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Onboarding">
+  <div class="eats-onboarding-phone">
+    <article class="eats-onboarding-slide is-active" data-onboarding-step="0">
+      <figure class="eats-onboarding-hero">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=82" alt="">
+      </figure>
+      <div class="eats-onboarding-copy">
+        <h2>Find the best tables in your city</h2>
+        <p>Browse top-rated spots and grab a seat in seconds.</p>
+        <div class="eats-onboarding-dots" aria-hidden="true">
+          <span data-onboarding-dot="0"></span>
+          <span data-onboarding-dot="1"></span>
+          <span data-onboarding-dot="2"></span>
+        </div>
+        <div class="eats-onboarding-actions">
+          <button class="eats-onboarding-skip" type="button" data-onboarding-skip>Skip</button>
+          <button class="eats-onboarding-next" type="button" data-onboarding-next>Next <span aria-hidden="true">&rarr;</span></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="eats-onboarding-slide" data-onboarding-step="1">
+      <figure class="eats-onboarding-hero">
+        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=82" alt="">
+      </figure>
+      <div class="eats-onboarding-copy">
+        <h2>No more waiting around.</h2>
+        <p>Secure your spot instantly and show up when you're ready to eat.</p>
+        <div class="eats-onboarding-dots" aria-hidden="true">
+          <span data-onboarding-dot="0"></span>
+          <span data-onboarding-dot="1"></span>
+          <span data-onboarding-dot="2"></span>
+        </div>
+        <div class="eats-onboarding-actions">
+          <button class="eats-onboarding-skip" type="button" data-onboarding-skip>Skip</button>
+          <button class="eats-onboarding-next" type="button" data-onboarding-next>Next <span aria-hidden="true">&rarr;</span></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="eats-onboarding-slide" data-onboarding-step="2">
+      <figure class="eats-onboarding-hero eats-onboarding-hero-tall">
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=82" alt="">
+      </figure>
+      <div class="eats-onboarding-copy">
+        <h2>Join Mouthshut Eats.</h2>
+        <p>Sign in to book tables, chat with restaurants, and share trusted reviews.</p>
+        <div class="eats-onboarding-dots" aria-hidden="true">
+          <span data-onboarding-dot="0"></span>
+          <span data-onboarding-dot="1"></span>
+          <span data-onboarding-dot="2"></span>
+        </div>
+        <button class="eats-onboarding-login" type="button" data-onboarding-login>Proceed to Login</button>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -28047,7 +28108,7 @@ dGV4dD4KPC9zdmc+Cg==
       let remaining = seconds;
       resendCodeBtn.classList.remove('resending', 'sent');
       resendCodeBtn.disabled = true;
-      resendCodeBtn.innerHTML = `Resend in <span id="resendCountdown">${remaining}</span>s`;
+      resendCodeBtn.innerHTML = `Resend in&nbsp;<span id="resendCountdown">${remaining}</span>s`;
       const update = () => {
         const counter = $('#resendCountdown');
         if (counter) counter.textContent = String(remaining);
@@ -28464,11 +28525,12 @@ dGV4dD4KPC9zdmc+Cg==
       steps.forEach(item => item.classList.toggle('active', item.dataset.step === step));
     }
 
-    function openAuth(step = 'phone') {
+    function openAuth(step = 'phone', options = {}) {
       closeDrawer();
       closeSettings();
       clearTimeout(authTransitionTimer);
       document.body.classList.add('eats-auth-onboarding-open');
+      document.body.classList.toggle('eats-auth-skip-mode', Boolean(options.onboarding));
       authOverlay.classList.add('open');
       authModal.classList.add('open');
       authModal.setAttribute('aria-hidden', 'false');
@@ -28481,8 +28543,14 @@ dGV4dD4KPC9zdmc+Cg==
       authOverlay.classList.remove('open');
       authModal.classList.remove('open');
       authModal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('eats-auth-onboarding-open');
+      document.body.classList.remove('eats-auth-onboarding-open', 'eats-auth-skip-mode');
       clearInterval(resendTimer);
+    }
+
+    function skipAuthToHome() {
+      closeAuth();
+      if (typeof routeTo === 'function') routeTo('home');
+      else window.location.hash = '#home';
     }
 
     function updateIdentity() {
@@ -28663,11 +28731,22 @@ dGV4dD4KPC9zdmc+Cg==
       closeCartPanel();
     });
 
-    signInBtn.addEventListener('click', () => openAuth('phone'));
-    drawerSignupBtn.addEventListener('click', () => openAuth('phone'));
+    function openAuthEntry() {
+      if (!window.__eatsBypassFirstOnboarding && typeof window.shouldShowEatsFirstOnboarding === 'function' && window.shouldShowEatsFirstOnboarding()) {
+        window.openEatsFirstOnboarding?.({ source: 'auth-entry' });
+        return;
+      }
+      const onboardingAuth = Boolean(window.__eatsBypassFirstOnboarding);
+      window.__eatsBypassFirstOnboarding = false;
+      openAuth('phone', { onboarding: onboardingAuth });
+    }
+
+    signInBtn.addEventListener('click', openAuthEntry);
+    drawerSignupBtn.addEventListener('click', openAuthEntry);
     authOverlay.addEventListener('click', event => { if (event.target === authOverlay) closeAuth(); });
     authModal.addEventListener('click', event => event.stopPropagation());
-    $$('.close-auth').forEach(button => button.addEventListener('click', closeAuth));
+    $$('[data-auth-skip]').forEach(button => button.addEventListener('click', skipAuthToHome));
+    $$('.close-auth:not([data-auth-skip])').forEach(button => button.addEventListener('click', closeAuth));
     $$('[data-auth-back]').forEach(button => button.addEventListener('click', () => showStep('phone', { animate: true })));
     resendCodeBtn?.addEventListener('click', showResendAnimation);
     $$('[data-next]').forEach(button => button.addEventListener('click', () => {
@@ -28795,7 +28874,7 @@ dGV4dD4KPC9zdmc+Cg==
       document.getElementById('authOverlay')?.classList.remove('open');
       document.getElementById('authModal')?.classList.remove('open');
       document.getElementById('authModal')?.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('eats-auth-onboarding-open');
+      document.body.classList.remove('eats-auth-onboarding-open', 'eats-auth-skip-mode');
       if (typeof window.closeCustomerSettingsModal === 'function') window.closeCustomerSettingsModal();
     }
 
@@ -36644,7 +36723,6 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
     return (
       <div className="cs-section-stack cs-bookmark-page">
         <div className="cs-section-toolbar cs-bookmark-toolbar">
-          <div className="cs-section-note"><strong>{list.length}</strong><span>saved restaurants</span></div>
           <label className="cs-search">
             {Icons.search}
             <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search bookmarks" />
@@ -45518,6 +45596,24 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
         return;
       }
 
+      const onboardingLaunch = event.target.closest('[data-app-onboarding-open]');
+      if (onboardingLaunch) {
+        event.preventDefault();
+        setThemeSheet(false);
+        window.openEatsFirstOnboarding?.({ source: 'theme-sheet' });
+        return;
+      }
+
+      const quickSignin = event.target.closest('[data-app-quick-signin]');
+      if (quickSignin) {
+        event.preventDefault();
+        updateIdentity();
+        setState('signed-in');
+        setThemeSheet(false);
+        showStatus('Signed in', 'success');
+        return;
+      }
+
       const themeChoice = event.target.closest('[data-theme-choice]');
       if (themeChoice) {
         event.preventDefault();
@@ -45542,6 +45638,7 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
         setThemeSheet(false);
         setProfilePush(false);
         setTutorialOverlay(false);
+        window.closeEatsFirstOnboarding?.({ markSeen: false });
         closeFlowTip();
       }
     });
@@ -51722,7 +51819,7 @@ body.eats-app-shell .app-tab svg {
 
   .mouthshut-navbar-extract #authModal .resend-action:disabled:not(.resending):not(.sent) {
     color: #7f8793;
-    font-weight: 620;
+    font-weight: 500;
     gap: 0;
   }
 
@@ -67722,6 +67819,922 @@ body.eats-app-shell .app-tab svg {
     background: #fff !important;
     border-color: rgba(12,13,16,.14) !important;
     color: #5f646d !important;
+  }
+</style>
+<style id="codex-first-onboarding-20260604">
+  .app-onboarding-launch {
+    width: 100%;
+    min-height: 50px;
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 760;
+    text-align: left;
+    padding: 0 14px;
+  }
+
+  #appThemeSheet .app-onboarding-launch,
+  #appThemeSheet .app-tutorial-launch {
+    min-height: 54px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  #appThemeSheet .app-tutorial-launch {
+    margin-top: 10px !important;
+  }
+
+  body.eats-dark-mode .app-onboarding-launch {
+    background: #1b2028 !important;
+    border-color: #36404d !important;
+    color: #f6f8fb !important;
+  }
+
+  body.eats-first-onboarding-open {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+  }
+
+  body.eats-first-onboarding-open .app-bottom-nav,
+  body.eats-first-onboarding-open .app-floating-cart-host,
+  body.eats-first-onboarding-open .booking-mode-actions {
+    display: none !important;
+  }
+
+  .eats-first-onboarding[hidden] {
+    display: none !important;
+  }
+
+  .eats-first-onboarding {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    color: #27282b;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .eats-onboarding-phone {
+    position: relative;
+    width: min(100vw, 460px);
+    height: 100dvh;
+    min-height: 620px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .eats-onboarding-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(18px);
+    transition: opacity .24s ease, transform .24s ease;
+  }
+
+  .eats-onboarding-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .eats-onboarding-hero {
+    height: 58dvh;
+    min-height: 360px;
+    max-height: 590px;
+    box-sizing: border-box;
+    display: flex;
+    margin: 0;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .eats-onboarding-hero-tall {
+    height: 62dvh;
+  }
+
+  .eats-onboarding-hero img {
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .eats-onboarding-slide[data-onboarding-step="0"] .eats-onboarding-hero img {
+    object-position: center 42%;
+  }
+
+  .eats-onboarding-slide[data-onboarding-step="1"] .eats-onboarding-hero img {
+    object-position: center 36%;
+  }
+
+  .eats-onboarding-slide[data-onboarding-step="2"] .eats-onboarding-hero img {
+    object-position: center 38%;
+  }
+
+  .eats-onboarding-copy {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 30px 28px;
+    background: #fff;
+    text-align: center;
+  }
+
+  .eats-onboarding-copy h2 {
+    max-width: 340px;
+    margin: 0;
+    color: #0b0b0b;
+    font-size: clamp(22px, 6vw, 27px);
+    line-height: 1.12;
+    font-weight: 820;
+    letter-spacing: 0;
+  }
+
+  .eats-onboarding-copy p {
+    max-width: 310px;
+    margin: 14px 0 0;
+    color: #0b0b0b;
+    font-size: 15px;
+    line-height: 1.28;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .eats-onboarding-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 26px;
+  }
+
+  .eats-onboarding-dots span {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #d6dadd;
+    transition: width .2s ease, background .2s ease;
+  }
+
+  .eats-onboarding-dots span.is-active {
+    width: 23px;
+    background: #0b0b0b;
+  }
+
+  .eats-onboarding-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0 2px;
+  }
+
+  .eats-onboarding-actions button,
+  .eats-onboarding-login {
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .eats-onboarding-skip {
+    min-height: 56px;
+    padding: 0 18px;
+    background: transparent;
+    color: #0b0b0b;
+    font-size: 16px;
+    font-weight: 760;
+  }
+
+  .eats-onboarding-next {
+    min-width: 134px;
+    min-height: 64px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #0b0b0b;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 780;
+    box-shadow: 0 14px 26px -22px rgba(0,0,0,.42);
+  }
+
+  .eats-onboarding-login {
+    width: 100%;
+    min-height: 64px;
+    margin-top: auto;
+    border-radius: 999px;
+    background: #0b0b0b;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 780;
+    box-shadow: 0 14px 26px -22px rgba(0,0,0,.42);
+  }
+
+  @media (max-height: 720px) {
+    .eats-onboarding-phone {
+      min-height: 0;
+    }
+
+    .eats-onboarding-hero,
+    .eats-onboarding-hero-tall {
+      height: 55dvh;
+      min-height: 310px;
+    }
+
+    .eats-onboarding-copy {
+      padding: 36px 28px 22px;
+    }
+
+    .eats-onboarding-dots {
+      margin-top: 20px;
+    }
+
+    .eats-onboarding-next,
+    .eats-onboarding-login {
+      min-height: 58px;
+    }
+  }
+</style>
+<script id="codex-first-onboarding-20260604">
+  (() => {
+    const root = document.getElementById('eatsFirstOnboarding');
+    if (!root || window.__eatsFirstOnboardingReady) return;
+    window.__eatsFirstOnboardingReady = true;
+
+    const seenKey = 'mouthshut-eats-first-onboarding-seen';
+    const slides = Array.from(root.querySelectorAll('[data-onboarding-step]'));
+    const getStep = () => Number(root.dataset.step || 0);
+
+    function hasSeenOnboarding() {
+      try {
+        return localStorage.getItem(seenKey) === 'true';
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function markSeen() {
+      try {
+        localStorage.setItem(seenKey, 'true');
+      } catch (error) {}
+    }
+
+    function setStep(next) {
+      const index = Math.max(0, Math.min(slides.length - 1, Number(next) || 0));
+      root.dataset.step = String(index);
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === index;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      root.querySelectorAll('[data-onboarding-dot]').forEach(dot => {
+        dot.classList.toggle('is-active', Number(dot.dataset.onboardingDot) === index);
+      });
+    }
+
+    function closeThemeSheet() {
+      const sheet = document.getElementById('appThemeSheet');
+      sheet?.classList.remove('open');
+      sheet?.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('app-sheet-open');
+    }
+
+    function proceedToLogin() {
+      window.__eatsBypassFirstOnboarding = true;
+      setTimeout(() => {
+        document.getElementById('signInBtn')?.click();
+      }, 90);
+    }
+
+    function openFirstOnboarding() {
+      closeThemeSheet();
+      root.hidden = false;
+      root.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('eats-first-onboarding-open');
+      setStep(0);
+    }
+
+    function closeFirstOnboarding(options = {}) {
+      const { login = false, markSeen: shouldMarkSeen = true } = options;
+      root.hidden = true;
+      root.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('eats-first-onboarding-open');
+      if (shouldMarkSeen) markSeen();
+      if (login) proceedToLogin();
+    }
+
+    window.openEatsFirstOnboarding = openFirstOnboarding;
+    window.closeEatsFirstOnboarding = closeFirstOnboarding;
+    window.shouldShowEatsFirstOnboarding = () => !hasSeenOnboarding() && document.body.dataset.eatsAuthState !== 'signed-in';
+
+    root.addEventListener('click', event => {
+      if (event.target.closest('[data-onboarding-next]')) {
+        event.preventDefault();
+        setStep(getStep() + 1);
+        return;
+      }
+
+      if (event.target.closest('[data-onboarding-skip]')) {
+        event.preventDefault();
+        closeFirstOnboarding({ login: true });
+        return;
+      }
+
+      if (event.target.closest('[data-onboarding-login]')) {
+        event.preventDefault();
+        closeFirstOnboarding({ login: true });
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !root.hidden) closeFirstOnboarding({ markSeen: false });
+    });
+
+    requestAnimationFrame(() => {
+      if (!window.shouldShowEatsFirstOnboarding()) return;
+      setTimeout(() => {
+        if (window.shouldShowEatsFirstOnboarding()) openFirstOnboarding();
+      }, 320);
+    });
+  })();
+</script>
+<style id="codex-auth-weight-and-cuisine-bottom-20260604">
+  .mouthshut-navbar-extract #authModal .modal-title,
+  .mouthshut-navbar-extract #authModal.compact .modal-title,
+  .mouthshut-navbar-extract #authModal.profile-expanded .modal-title {
+    font-weight: 650 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .modal-copy,
+  .mouthshut-navbar-extract #authModal.compact .modal-copy,
+  .mouthshut-navbar-extract #authModal.profile-expanded .modal-copy {
+    font-weight: 480 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .phone-prefix,
+  .mouthshut-navbar-extract #authModal.compact .phone-prefix,
+  .mouthshut-navbar-extract #authModal .phone-field input,
+  .mouthshut-navbar-extract #authModal .text-field input,
+  .mouthshut-navbar-extract #authModal .cuisine-search input,
+  .mouthshut-navbar-extract #authModal .otp-input {
+    font-weight: 470 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .phone-field input::placeholder,
+  .mouthshut-navbar-extract #authModal .text-field input::placeholder,
+  .mouthshut-navbar-extract #authModal .cuisine-search input::placeholder {
+    font-weight: 470 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .primary-action,
+  .mouthshut-navbar-extract #authModal.compact .primary-action,
+  .mouthshut-navbar-extract #authModal.profile-expanded .primary-action {
+    font-weight: 570 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .social-title,
+  .mouthshut-navbar-extract #authModal.compact .social-title,
+  .mouthshut-navbar-extract #authModal .social-btn,
+  .mouthshut-navbar-extract #authModal.compact .social-btn,
+  .mouthshut-navbar-extract #authModal .username-pill,
+  .mouthshut-navbar-extract #authModal .username-suggestions[data-size="long"] .username-pill,
+  .mouthshut-navbar-extract #authModal .cuisine-pill,
+  .mouthshut-navbar-extract #authModal .cuisine-pill span {
+    font-weight: 520 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .resend-copy,
+  .mouthshut-navbar-extract #authModal.compact .resend-copy {
+    font-weight: 520 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .resend-action:not(:disabled),
+  .mouthshut-navbar-extract #authModal .resend-action.resending,
+  .mouthshut-navbar-extract #authModal .resend-action.sent {
+    font-weight: 500 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .resend-action.resending,
+  .mouthshut-navbar-extract #authModal .resend-action.sent {
+    font-weight: 480 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .resend-action:disabled:not(.resending):not(.sent),
+  .mouthshut-navbar-extract #authModal .resend-action:disabled:not(.resending):not(.sent) #resendCountdown {
+    font-weight: 500 !important;
+  }
+
+  body.eats-auth-onboarding-open .mouthshut-navbar-extract #authModal.profile-expanded .auth-step[data-step="cuisine"].active,
+  .mouthshut-navbar-extract #authModal.profile-expanded .auth-step[data-step="cuisine"].active {
+    height: calc(100dvh - 92px - env(safe-area-inset-bottom)) !important;
+    min-height: calc(100dvh - 92px - env(safe-area-inset-bottom)) !important;
+    max-height: calc(100dvh - 92px - env(safe-area-inset-bottom)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .mouthshut-navbar-extract #authModal.profile-expanded .auth-step[data-step="cuisine"].active .cuisine-grid {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    padding-bottom: 18px !important;
+  }
+
+  .mouthshut-navbar-extract #authModal.profile-expanded .auth-step[data-step="cuisine"].active .primary-action {
+    flex: 0 0 52px !important;
+    margin-top: auto !important;
+    margin-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy h2 {
+    font-weight: 620 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy p {
+    font-weight: 430 !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .auth-skip {
+    display: none !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #0b0b0b !important;
+    font: inherit !important;
+    font-size: 15px !important;
+    font-weight: 480 !important;
+    line-height: 1 !important;
+    padding: 0 2px !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-auth-skip-mode .mouthshut-navbar-extract #authModal .close-auth {
+    display: none !important;
+  }
+
+  body.eats-auth-skip-mode .mouthshut-navbar-extract #authModal .auth-skip {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .auth-skip:hover,
+  .mouthshut-navbar-extract #authModal .auth-skip:active {
+    background: transparent !important;
+    transform: none !important;
+  }
+</style>
+<style id="codex-auth-normal-close-restore-20260604">
+  body.eats-auth-onboarding-open:not(.eats-auth-skip-mode) .mouthshut-navbar-extract #authModal .close-auth {
+    display: inline-grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body.eats-auth-onboarding-open:not(.eats-auth-skip-mode) .mouthshut-navbar-extract #authModal .close-auth svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    color: #111 !important;
+    stroke: currentColor !important;
+  }
+</style>
+<style id="codex-profile-booking-weight-soften-20260604">
+  #profile-view .app-profile-card-name,
+  #profile-view .app-profile-card-name .app-profile-signed-title {
+    font-weight: 650 !important;
+  }
+
+  #profile-view .app-profile-identity-card .app-profile-contact {
+    font-weight: 460 !important;
+  }
+
+  #profile-view .cs-order-title-row h3 {
+    font-weight: 620 !important;
+  }
+
+  #profile-view .cs-order-tag {
+    font-weight: 560 !important;
+  }
+
+  #profile-view .cs-order-title-block p,
+  #profile-view .cs-order-booking-meta,
+  #profile-view .cs-order-food-note,
+  #profile-view .cs-order-meta-row div > span {
+    font-weight: 460 !important;
+  }
+
+  #profile-view .cs-order-item-title-line strong,
+  #profile-view .cs-order-meta-row strong {
+    font-weight: 600 !important;
+  }
+
+  #profile-view .cs-order-amount {
+    font-weight: 650 !important;
+  }
+
+  #profile-view .cs-pill {
+    font-weight: 560 !important;
+  }
+
+  #profile-view .cs-order-secondary-action {
+    font-weight: 600 !important;
+  }
+</style>
+<style id="codex-onboarding-stable-slide-layout-20260604">
+  .eats-first-onboarding .eats-onboarding-slide {
+    transform: none !important;
+    transition: opacity .24s ease !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-slide.is-active {
+    transform: none !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-hero,
+  .eats-first-onboarding .eats-onboarding-hero-tall {
+    height: 58dvh !important;
+    min-height: 360px !important;
+    max-height: 590px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy {
+    flex: 1 1 auto !important;
+    display: grid !important;
+    grid-template-rows: 26px 74px 54px 1fr 64px !important;
+    align-items: start !important;
+    justify-items: center !important;
+    padding: 20px 30px 28px !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-dots {
+    grid-row: 1 !important;
+    margin: 0 !important;
+    align-self: start !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy h2 {
+    grid-row: 2 !important;
+    align-self: end !important;
+    margin: 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy p {
+    grid-row: 3 !important;
+    align-self: start !important;
+    margin: 12px 0 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-actions,
+  .eats-first-onboarding .eats-onboarding-login {
+    grid-row: 5 !important;
+    align-self: end !important;
+    margin-top: 0 !important;
+  }
+
+  @media (max-height: 720px) {
+    .eats-first-onboarding .eats-onboarding-hero,
+    .eats-first-onboarding .eats-onboarding-hero-tall {
+      height: 55dvh !important;
+      min-height: 310px !important;
+    }
+
+    .eats-first-onboarding .eats-onboarding-copy {
+      grid-template-rows: 24px 68px 48px 1fr 58px !important;
+      padding: 18px 28px 22px !important;
+    }
+  }
+</style>
+<style id="codex-settings-order-card-weight-soften-20260604">
+  #customer-settings-modal-root .cs-order-title-block h3,
+  #customer-settings-modal-root .cs-order-title-row h3 {
+    font-weight: 620 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-tag {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-title-block p,
+  #customer-settings-modal-root .cs-order-booking-meta,
+  #customer-settings-modal-root .cs-order-booking-meta span,
+  #customer-settings-modal-root .cs-order-food p,
+  #customer-settings-modal-root .cs-order-meta-row span {
+    font-weight: 460 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-food strong,
+  #customer-settings-modal-root .cs-order-item-title-line strong,
+  #customer-settings-modal-root .cs-order-meta-row strong {
+    font-weight: 600 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-amount {
+    font-weight: 650 !important;
+  }
+
+  #customer-settings-modal-root .cs-pill,
+  #customer-settings-modal-root .cs-refund-pill,
+  #customer-settings-modal-root .cs-order-meta-row .cs-refund-pill {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-primary-action,
+  #customer-settings-modal-root .cs-order-secondary-action,
+  #customer-settings-modal-root .cs-order-invoice-btn,
+  #customer-settings-modal-root .cs-order-rate {
+    font-weight: 600 !important;
+  }
+</style>
+<style id="codex-order-detail-weight-and-action-height-20260604">
+  #customer-settings-modal-root .cs-order-detail-head h3 {
+    font-weight: 650 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-state-card h4,
+  #customer-settings-modal-root .cs-order-detail-restaurant h4,
+  #customer-settings-modal-root .cs-order-bill-head h4 {
+    font-weight: 620 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-state-card p,
+  #customer-settings-modal-root .cs-order-detail-restaurant p,
+  #customer-settings-modal-root .cs-order-id-line,
+  #customer-settings-modal-root .cs-order-booking-facts p,
+  #customer-settings-modal-root .cs-order-detail-item p,
+  #customer-settings-modal-root .cs-order-bill-lines > div,
+  #customer-settings-modal-root .cs-order-person p,
+  #customer-settings-modal-root .cs-order-payment-row p,
+  #customer-settings-modal-root .cs-order-cancel-reason p {
+    font-weight: 460 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-booking-facts strong,
+  #customer-settings-modal-root .cs-order-detail-item strong,
+  #customer-settings-modal-root .cs-order-item-title-line strong,
+  #customer-settings-modal-root .cs-order-cost-row p,
+  #customer-settings-modal-root .cs-order-cancel-reason strong,
+  #customer-settings-modal-root .cs-order-person strong,
+  #customer-settings-modal-root .cs-order-payment-row strong {
+    font-weight: 600 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-detail-item span,
+  #customer-settings-modal-root .cs-order-cost-row strong,
+  #customer-settings-modal-root .cs-order-bill-lines strong,
+  #customer-settings-modal-root .cs-order-bill-lines .total,
+  #customer-settings-modal-root .cs-order-bill-lines .total strong {
+    font-weight: 650 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-detail-foot .cs-order-primary-action,
+  #customer-settings-modal-root .cs-order-detail-foot .cs-order-invoice-btn {
+    height: 56px !important;
+    min-height: 56px !important;
+    padding-inline: 14px !important;
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+  }
+
+  #customer-settings-modal-root .cs-order-detail-foot .cs-order-primary-action *,
+  #customer-settings-modal-root .cs-order-detail-foot .cs-order-invoice-btn * {
+    font-weight: 600 !important;
+  }
+</style>
+<style id="codex-transition-pages-weight-soften-20260604">
+  #profile-view .app-profile-row strong {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-head h2,
+  #customer-settings-modal-root .cs-detail-head h3,
+  #customer-settings-modal-root .cs-title {
+    font-weight: 650 !important;
+  }
+
+  #customer-settings-modal-root .cs-row-title,
+  #customer-settings-modal-root .cs-pay-title,
+  #customer-settings-modal-root .cs-detail-name,
+  #customer-settings-modal-root .cs-detail-section h4,
+  #customer-settings-modal-root .cs-detail-item-name,
+  #customer-settings-modal-root .cs-detail-item-name span,
+  #customer-settings-modal-root .cs-detail-pay b,
+  #customer-settings-modal-root .cs-detail-value,
+  #customer-settings-modal-root .cs-review-name,
+  #customer-settings-modal-root .cs-address-action strong,
+  #customer-settings-modal-root .cs-address-saved h3,
+  #customer-settings-modal-root .cs-address-card-title,
+  #customer-settings-modal-root .cs-address-empty strong,
+  #customer-settings-modal-root .cs-bookmark-order-card .cs-order-title-block h3,
+  #customer-settings-modal-root .cs-empty h3 {
+    font-weight: 600 !important;
+  }
+
+  #customer-settings-modal-root .cs-help-tab,
+  #customer-settings-modal-root .cs-faq-q,
+  #customer-settings-modal-root .cs-faq-q span,
+  #customer-settings-modal-root .cs-detail-label,
+  #customer-settings-modal-root .cs-detail-chip,
+  #customer-settings-modal-root .cs-metric-label,
+  #customer-settings-modal-root .cs-bookmark-rating-chip,
+  #customer-settings-modal-root .cs-bookmark-top-action {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-detail-price,
+  #customer-settings-modal-root .cs-detail-bill-row,
+  #customer-settings-modal-root .cs-detail-bill-row.total {
+    font-weight: 650 !important;
+  }
+
+  #customer-settings-modal-root .cs-detail-id,
+  #customer-settings-modal-root .cs-detail-address,
+  #customer-settings-modal-root .cs-detail-pay,
+  #customer-settings-modal-root .cs-review-date,
+  #customer-settings-modal-root .cs-review-text,
+  #customer-settings-modal-root .cs-faq-a-inner,
+  #customer-settings-modal-root .cs-address-card p,
+  #customer-settings-modal-root .cs-address-card em,
+  #customer-settings-modal-root .cs-address-empty span,
+  #customer-settings-modal-root .cs-search input,
+  #customer-settings-modal-root .cs-bookmark-order-card .cs-order-title-block p,
+  #customer-settings-modal-root .cs-bookmark-order-card .cs-order-booking-meta,
+  #customer-settings-modal-root .cs-bookmark-order-card .cs-order-booking-meta span {
+    font-weight: 460 !important;
+  }
+
+  #customer-settings-modal-root .cs-bookmark-toolbar {
+    margin-top: 0 !important;
+  }
+</style>
+<style id="codex-product-transition-weight-soften-20260604">
+  #amenities-modal .info-modal-head h2,
+  #reviews-modal .info-modal-head h2 {
+    font-weight: 650 !important;
+  }
+
+  #restaurant-view .restaurant-hours-sheet-head h3 {
+    font-weight: 650 !important;
+  }
+
+  #restaurant-view .restaurant-hours-sheet-panel .hours-day {
+    font-weight: 600 !important;
+  }
+
+  #restaurant-view .restaurant-hours-sheet-panel .hours-time {
+    font-weight: 500 !important;
+  }
+</style>
+<style id="codex-theme-quick-signin-click-fix-20260604">
+  #appThemeSheet .app-theme-quick-signin {
+    position: relative !important;
+    z-index: 5 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+</style>
+<script id="codex-theme-quick-signin-fallback-20260604">
+  (function () {
+    function closeThemeSheet() {
+      const sheet = document.getElementById('appThemeSheet');
+      sheet?.classList.remove('open');
+      sheet?.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('app-sheet-open');
+    }
+
+    function quickSignIn() {
+      const navbar = document.getElementById('mouthShutNavbarExtract');
+      if (navbar) navbar.dataset.state = 'signed-in';
+      document.body.dataset.eatsAuthState = 'signed-in';
+
+      const name = 'Kashif Farooqui';
+      const phone = '+91 99666 66676';
+      const email = 'kashif@mouthshut.com';
+      document.getElementById('profileName') && (document.getElementById('profileName').textContent = 'Kashif');
+      document.getElementById('profileAvatar') && (document.getElementById('profileAvatar').textContent = 'KF');
+      document.getElementById('drawerName') && (document.getElementById('drawerName').textContent = name);
+      document.getElementById('drawerHandle') && (document.getElementById('drawerHandle').textContent = '@kashif.f');
+      document.getElementById('drawerAvatar') && (document.getElementById('drawerAvatar').textContent = 'KF');
+
+      const signedTitle = document.querySelector('.app-profile-signed-title');
+      if (signedTitle) signedTitle.textContent = name;
+      const appAvatar = document.querySelector('.app-profile-avatar');
+      if (appAvatar) appAvatar.textContent = 'KF';
+      const contactLine = document.querySelector('.app-profile-contact');
+      if (contactLine) {
+        const parts = contactLine.querySelectorAll('span');
+        if (parts[0]) parts[0].textContent = phone;
+        if (parts[1]) parts[1].textContent = email;
+      }
+
+      closeThemeSheet();
+      window.showEatsStatus?.('Signed in', 'success');
+    }
+
+    document.addEventListener('click', function (event) {
+      const button = event.target.closest?.('[data-app-quick-signin]');
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      quickSignIn();
+    }, true);
+  })();
+</script>
+<style id="codex-liquid-product-actions-unified-pill-20260604">
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 5px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255, 255, 255, .68) !important;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, .54), rgba(255, 255, 255, .18) 48%, rgba(255, 255, 255, .38)) !important;
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, .92),
+      inset 0 -1px 1px rgba(255, 255, 255, .28),
+      0 16px 34px -22px rgba(18, 24, 38, .62),
+      0 1px 2px rgba(18, 24, 38, .10) !important;
+    backdrop-filter: blur(18px) saturate(1.35) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.35) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon:active {
+    background: rgba(255, 255, 255, .34) !important;
+    transform: scale(.97) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon.is-saved {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon .eats-svg-icon,
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon .eats-svg-icon * {
+    color: rgba(17, 24, 39, .92) !important;
+    stroke: currentColor !important;
+  }
+</style>
+<style id="codex-eats-ai-blank-header-20260604">
+  #ai-view .app-ai-head {
+    min-height: 112px !important;
+    height: 112px !important;
+    padding: 0 !important;
+    border-bottom: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #ai-view .app-ai-head .app-ai-title-row,
+  #ai-view #mouthshut-eats-ai-logo {
+    display: none !important;
+  }
+</style>
+<style id="codex-bookmarks-locality-size-20260604">
+  #customer-settings-modal-root .cs-bookmark-order-card .cs-order-title-block > p {
+    font-size: 12.5px !important;
+    line-height: 1.2 !important;
   }
 </style>
 </body>
