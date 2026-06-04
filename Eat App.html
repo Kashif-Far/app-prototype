@@ -51720,6 +51720,18 @@ body.eats-app-shell .app-tab svg {
     transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
   }
 
+  .mouthshut-navbar-extract #authModal .resend-action:disabled:not(.resending):not(.sent) {
+    color: #7f8793;
+    font-weight: 620;
+    gap: 0;
+  }
+
+  .mouthshut-navbar-extract #authModal .resend-action:disabled:not(.resending):not(.sent) #resendCountdown {
+    color: inherit;
+    font-weight: inherit;
+    margin-right: 0;
+  }
+
   .mouthshut-navbar-extract #authModal .resend-action:not(:disabled),
   .mouthshut-navbar-extract #authModal .resend-action.resending,
   .mouthshut-navbar-extract #authModal .resend-action.sent {
