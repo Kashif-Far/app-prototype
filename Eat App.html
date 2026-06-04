@@ -22891,10 +22891,17 @@ dGV4dD4KPC9zdmc+Cg==
         <button class="primary-action" data-next="otp" type="button">Continue</button>
         <p class="social-title">or</p>
         <div class="social-row">
-          <button class="social-btn" type="button" aria-label="Continue with Google">G</button>
+          <button class="social-btn" type="button" aria-label="Continue with Google">
+            <svg class="auth-brand-icon auth-brand-icon-google" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="#4285f4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.29h6.47c-.28 1.5-1.13 2.77-2.4 3.62v3h3.89c2.28-2.1 3.59-5.2 3.59-8.64z"/>
+              <path fill="#34a853" d="M12 24c3.24 0 5.96-1.08 7.95-2.91l-3.89-3c-1.08.72-2.45 1.15-4.06 1.15-3.12 0-5.76-2.11-6.71-4.94H1.29v3.09C3.27 21.31 7.32 24 12 24z"/>
+              <path fill="#fbbc05" d="M5.29 14.3c-.24-.72-.38-1.49-.38-2.3s.14-1.58.38-2.3V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l4-3.09z"/>
+              <path fill="#ea4335" d="M12 4.76c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.95 1.18 15.23 0 12 0 7.32 0 3.27 2.69 1.29 6.61l4 3.09C6.24 6.87 8.88 4.76 12 4.76z"/>
+            </svg>
+          </button>
           <button class="social-btn" type="button" aria-label="Continue with Apple">
-            <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M16.7 12.9c0-2 1.6-3 1.7-3.1-1-.1-2 .5-2.5.5-.6 0-1.4-.5-2.3-.5-1.8 0-3.5 1.1-4.4 2.8-1.9 3.3-.5 8.2 1.4 10.9.9 1.3 2 2.8 3.4 2.7 1.4-.1 1.9-.9 3.5-.9 1.7 0 2.1.9 3.5.9 1.5 0 2.4-1.3 3.3-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.4ZM15.1 8.7c.8-1 1.3-2.3 1.2-3.7-1.2 0-2.5.8-3.3 1.7-.7.8-1.3 2.2-1.2 3.5 1.2.1 2.5-.6 3.3-1.5Z" fill="currentColor" transform="translate(-5 -4)"/>
+            <svg class="auth-brand-icon auth-brand-icon-apple" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M17.05 12.54c-.03-3.01 2.46-4.45 2.57-4.52-1.4-2.05-3.58-2.33-4.36-2.36-1.86-.19-3.63 1.09-4.57 1.09-.95 0-2.42-1.07-3.98-1.04-2.05.03-3.94 1.19-4.99 3.02-2.13 3.69-.55 9.16 1.53 12.15 1.02 1.47 2.23 3.12 3.82 3.06 1.53-.06 2.11-.99 3.96-.99 1.85 0 2.37.99 3.98.96 1.64-.03 2.68-1.5 3.67-2.98 1.17-1.71 1.65-3.37 1.68-3.46-.04-.02-3.22-1.24-3.25-4.92zM14.04 3.7C14.87 2.69 15.43 1.28 15.28 0c-1.2.05-2.66.8-3.52 1.8-.77.89-1.45 2.32-1.27 3.69 1.34.1 2.71-.68 3.55-1.69z"/>
             </svg>
           </button>
         </div>
@@ -23988,13 +23995,13 @@ dGV4dD4KPC9zdmc+Cg==
 
     <section class="eats-reels-feed" aria-label="Eats reels feed" data-eats-panel="reels">
       <article class="eats-reel" style="--reel-photo: url('https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1200&q=82');">
-        <button class="eats-reel-save-top" type="button" aria-label="Save reel">
-          <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg>
-        </button>
         <aside class="eats-reel-actions" aria-label="Reel actions">
           <button type="button" aria-label="Like reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             <span>18K</span>
+          </button>
+          <button class="eats-reel-save-top" type="button" aria-label="Save reel">
+            <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <button type="button" aria-label="Share reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
@@ -24017,13 +24024,13 @@ dGV4dD4KPC9zdmc+Cg==
       </article>
 
       <article class="eats-reel is-caption-expanded" style="--reel-photo: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=82');">
-        <button class="eats-reel-save-top" type="button" aria-label="Save reel">
-          <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg>
-        </button>
         <aside class="eats-reel-actions" aria-label="Reel actions">
           <button type="button" aria-label="Like reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             <span>9.4K</span>
+          </button>
+          <button class="eats-reel-save-top" type="button" aria-label="Save reel">
+            <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <button type="button" aria-label="Share reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
@@ -24046,13 +24053,13 @@ dGV4dD4KPC9zdmc+Cg==
       </article>
 
       <article class="eats-reel" style="--reel-photo: url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=82');">
-        <button class="eats-reel-save-top" type="button" aria-label="Save reel">
-          <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg>
-        </button>
         <aside class="eats-reel-actions" aria-label="Reel actions">
           <button type="button" aria-label="Like reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             <span>6.1K</span>
+          </button>
+          <button class="eats-reel-save-top" type="button" aria-label="Save reel">
+            <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <button type="button" aria-label="Share reel">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
@@ -24880,12 +24887,11 @@ dGV4dD4KPC9zdmc+Cg==
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-pre-order"></use></svg>
             <span>Pre-Order</span>
           </button>
-          <button class="flow-tip-trigger flow-tip-preorder" type="button" data-flow-tip data-flow-tip-title="Pre-Order" data-flow-tip-copy="Pre-order is for dining in. You reserve a table, choose dishes in advance, and the paid amount is adjusted against the final bill." aria-label="What is Pre-Order?">i</button>
+          <button class="flow-tip-trigger flow-tip-preorder" type="button" data-flow-tip data-flow-tip-title="Pre-Order" data-flow-tip-copy="With Pre-Order, you can choose your food before you arrive for your table reservation, so the restaurant can start preparing it ahead of time." aria-label="What is Pre-Order?">i</button>
           <button class="proceed" type="button">
             <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-dine-in"></use></svg>
             <span>Table Booking</span>
           </button>
-          <button class="flow-tip-trigger flow-tip-table" type="button" data-flow-tip data-flow-tip-title="Table Booking" data-flow-tip-copy="Reserve a table first. On the booking screens you choose guests, date, and time, then review before confirming." aria-label="What is Table Booking?">i</button>
         </div>
       </div>
 
@@ -25240,70 +25246,112 @@ dGV4dD4KPC9zdmc+Cg==
           </div>
         </div>
         <div class="restaurant-scroll" data-scroller>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=720&q=70" alt="Atrium Lounge"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">Atrium Lounge</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>4.0</span></div>
-              <div class="loc">Bandra West • 2.1 km</div>
-              <div class="meta">₹4000 for 2 <span class="dot"></span> Cafe</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">Atrium Lounge</span>
+                <span class="rating">4.0 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">Bandra West</div>
+              <div class="card-distance">2.1 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> Cafe</div>
+              <div class="card-price">₹4000 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=720&q=70" alt="Weli Deli"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">Weli Deli</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>4.0</span></div>
-              <div class="loc">Colaba • 8.2 km</div>
-              <div class="meta">₹2500 for 2 <span class="dot"></span> Cafe</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">Weli Deli</span>
+                <span class="rating">4.0 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">Colaba</div>
+              <div class="card-distance">8.2 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> Cafe</div>
+              <div class="card-price">₹2500 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?auto=format&fit=crop&w=720&q=70" alt="Napoli By Shatranj"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">Napoli By Shatranj</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>4.0</span></div>
-              <div class="loc">Bandra West • 0.8 km</div>
-              <div class="meta">₹1800 for 2 <span class="dot"></span> Italian</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">Napoli By Shatranj</span>
+                <span class="rating">4.0 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">Bandra West</div>
+              <div class="card-distance">0.8 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> Italian</div>
+              <div class="card-price">₹1800 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=720&q=70" alt="The Irish House"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">The Irish House</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>4.1</span></div>
-              <div class="loc">BKC • 4.0 km</div>
-              <div class="meta">₹300 for 2 <span class="dot"></span> European</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">The Irish House</span>
+                <span class="rating">4.1 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">BKC</div>
+              <div class="card-distance">4.0 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> European</div>
+              <div class="card-price">₹300 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1546195643-70f48f9c5b87?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1546195643-70f48f9c5b87?auto=format&fit=crop&w=720&q=70" alt="Monkey Bar"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">Monkey Bar</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>3.0</span></div>
-              <div class="loc">Bandra West • 1.2 km</div>
-              <div class="meta">₹1900 for 2 <span class="dot"></span> Bar</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">Monkey Bar</span>
+                <span class="rating">3.0 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">Bandra West</div>
+              <div class="card-distance">1.2 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> Bar</div>
+              <div class="card-price">₹1900 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
-          <a class="r-card" href="#restaurant" data-route="restaurant">
+          <a class="card explore-card" href="#restaurant" data-route="restaurant">
             <div class="img-wrap">
-              <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=720&q=70" alt=""/>
-              <button class="bookmark" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
+              <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=720&q=70" alt="Bar Stock Exchange"/>
+              <span class="badge gold"><span class="medal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>Gold Partner</span>
+              <button class="bookmark-btn" aria-label="Save"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-bookmark"></use></svg></button>
             </div>
-            <div class="body">
-              <div class="top-line"><span class="name">Bar Stock Exchange</span><span class="rate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg>4.2</span></div>
-              <div class="loc">Andheri West • 12 km</div>
-              <div class="meta">₹1800 for 2 <span class="dot"></span> Bar</div>
+            <div class="card-body">
+              <div class="card-row-top">
+                <span class="card-title">Bar Stock Exchange</span>
+                <span class="rating">4.2 <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9 8l-6 .9 4.5 4.4L6.1 20 12 16.9 17.9 20l-1.4-6.7L21 8.9 15 8z"/></svg></span>
+              </div>
+              <div class="card-loc">Andheri West</div>
+              <div class="card-distance">12 km</div>
+              <div class="card-meta card-cuisine"><span class="plate"></span> Bar</div>
+              <div class="card-price">₹1800 for 2</div>
+              <button class="book-btn" type="button">Book Now</button>
             </div>
           </a>
         </div>
@@ -32100,13 +32148,12 @@ function BookTableScreen({ state, set, onPreOrder, onProceed, onClose }) {
           <Pill variant="secondary" onClick={onPreOrder} disabled={!canProceed} fullWidth>
             {React.cloneElement(I.cloche, { size: 20 })} Pre-Order
           </Pill>
-          <button className="flow-tip-trigger flow-tip-preorder" type="button" data-flow-tip data-flow-tip-title="Pre-Order" data-flow-tip-copy="Pre-order is for dining in. You keep the table booking context, choose dishes before arrival, and review the order before paying." aria-label="What is Pre-Order?">i</button>
+          <button className="flow-tip-trigger flow-tip-preorder" type="button" data-flow-tip data-flow-tip-title="Pre-Order" data-flow-tip-copy="With Pre-Order, you can choose your food before you arrive for your table reservation, so the restaurant can start preparing it ahead of time." aria-label="What is Pre-Order?">i</button>
         </div>
         <div className="bf-book-action-wrap">
           <Pill variant="primary" onClick={onProceed} disabled={!canProceed} fullWidth>
             {React.cloneElement(I.tableBooking, { size: 20 })} Table Booking
           </Pill>
-          <button className="flow-tip-trigger flow-tip-table" type="button" data-flow-tip data-flow-tip-title="Table Booking" data-flow-tip-copy="Table Booking reserves only the table. Users choose guests, date, and time, then review booking details before confirming." aria-label="What is Table Booking?">i</button>
         </div>
       </div>
     </React.Fragment>
@@ -55885,11 +55932,6 @@ body.eats-app-shell .app-tab svg {
     background: #eceef2;
   }
 
-  .booking-mode-actions .flow-tip-table {
-    top: -6px;
-    left: calc(50% - 24px);
-  }
-
   .booking-mode-actions .flow-tip-pickup {
     top: -6px;
     right: 8px;
@@ -55902,11 +55944,6 @@ body.eats-app-shell .app-tab svg {
   .side-cta-row .flow-tip-preorder {
     top: -7px;
     left: calc(42% - 20px);
-  }
-
-  .side-cta-row .flow-tip-table {
-    top: -7px;
-    right: 8px;
   }
 
   .bf-book-action-wrap {
@@ -61487,11 +61524,43 @@ body.eats-app-shell .app-tab svg {
       burst.classList.add('is-visible');
     };
 
+    const triggerReelHaptic = (pattern = 12) => {
+      if (!('vibrate' in navigator)) return;
+      try {
+        navigator.vibrate(pattern);
+      } catch (_) {}
+    };
+
     const setReelLiked = (button, liked, burst = false) => {
       if (!button) return;
       button.classList.toggle('is-liked', liked);
       button.setAttribute('aria-pressed', String(liked));
-      if (burst) ensureHeartBurst(button.closest('.eats-reel'));
+      if (burst) {
+        button.classList.remove('like-pop');
+        void button.offsetWidth;
+        button.classList.add('like-pop');
+        ensureHeartBurst(button.closest('.eats-reel'));
+        if (liked) triggerReelHaptic([18, 22, 28]);
+      }
+    };
+
+    const likeReelFromTarget = (target) => {
+      const reel = target?.closest?.('.eats-reel');
+      if (!reel) return;
+      const likeButton = reel.querySelector('.eats-reel-actions button[aria-label="Like reel"]');
+      setReelLiked(likeButton, true, true);
+    };
+
+    const setReelSaved = (button, saved) => {
+      if (!button) return;
+      button.classList.toggle('is-saved', saved);
+      button.setAttribute('aria-pressed', String(saved));
+      button.setAttribute('aria-label', saved ? 'Unsave reel' : 'Save reel');
+      if (saved) {
+        button.classList.remove('save-pop');
+        void button.offsetWidth;
+        button.classList.add('save-pop');
+      }
     };
 
     const metricsFor = (rating) => metricLabels.map((label, index) => {
@@ -61627,6 +61696,25 @@ body.eats-app-shell .app-tab svg {
     window.setTimeout(ensureCarousel, 300);
     if (page.classList.contains('is-review-mode')) renderReviewsV2();
 
+    const reelsFeed = page.querySelector('.eats-reels-feed');
+    if (reelsFeed && 'IntersectionObserver' in window) {
+      let activeReel = null;
+      let hasSettledInitialReel = false;
+      const reelObserver = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible || visible.target === activeReel) return;
+        activeReel = visible.target;
+        if (hasSettledInitialReel) triggerReelHaptic(10);
+        hasSettledInitialReel = true;
+      }, {
+        root: reelsFeed,
+        threshold: [0.62, 0.78]
+      });
+      page.querySelectorAll('.eats-reel').forEach((reel) => reelObserver.observe(reel));
+    }
+
     page.querySelectorAll('[data-eats-feed-tab]').forEach((tab) => {
       tab.addEventListener('click', () => {
         if (tab.dataset.eatsFeedTab === 'reviews') {
@@ -61637,10 +61725,25 @@ body.eats-app-shell .app-tab svg {
 
     page.addEventListener('dblclick', (event) => {
       if (event.target.closest('button, a, input, textarea, select')) return;
+      likeReelFromTarget(event.target);
+    }, true);
+
+    let lastReelTapTime = 0;
+    let lastReelTap = null;
+    page.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'mouse') return;
+      if (event.target.closest('button, a, input, textarea, select')) return;
       const reel = event.target.closest('.eats-reel');
       if (!reel) return;
-      const likeButton = reel.querySelector('.eats-reel-actions button[aria-label="Like reel"]');
-      setReelLiked(likeButton, true, true);
+      const now = Date.now();
+      if (lastReelTap === reel && now - lastReelTapTime < 360) {
+        likeReelFromTarget(event.target);
+        lastReelTap = null;
+        lastReelTapTime = 0;
+        return;
+      }
+      lastReelTap = reel;
+      lastReelTapTime = now;
     }, true);
 
     page.addEventListener('click', (event) => {
@@ -61670,6 +61773,14 @@ body.eats-app-shell .app-tab svg {
         event.preventDefault();
         const liked = !reelLike.classList.contains('is-liked');
         setReelLiked(reelLike, liked, liked);
+        return;
+      }
+
+      const reelSave = event.target.closest('.eats-reel-actions .eats-reel-save-top');
+      if (reelSave) {
+        event.preventDefault();
+        const saved = !reelSave.classList.contains('is-saved');
+        setReelSaved(reelSave, saved);
         return;
       }
 
@@ -68735,6 +68846,443 @@ body.eats-app-shell .app-tab svg {
   #customer-settings-modal-root .cs-bookmark-order-card .cs-order-title-block > p {
     font-size: 12.5px !important;
     line-height: 1.2 !important;
+  }
+</style>
+<style id="codex-eats-bookmark-action-stack-20260604">
+  #eats-view .eats-reel-actions .eats-reel-save-top {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    z-index: auto !important;
+    display: inline-flex !important;
+    width: 42px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #eats-view .eats-reel-actions .eats-reel-save-top .eats-svg-icon {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  #eats-view .eats-reel-actions .eats-reel-save-top.is-saved {
+    color: #fff !important;
+  }
+
+  #eats-view .eats-reel-actions .eats-reel-save-top.is-saved .eats-svg-icon,
+  #eats-view .eats-reel-actions .eats-reel-save-top.is-saved .eats-svg-icon *,
+  #eats-view .eats-reel-actions .eats-reel-save-top.is-saved .eats-svg-icon use {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  #eats-view .eats-reel-actions button.like-pop .eats-svg-icon {
+    animation: eatsActionHeartPop .64s cubic-bezier(.2,.78,.24,1) both;
+    transform-origin: 50% 50%;
+  }
+
+  #eats-view .eats-reel-actions .eats-reel-save-top.save-pop .eats-svg-icon {
+    animation: eatsActionHeartPop .64s cubic-bezier(.2,.78,.24,1) both;
+    transform-origin: 50% 50%;
+  }
+
+  @keyframes eatsActionHeartPop {
+    0% { transform: scale(1); filter: drop-shadow(0 2px 10px rgba(0,0,0,.46)); }
+    22% { transform: scale(1.28); filter: drop-shadow(0 0 15px rgba(255,59,102,.54)); }
+    48% { transform: scale(.96); }
+    72% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(255,59,102,.36)); }
+    100% { transform: scale(1); filter: drop-shadow(0 2px 10px rgba(0,0,0,.46)); }
+  }
+</style>
+<style id="codex-eats-transparent-bottom-nav-20260604">
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav {
+    border: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-liquid-nav-lens,
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab::before,
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab::after {
+    display: none !important;
+  }
+
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab {
+    background: transparent !important;
+    color: rgba(255, 255, 255, .66) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, .66) !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .58) !important;
+  }
+
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab > :is(.eats-svg-icon, span) {
+    transform: translateY(-7px) !important;
+  }
+
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab:is(.active, [aria-current="page"]) {
+    background: transparent !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-weight: 720 !important;
+  }
+
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab :is(span, svg, .eats-svg-icon),
+  :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab svg * {
+    color: currentColor !important;
+    -webkit-text-fill-color: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+</style>
+<style id="codex-auth-brand-icons-20260604">
+  .mouthshut-navbar-extract #authModal .auth-step[data-step="phone"] .social-btn .auth-brand-icon {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .mouthshut-navbar-extract #authModal .auth-step[data-step="phone"] .social-btn .auth-brand-icon-google {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .mouthshut-navbar-extract #authModal .auth-step[data-step="phone"] .social-btn .auth-brand-icon-apple {
+    width: 23px !important;
+    height: 23px !important;
+    color: #050505;
+    transform: translateY(-1px);
+  }
+</style>
+<style id="codex-payment-methods-font-weight-soften-20260604">
+  body.customer-settings-open #customer-settings-modal-root .cs-head h2 {
+    font-weight: 620 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-group h3 {
+    font-weight: 620 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-name {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-logo {
+    font-weight: 620 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-logo.visa,
+  #customer-settings-modal-root .cs-payment-logo.gpay {
+    font-weight: 640 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-control,
+  #customer-settings-modal-root .cs-payment-plus {
+    font-weight: 360 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-note strong {
+    font-weight: 580 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-note span {
+    font-weight: 430 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-field span {
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-field input,
+  #customer-settings-modal-root .cs-payment-field input::placeholder,
+  #customer-settings-modal-root .cs-payment-helper,
+  #customer-settings-modal-root .cs-payment-error {
+    font-weight: 430 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-form-action {
+    font-weight: 560 !important;
+  }
+</style>
+<style id="codex-address-empty-copy-size-20260604">
+  #customer-settings-modal-root .cs-address-empty span {
+    font-size: 13.5px !important;
+    line-height: 1.32 !important;
+  }
+</style>
+<style id="codex-home-product-title-weight-soften-20260604">
+  body.eats-app-shell #home-view .row > .row-header h2,
+  body.eats-app-shell #home-view .section-header h2 {
+    font-weight: 620 !important;
+  }
+
+  body.eats-app-shell #restaurant-view .section > h2,
+  body.eats-app-shell #restaurant-view .section-header h2,
+  body.eats-app-shell #restaurant-view .r-title h1,
+  body.eats-app-shell #restaurant-view #menu-photos h2,
+  body.eats-app-shell #restaurant-view .reviews-head h3,
+  body.eats-app-shell #restaurant-view .menu-section-head h2,
+  body.eats-app-shell #amenities-modal .info-modal-head h2,
+  body.eats-app-shell #overview-modal .info-modal-head h2 {
+    font-weight: 620 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #amenities .amenity,
+  body.eats-app-shell #restaurant-view #amenities .amenity :is(strong, span) {
+    font-weight: 540 !important;
+  }
+</style>
+<style id="codex-product-explore-home-card-match-20260604">
+  body.eats-app-shell #restaurant-view #explore-restaurants .restaurant-scroll {
+    grid-auto-columns: minmax(300px, 82vw) !important;
+    gap: 20px !important;
+    padding: 4px 8px 12px !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-shadow: 0 1px 0 rgba(16, 24, 40, .02) !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    scroll-snap-align: start !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .img-wrap {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .img-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .bookmark-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-body {
+    padding: 13px 16px 16px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    column-gap: 12px !important;
+    row-gap: 5px !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-row-top {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-title {
+    min-width: 0 !important;
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+    font-weight: 620 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .rating {
+    gap: 4px !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    font-weight: 620 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .rating .star {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-loc {
+    grid-column: 1 !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-loc::after {
+    content: none !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-distance {
+    grid-column: 2 !important;
+    justify-self: end !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-meta:not(.card-cuisine) {
+    grid-column: 2 !important;
+    justify-self: end !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-cuisine {
+    grid-column: 1 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-price {
+    grid-column: 2 !important;
+    justify-self: end !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-distance,
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-price,
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .card-cuisine {
+    color: var(--muted) !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell #restaurant-view #explore-restaurants .card.explore-card .book-btn {
+    width: 100% !important;
+    min-height: 42px !important;
+    margin-top: 8px !important;
+    font-size: 14px !important;
+    font-weight: 620 !important;
+  }
+</style>
+<style id="codex-pickup-menu-type-and-pill-match-20260604">
+  body.eats-app-shell #restaurant-view .pickup-title,
+  body.eats-app-shell #restaurant-view .pickup-section h2 {
+    font-weight: 620 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-item-name,
+  body.eats-app-shell #restaurant-view .pickup-price,
+  body.eats-app-shell #restaurant-view .pickup-add,
+  body.eats-app-shell #restaurant-view .pickup-stepper {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-desc {
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-desc button {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-order-controls .pickup-cats {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    gap: 5px !important;
+    padding: 4px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-order-controls .pickup-cats button {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 16px !important;
+    border: 1px solid transparent !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: var(--muted) !important;
+    font-size: 14.5px !important;
+    line-height: 1 !important;
+    font-weight: 520 !important;
+    letter-spacing: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell #restaurant-view .pickup-order-controls .pickup-cats button.active {
+    border-color: var(--line-2) !important;
+    background: #fff !important;
+    color: var(--ink) !important;
+    box-shadow: var(--shadow-sm) !important;
+    font-weight: 560 !important;
+  }
+</style>
+<style id="codex-home-card-text-scale-soften-20260604">
+  body.eats-app-shell #home-view .card:not(.dining-mood-card) .card-title {
+    font-size: 15.5px !important;
+    font-weight: 620 !important;
+  }
+
+  body.eats-app-shell #home-view .card:not(.dining-mood-card) .rating {
+    font-size: 12.75px !important;
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #home-view .card:not(.dining-mood-card) :is(.card-loc, .card-meta, .card-cuisine, .card-price) {
+    font-size: 12.25px !important;
+    font-weight: 460 !important;
+  }
+</style>
+<style id="codex-pickup-search-weight-soften-20260604">
+  body.eats-app-shell #restaurant-view .pickup-search input,
+  body.eats-app-shell #restaurant-view .pickup-search input::placeholder {
+    font-weight: 500 !important;
+  }
+</style>
+<style id="codex-menu-card-shared-effective-weights-20260604">
+  body.eats-app-shell #booking-flow-root .bf-menu-name,
+  body.eats-app-shell #restaurant-view .pickup-item-name {
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell #booking-flow-root .bf-menu-price,
+  body.eats-app-shell #restaurant-view .pickup-price {
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell #booking-flow-root .bf-menu-desc,
+  body.eats-app-shell #restaurant-view .pickup-desc {
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell #booking-flow-root .bf-menu-desc button,
+  body.eats-app-shell #restaurant-view .pickup-desc button {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #booking-flow-root .bf-menu-action > button,
+  body.eats-app-shell #booking-flow-root .bf-menu-action > button *,
+  body.eats-app-shell #booking-flow-root .bf-menu-action > div,
+  body.eats-app-shell #booking-flow-root .bf-menu-action > div *,
+  body.eats-app-shell #restaurant-view .pickup-add,
+  body.eats-app-shell #restaurant-view .pickup-add *,
+  body.eats-app-shell #restaurant-view .pickup-stepper,
+  body.eats-app-shell #restaurant-view .pickup-stepper * {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #booking-flow-root .bf-menu-action > div > div,
+  body.eats-app-shell #booking-flow-root .bf-menu-action > div > div *,
+  body.eats-app-shell #restaurant-view .pickup-stepper span,
+  body.eats-app-shell #restaurant-view .pickup-stepper span *,
+  body.eats-app-shell #restaurant-view .pickup-stepper-count,
+  body.eats-app-shell #restaurant-view .pickup-stepper-count * {
+    font-weight: 500 !important;
   }
 </style>
 </body>
