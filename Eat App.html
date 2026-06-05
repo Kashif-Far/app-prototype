@@ -64232,7 +64232,7 @@ body.eats-app-shell .app-tab svg {
     color: #111217;
     font: inherit;
     font-size: 15px;
-    font-weight: 720;
+    font-weight: 520;
   }
 
   .eats-partner-search svg {
@@ -64574,7 +64574,12 @@ body.eats-app-shell .app-tab svg {
 
   .eats-partner-doc-field {
     display: grid;
-    gap: 7px;
+    gap: 5px;
+  }
+
+  .eats-partner-doc-field .eats-partner-error:empty {
+    min-height: 0;
+    margin-top: 0;
   }
 
   .eats-partner-upload-input {
@@ -65419,7 +65424,7 @@ body.eats-app-shell .app-tab svg {
             <section class="eats-partner-step" data-partner-step="1">
               <div class="eats-partner-search">
                 ${searchIcon}
-                <input value="" placeholder="Search for your restaurant listing" data-partner-search autocomplete="off">
+                <input value="" placeholder="Search restaurant" data-partner-search autocomplete="off">
                 <div class="eats-partner-found-list">
                   ${partnerListings.map((item, index) => `
                     <button type="button" data-partner-found="${index}">
@@ -65435,8 +65440,7 @@ body.eats-app-shell .app-tab svg {
                   ${field('Legal business name', 'partner-legal', '', 'Enter legal business name', 'data-partner-required')}
                 </div>
                 <div class="eats-partner-grid" style="margin-top:12px;">
-                  ${field('Address line 1', 'partner-address-1', 'Shop no 101, Pali Hill', 'Building / street address', 'readonly data-partner-required')}
-                  ${field('Address line 2 (optional)', 'partner-address-2', '', '', '')}
+                  ${field('Address', 'partner-address-1', 'Shop no 101, Pali Hill', 'Building / street address', 'readonly data-partner-required')}
                 </div>
                 <div class="eats-partner-grid two" style="margin-top:12px;">
                   ${field('Locality', 'partner-locality', 'Bandra West', 'Area / locality', 'readonly data-partner-required')}
@@ -65702,7 +65706,6 @@ body.eats-app-shell .app-tab svg {
         'partner-brand': brand,
         'partner-legal': '',
         'partner-address-1': address1,
-        'partner-address-2': '',
         'partner-locality': address2,
         'partner-city': city,
         'partner-state': state,
