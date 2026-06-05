@@ -519,7 +519,6 @@
     color: var(--ink);
   }
   .footer-col a .ico svg { width: 16px; height: 16px; }
-  .footer-col + .footer-col { }
   .footer-col h4.spaced { margin-top: 28px; }
   .footer-divider {
     border-top: 1px solid #e3e3e3;
@@ -5540,7 +5539,6 @@
     flex-direction: column;
   }
   .mv-page.active { display: flex; }
-  /* unused remnant — kept to no-op the old wrapper */
   .mv-page-content { display: contents; }
 
   /* Page nav */
@@ -24702,6 +24700,7 @@ dGV4dD4KPC9zdmc+Cg==
         <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-pickup"></use></svg>
         <span>Pickup</span>
       </button>
+      <button class="flow-tip-trigger flow-tip-pickup" type="button" data-flow-tip data-flow-tip-title="Pickup" data-flow-tip-copy="Place a pickup order and collect it from the restaurant when it is ready." aria-label="What is Pickup?">i</button>
       </div>
     </div>
 
@@ -26077,17 +26076,6 @@ dGV4dD4KPC9zdmc+Cg==
     button.dataset.route = 'listing';
   });
 
-// Preserve preview auth token across in-app navigation
-  (function preserveQuery(){
-    const qs = window.location.search;
-    if (!qs) return;
-    document.querySelectorAll('a[href]').forEach(a => {
-      const href = a.getAttribute('href');
-      if (!href || /^(https?:|mailto:|tel:|#)/.test(href)) return;
-      a.setAttribute('href', href + qs);
-    });
-  })();
-
   // Sticky section navigation
   (function setupSectionTabs(){
     const tabs = Array.from(document.querySelectorAll('.tab[data-section-target]'));
@@ -26338,7 +26326,7 @@ dGV4dD4KPC9zdmc+Cg==
         image.onload = () => resolve(image);
         image.onerror = () => resolve(null);
         let resolvedSrc = logoSrc;
-        try { resolvedSrc = new URL(logoSrc, document.baseURI).href; } catch (error) {}
+        try { resolvedSrc = new URL(logoSrc, document.baseURI).href; } catch {}
         try {
           const response = await fetch(resolvedSrc);
           const svgText = await response.text();
@@ -26346,7 +26334,7 @@ dGV4dD4KPC9zdmc+Cg==
             image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgText)}`;
             return;
           }
-        } catch (error) {}
+        } catch {}
         if (!String(resolvedSrc).startsWith('file:')) image.crossOrigin = 'anonymous';
         image.src = resolvedSrc;
       });
@@ -26806,7 +26794,19 @@ dGV4dD4KPC9zdmc+Cg==
     };
 
     const close = () => {
-      root.classList.remove('open');
+      root.classList.remove('open', 'eats-write-review-visible');
+      root.style.removeProperty('display');
+      root.style.removeProperty('position');
+      root.style.removeProperty('inset');
+      root.style.removeProperty('z-index');
+      root.style.removeProperty('visibility');
+      root.style.removeProperty('opacity');
+      root.style.removeProperty('pointer-events');
+      dialog?.style.removeProperty('opacity');
+      dialog?.style.removeProperty('transform');
+      dialog?.style.removeProperty('visibility');
+      dialog?.style.removeProperty('pointer-events');
+      root.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('write-review-lock');
       document.body.style.overflow = previousOverflow;
       window.setTimeout(() => {
@@ -31540,13 +31540,10 @@ let __bf_modalDepth = 0;
 function Modal({ open, onClose, children, width = 1100, height, minHeight, zIndex = 2000, placement = 'center', className = '', fullScreen = false, closeOnBackdrop = false }) {
   useEffect(() => {
     if (!open) return;
-    const k = (e) => {};
-    document.addEventListener('keydown', k);
     __bf_modalDepth += 1;
     document.body.style.overflow = 'hidden';
     document.body.classList.add('eats-booking-modal-open');
     return () => {
-      document.removeEventListener('keydown', k);
       __bf_modalDepth = Math.max(0, __bf_modalDepth - 1);
       if (__bf_modalDepth === 0) {
         document.body.style.overflow = '';
@@ -33511,7 +33508,7 @@ function ConfirmScreen({ state, cart, contact, bill, bookingId: providedBookingI
   };
 
   const copyLink = async () => {
-    try { await navigator.clipboard.writeText(shareUrl); } catch (e) {}
+    try { await navigator.clipboard.writeText(shareUrl); } catch {}
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
@@ -34114,7 +34111,7 @@ function PickupConfirmScreen({ cart, contact, bill, pickupId: providedPickupId, 
   };
 
   const copyLink = async () => {
-    try { await navigator.clipboard.writeText(shareUrl); } catch (error) {}
+    try { await navigator.clipboard.writeText(shareUrl); } catch {}
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
@@ -34597,7 +34594,7 @@ function UpcomingOrderDropup({ record, secondsLeft, onClose, onCancelled }) {
   };
   const beginDragClose = event => {
     if (event.target.closest('button')) return;
-    try { event.currentTarget.setPointerCapture?.(event.pointerId); } catch (_) {}
+    try { event.currentTarget.setPointerCapture?.(event.pointerId); } catch {}
     dragRef.current = {
       startY: event.clientY,
       dragging: false,
@@ -34620,7 +34617,7 @@ function UpcomingOrderDropup({ record, secondsLeft, onClose, onCancelled }) {
   const endDragClose = event => {
     const drag = dragRef.current;
     if (!drag.card) return;
-    try { event.currentTarget.releasePointerCapture?.(event.pointerId); } catch (_) {}
+    try { event.currentTarget.releasePointerCapture?.(event.pointerId); } catch {}
     const delta = event.clientY - drag.startY;
     drag.card.style.transition = 'transform .22s cubic-bezier(.22,.8,.24,1)';
     if (drag.dragging && delta > 74) {
@@ -34866,7 +34863,7 @@ function UpcomingOrderHomeApp() {
   const toastBaseTransform = () => window.matchMedia('(max-width: 760px)').matches ? '' : 'translateX(-50%) ';
   const beginToastDrag = event => {
     toastDragRef.current = { startY: event.clientY, dragging: false, suppressClick: false };
-    try { event.currentTarget.setPointerCapture?.(event.pointerId); } catch (_) {}
+    try { event.currentTarget.setPointerCapture?.(event.pointerId); } catch {}
   };
   const moveToastDrag = event => {
     const drag = toastDragRef.current;
@@ -34880,7 +34877,7 @@ function UpcomingOrderHomeApp() {
   };
   const endToastDrag = event => {
     const drag = toastDragRef.current;
-    try { event.currentTarget.releasePointerCapture?.(event.pointerId); } catch (_) {}
+    try { event.currentTarget.releasePointerCapture?.(event.pointerId); } catch {}
     const delta = event.clientY - drag.startY;
     if (drag.dragging && delta > 38) {
       drag.suppressClick = true;
@@ -35733,7 +35730,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
   function writeStoredBookmarks(rows) {
     try {
       localStorage.setItem(EATS_BOOKMARK_STORAGE_KEY, JSON.stringify(rows));
-    } catch (error) {}
+    } catch {}
   }
   function isRoyalChinaSavedInDom() {
     return document.body?.dataset.eatsRoyalChinaBookmarked === 'true'
@@ -35849,7 +35846,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
   function writeStoredAddresses(rows) {
     try {
       localStorage.setItem(EATS_ADDRESS_STORAGE_KEY, JSON.stringify(rows));
-    } catch (error) {}
+    } catch {}
   }
 
   function makeAddressDraft(row = {}) {
@@ -36490,7 +36487,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
     const copyOrderId = async () => {
       try {
         await navigator.clipboard?.writeText(String(orderId));
-      } catch (error) {}
+      } catch {}
       setIdCopied(true);
       window.setTimeout(() => setIdCopied(false), 1600);
     };
@@ -37026,6 +37023,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
     const [mode, setMode] = useState('list');
     const [draft, setDraft] = useState(makeAddressDraft());
     const [openAddressSelect, setOpenAddressSelect] = useState(null);
+    const [deleteTarget, setDeleteTarget] = useState(null);
     const labelOptions = ['Home', 'Work', 'Other'];
     const cityOptions = ['Mumbai', 'Navi Mumbai', 'Thane', 'Pune', 'Delhi', 'Bengaluru'];
     const stateOptions = ['Maharashtra', 'Delhi', 'Karnataka', 'Gujarat', 'Goa'];
@@ -37079,20 +37077,32 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
     };
     const openAdd = () => {
       setDraft(makeAddressDraft());
+      setDeleteTarget(null);
       setMode('add');
     };
     const openEdit = row => {
       setDraft(makeAddressDraft(row));
+      setDeleteTarget(null);
       setMode('edit');
     };
     const openInstructions = row => {
       setDraft(makeAddressDraft(row));
+      setDeleteTarget(null);
       setMode('instructions');
     };
-    const deleteAddress = id => {
-      const nextRows = addresses.filter(row => row.id !== id);
+    const requestDeleteAddress = row => {
+      setDeleteTarget(row);
+      setOpenAddressSelect(null);
+    };
+    const cancelDeleteAddress = () => {
+      setDeleteTarget(null);
+    };
+    const confirmDeleteAddress = () => {
+      if (!deleteTarget) return;
+      const nextRows = addresses.filter(row => row.id !== deleteTarget.id);
       commitRows(nextRows);
-      window.showEatsStatus?.('Address deleted', 'danger');
+      setDeleteTarget(null);
+      window.showEatsStatus?.('Saved address deleted', 'danger');
     };
     const saveAddress = event => {
       event.preventDefault();
@@ -37102,7 +37112,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
       const pincode = draft.pincode.trim();
       const state = draft.state.trim();
       if (!line1 || !area || !city || !pincode || !state) {
-        window.showEatsStatus?.('Add house, locality, city, pincode, and state to save this address.', 'danger');
+        window.showEatsStatus?.('Add address line 1, locality, city, pincode, and state to save this address.', 'danger');
         return;
       }
       const saved = {
@@ -37122,6 +37132,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
       };
       const nextRows = draft.id ? addresses.map(row => row.id === draft.id ? saved : row) : [saved, ...addresses];
       commitRows(nextRows);
+      setDeleteTarget(null);
       setMode('list');
       window.showEatsStatus?.(draft.id ? 'Address updated' : 'Address saved', 'success');
     };
@@ -37152,14 +37163,14 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
             </div>
             <div className="cs-address-grid">
               <label className="cs-address-field full">
-                <span>House / Flat / Floor</span>
+                <span>Address line 1</span>
                 <input value={draft.line1} onChange={event => updateDraft('line1', event.target.value)} placeholder="Flat / building / floor" autoComplete="address-line1" />
               </label>
               <label className="cs-address-field full">
-                <span>Apartment / Road / Street</span>
+                <span>Address line 2 (optional)</span>
                 <input value={draft.line2} onChange={event => updateDraft('line2', event.target.value)} placeholder="Road / street / society" autoComplete="address-line2" />
               </label>
-              <label className="cs-address-field full">
+              <label className="cs-address-field">
                 <span>Locality</span>
                 <input value={draft.area} onChange={event => updateDraft('area', event.target.value)} placeholder="Locality" autoComplete="address-level3" />
               </label>
@@ -37168,9 +37179,9 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
                 <span>Pincode</span>
                 <input value={draft.pincode} onChange={event => updateDraft('pincode', event.target.value)} placeholder="400050" inputMode="numeric" autoComplete="postal-code" />
               </label>
-              {renderAddressSelect('State', 'state', stateOptions, true)}
+              {renderAddressSelect('State', 'state', stateOptions)}
               <label className="cs-address-field full">
-                <span>Nearby landmark</span>
+                <span>Nearby landmark (optional)</span>
                 <input value={draft.landmark} onChange={event => updateDraft('landmark', event.target.value)} placeholder="Nearby landmark" />
               </label>
               <label className="cs-address-field">
@@ -37223,6 +37234,25 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
       </div>
     ) : null;
 
+    const deleteConfirmSheet = deleteTarget ? (
+      <div className="cs-address-sheet-layer cs-address-delete-layer" role="presentation">
+        <button className="cs-address-sheet-scrim" type="button" aria-label="Cancel address deletion" onClick={cancelDeleteAddress}></button>
+        <section className="cs-address-sheet cs-address-delete-sheet" role="dialog" aria-modal="true" aria-labelledby="csAddressDeleteTitle">
+          <div className="cs-address-sheet-grabber" aria-hidden="true"></div>
+          <div className="cs-address-delete-card">
+            <span className="cs-address-delete-icon" aria-hidden="true">{Icons.trash}</span>
+            <p className="cs-address-kicker">Delete saved address</p>
+            <h3 id="csAddressDeleteTitle">Delete this address?</h3>
+            <p className="cs-address-form-copy">{formatAddressLine(deleteTarget)}</p>
+            <div className="cs-address-delete-actions">
+              <button className="cs-ghost-btn" type="button" onClick={cancelDeleteAddress}>No, keep it</button>
+              <button className="cs-danger-btn" type="button" onClick={confirmDeleteAddress}>Yes, delete</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    ) : null;
+
     return (
       <div className="cs-address-page">
         <section className="cs-address-actions-card" aria-label="Address actions">
@@ -37244,7 +37274,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
                 <div className="cs-address-card-actions">
                   <button type="button" aria-label={`Edit ${row.label || 'address'}`} title="Edit" onClick={() => openEdit(row)}>{Icons.pencil}</button>
                   <button type="button" aria-label={`Edit delivery instructions for ${row.label || 'address'}`} title="Instructions" onClick={() => openInstructions(row)}>{Icons.note}</button>
-                  <button type="button" className="danger" aria-label={`Delete ${row.label || 'address'}`} title="Delete" onClick={() => deleteAddress(row.id)}>{Icons.trash}</button>
+                  <button type="button" className="danger" aria-label={`Delete ${row.label || 'address'}`} title="Delete" onClick={() => requestDeleteAddress(row)}>{Icons.trash}</button>
                 </div>
               </div>
             </article>
@@ -37257,6 +37287,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
         </section>
         {addressSheet}
         {instructionsSheet}
+        {deleteConfirmSheet}
       </div>
     );
   }
@@ -44937,7 +44968,7 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
       });
       try {
         localStorage.setItem('mouthshut-eats-theme', theme);
-      } catch (error) {}
+      } catch {}
       syncEffectiveTheme(theme);
       requestAnimationFrame(() => {
         const activeNav = document.querySelector('.app-bottom-nav .app-tab[aria-current="page"]')?.dataset.appNav || 'home';
@@ -45135,10 +45166,15 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
       tip.hidden = false;
       tip.classList.add('open');
 
-      const rect = trigger.getBoundingClientRect();
-      const tipWidth = Math.min(260, window.innerWidth - 28);
+      const pickupButton = trigger.classList.contains('flow-tip-pickup')
+        ? trigger.closest('.booking-mode-actions')?.querySelector('.cta-secondary')
+        : null;
+      const rect = (pickupButton || trigger).getBoundingClientRect();
+      const arrowRect = trigger.getBoundingClientRect();
+      const tipWidth = Math.min(trigger.classList.contains('flow-tip-pickup') ? 238 : 260, window.innerWidth - 28);
       const tipHeight = Math.max(96, tip.offsetHeight || 96);
       const left = Math.min(Math.max(14, rect.left + rect.width / 2 - tipWidth / 2), window.innerWidth - tipWidth - 14);
+      const arrowX = Math.min(Math.max(34, arrowRect.left + arrowRect.width / 2 - left), tipWidth - 34);
       const hasRoomAbove = rect.top > tipHeight + 18;
       const top = hasRoomAbove
         ? Math.max(14, rect.top - tipHeight - 12)
@@ -45146,6 +45182,7 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
       tip.style.setProperty('--flow-tip-x', `${left}px`);
       tip.style.setProperty('--flow-tip-y', `${top}px`);
       tip.style.setProperty('--flow-tip-w', `${tipWidth}px`);
+      tip.style.setProperty('--flow-tip-arrow-x', `${arrowX}px`);
       tip.dataset.placement = hasRoomAbove ? 'above' : 'below';
     }
 
@@ -55990,11 +56027,11 @@ body.eats-app-shell .app-tab svg {
     width: var(--flow-tip-w, min(260px, calc(100vw - 28px)));
     min-height: 0;
     padding: 12px 34px 12px 13px;
-    border: 1px solid #d9dce2;
+    border: 1px solid #e2e5eb;
     border-radius: 12px;
-    background: #f0f1f4;
+    background: #fafbfc;
     color: #17191f;
-    box-shadow: 0 16px 36px -24px rgba(0,0,0,.48);
+    box-shadow: 0 16px 34px -24px rgba(0,0,0,.36);
   }
 
   .app-flow-tip[hidden] {
@@ -56021,7 +56058,7 @@ body.eats-app-shell .app-tab svg {
   .app-flow-tip::after {
     content: "";
     position: absolute;
-    left: 50%;
+    left: var(--flow-tip-arrow-x, 50%);
     width: 16px;
     height: 16px;
     background: inherit;
@@ -56043,21 +56080,25 @@ body.eats-app-shell .app-tab svg {
 
   .app-flow-tip-close {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 9px;
+    top: 9px;
     width: 22px;
     height: 22px;
+    padding: 0;
     border: 0;
     border-radius: 999px;
-    display: grid;
-    place-items: center;
-    background: #e1e3e8;
-    color: #555b65;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    background: #eef1f5;
+    color: #6a707a;
   }
 
   .app-flow-tip-close svg {
     width: 12px;
     height: 12px;
+    display: block;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.2;
@@ -56321,19 +56362,20 @@ body.eats-app-shell .app-tab svg {
   }
 
   body[data-eats-theme="liquid-glass"] {
-    --eats-liquid-nav-width: min(284px, calc(100vw - 30px));
+    --eats-liquid-nav-width: min(342px, calc(100vw - 30px));
   }
 
   body[data-eats-theme="liquid-glass"].eats-app-shell .app-bottom-nav {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 
   body[data-eats-theme="liquid-glass"].eats-app-shell .app-bottom-nav .app-tab[data-app-nav="profile"] {
-    display: none !important;
+    display: flex !important;
+    grid-column: 4 !important;
   }
 
   body[data-eats-theme="liquid-glass"].eats-app-shell .app-bottom-nav .app-liquid-nav-lens {
-    width: var(--eats-liquid-lens-w, calc((100% - 16px) / 3)) !important;
+    width: var(--eats-liquid-lens-w, calc((100% - 21px) / 4)) !important;
   }
 
   body[data-eats-theme="liquid-glass"] #profile-view .app-profile-push-head {
@@ -61524,11 +61566,26 @@ body.eats-app-shell .app-tab svg {
       burst.classList.add('is-visible');
     };
 
+    const ensureReviewHeartBurst = (button) => {
+      const card = button?.closest?.('.eats-review-card');
+      if (!card) return;
+      let burst = card.querySelector('.eats-review-heart-burst');
+      if (!burst) {
+        burst = document.createElement('div');
+        burst.className = 'eats-review-heart-burst';
+        burst.innerHTML = heartSvg;
+        card.appendChild(burst);
+      }
+      burst.classList.remove('is-visible');
+      void burst.offsetWidth;
+      burst.classList.add('is-visible');
+    };
+
     const triggerReelHaptic = (pattern = 12) => {
       if (!('vibrate' in navigator)) return;
       try {
         navigator.vibrate(pattern);
-      } catch (_) {}
+      } catch {}
     };
 
     const setReelLiked = (button, liked, burst = false) => {
@@ -61615,10 +61672,15 @@ body.eats-app-shell .app-tab svg {
               <div class="eats-review-metrics">${metrics}</div>
               <div class="eats-review-footer">
                 <button class="eats-review-like" type="button" data-eats-review-like data-likes="${likes}" aria-pressed="false">${heartSvg}<span>${likes} Likes</span></button>
-                <button type="button" aria-label="Share review ${reviewIndex + 1}">
-                  <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
-                  Share
-                </button>
+                <span class="eats-review-actions">
+                  <button class="eats-review-bookmark" type="button" data-eats-review-bookmark aria-label="Bookmark review ${reviewIndex + 1}" aria-pressed="false">
+                    <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="eats-review-bookmark-shape" d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z" fill="transparent" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button class="eats-review-share" type="button" aria-label="Share review ${reviewIndex + 1}">
+                    <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
+                    Share
+                  </button>
+                </span>
               </div>
             </div>
           </article>
@@ -61765,6 +61827,29 @@ body.eats-app-shell .app-tab svg {
         const count = baseLikes + (liked ? 1 : 0);
         const label = reviewLike.querySelector('span');
         if (label) label.textContent = `${count} Likes`;
+        if (liked) {
+          reviewLike.classList.remove('like-pop');
+          void reviewLike.offsetWidth;
+          reviewLike.classList.add('like-pop');
+          ensureReviewHeartBurst(reviewLike);
+          triggerReelHaptic([18, 22, 28]);
+        } else {
+          reviewLike.classList.remove('like-pop');
+        }
+        return;
+      }
+
+      const reviewBookmark = event.target.closest('[data-eats-review-bookmark]');
+      if (reviewBookmark) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        const saved = reviewBookmark.classList.toggle('is-saved');
+        reviewBookmark.setAttribute('aria-pressed', String(saved));
+        reviewBookmark.setAttribute('aria-label', saved ? 'Remove bookmark' : 'Bookmark review');
+        reviewBookmark.classList.remove('save-pop');
+        void reviewBookmark.offsetWidth;
+        reviewBookmark.classList.add('save-pop');
+        triggerReelHaptic(saved ? [14, 18, 24] : [10]);
         return;
       }
 
@@ -62096,7 +62181,7 @@ body.eats-app-shell .app-tab svg {
   .eats-review-select-sheet {
     position: fixed;
     inset: 0;
-    z-index: 17000;
+    z-index: 17900;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -62120,6 +62205,14 @@ body.eats-app-shell .app-tab svg {
     background: #fff;
     box-shadow: 0 -18px 45px rgba(15,18,24,.18);
     animation: eatsSheetIn .2s ease-out both;
+  }
+
+  body.eats-review-picker-open #eats-app-bottom-nav {
+    pointer-events: none !important;
+  }
+
+  body.write-review-lock .eats-review-select-sheet {
+    display: none !important;
   }
 
   .eats-review-select-handle,
@@ -62168,6 +62261,47 @@ body.eats-app-shell .app-tab svg {
     line-height: 1.35;
   }
 
+  .eats-review-select-search {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    margin: 0 0 12px;
+    padding: 0 15px;
+    border: 1px solid #e5e8ee;
+    border-radius: 18px;
+    background: #f8f9fb;
+    color: #8c939f;
+  }
+
+  .eats-review-select-search .eats-svg-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .eats-review-select-search input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #111217;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 560;
+  }
+
+  .eats-review-select-search input::placeholder {
+    color: #9aa1ac;
+  }
+
+  .eats-review-select-search:focus-within {
+    border-color: #cfd5df;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(17,18,23,.06);
+  }
+
   .eats-review-restaurant-list {
     display: grid;
     gap: 9px;
@@ -62200,18 +62334,42 @@ body.eats-app-shell .app-tab svg {
     font-weight: 850;
   }
 
-  .eats-review-restaurant-option span {
+  .eats-review-restaurant-copy,
+  .eats-review-restaurant-meta {
     display: block;
+  }
+
+  .eats-review-restaurant-meta {
     margin-top: 3px;
-    color: #737b87;
     font-size: 12px;
     font-weight: 700;
+  }
+
+  .eats-review-restaurant-area {
+    color: #737b87;
+  }
+
+  .eats-review-restaurant-rating {
+    color: #d99a20;
   }
 
   .eats-review-restaurant-option .eats-svg-icon {
     width: 18px;
     height: 18px;
     color: #a1a7b1;
+  }
+
+  .eats-review-restaurant-empty {
+    min-height: 118px;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    border: 1px dashed #dfe3ea;
+    border-radius: 18px;
+    color: #7b828d;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 620;
   }
 
   .eats-post-composer-root {
@@ -62221,14 +62379,22 @@ body.eats-app-shell .app-tab svg {
     display: flex;
     justify-content: center;
     background: #fff;
+    overflow-x: hidden;
   }
 
   .eats-post-composer-shell {
-    width: min(430px, 100%);
+    width: 100%;
+    max-width: 430px;
     height: 100dvh;
     display: flex;
     flex-direction: column;
     background: #fff;
+    overflow-x: hidden;
+  }
+
+  .eats-post-composer-root,
+  .eats-post-composer-root * {
+    box-sizing: border-box;
   }
 
   .eats-post-composer-header {
@@ -62271,8 +62437,9 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-composer-header h1 {
     margin: 0;
-    font-size: 25px;
-    font-weight: 880;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.08;
   }
 
   .eats-post-composer-action {
@@ -62283,7 +62450,7 @@ body.eats-app-shell .app-tab svg {
     background: #050505;
     color: #fff;
     font-size: 12px;
-    font-weight: 850;
+    font-weight: 680;
   }
 
   .eats-post-composer-action:disabled {
@@ -62292,10 +62459,14 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-composer-body {
     overflow: auto;
+    overflow-x: hidden;
     padding: 18px 18px calc(28px + env(safe-area-inset-bottom));
   }
 
   .eats-post-form-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     display: grid;
     gap: 0;
     padding: 0;
@@ -62303,9 +62474,12 @@ body.eats-app-shell .app-tab svg {
     border-radius: 24px;
     background: #fff;
     box-shadow: 0 18px 46px -38px rgba(10, 13, 18, .38);
+    overflow: hidden;
   }
 
   .eats-post-card {
+    min-width: 0;
+    max-width: 100%;
     padding: 16px;
     border: 0;
     border-radius: 0;
@@ -62323,9 +62497,30 @@ body.eats-app-shell .app-tab svg {
     margin-bottom: 8px;
     color: #8d929b;
     font-size: 11px;
-    font-weight: 850;
+    font-weight: 680;
     letter-spacing: .08em;
     text-transform: uppercase;
+  }
+
+  .eats-post-media-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .eats-post-media-count {
+    color: #68707c;
+    font-size: 11px;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .eats-post-media-count[hidden] {
+    display: none !important;
   }
 
   .eats-post-upload-card {
@@ -62336,22 +62531,37 @@ body.eats-app-shell .app-tab svg {
   .eats-post-upload-drop {
     order: 1;
     width: 100%;
+    max-width: 100%;
     aspect-ratio: 16 / 9;
     display: grid;
     place-items: center;
+    padding: 0;
     border: 1.5px dashed #d8dde5;
     border-radius: 20px;
-    background: #f7f8fa;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,0)),
+      #f7f8fa;
     color: #111217;
     text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.82);
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  }
+
+  .eats-post-upload-drop:hover,
+  .eats-post-upload-drop:focus-visible {
+    border-color: #bfc6d1;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,0)),
+      #f2f4f7;
+    outline: none;
   }
 
   .eats-post-upload-card.has-media .eats-post-upload-drop {
     order: 3;
-    width: auto;
+    width: 100%;
     aspect-ratio: auto;
     min-height: 40px;
-    justify-self: start;
+    justify-self: stretch;
     padding: 0 14px 0 8px;
     border: 1px solid #111217;
     border-style: solid;
@@ -62361,7 +62571,8 @@ body.eats-app-shell .app-tab svg {
   }
 
   .eats-post-upload-card.has-media .eats-post-upload-drop-inner {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
     padding: 0;
     gap: 8px;
   }
@@ -62380,7 +62591,7 @@ body.eats-app-shell .app-tab svg {
   .eats-post-upload-card.has-media .eats-post-upload-drop strong {
     color: #fff;
     font-size: 12.5px;
-    font-weight: 830;
+    font-weight: 680;
   }
 
   .eats-post-upload-card.has-media .eats-post-upload-drop-inner > span:not(.eats-post-plus):not(strong) {
@@ -62390,7 +62601,7 @@ body.eats-app-shell .app-tab svg {
   .eats-post-upload-drop-inner {
     display: grid;
     place-items: center;
-    gap: 8px;
+    gap: 9px;
     padding: 18px;
   }
 
@@ -62411,13 +62622,44 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-upload-drop strong {
     font-size: 18px;
-    font-weight: 880;
+    font-weight: 720;
   }
 
   .eats-post-upload-drop-inner > span:not(.eats-post-plus) {
     color: #747b86;
     font-size: 12.5px;
-    font-weight: 700;
+    font-weight: 560;
+  }
+
+  .eats-post-upload-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .eats-post-upload-chip {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px;
+    border: 1px solid #e1e5eb;
+    border-radius: 999px;
+    background: #fff;
+    color: #2f343c;
+    font-size: 11.5px;
+    font-weight: 620;
+    line-height: 1;
+    box-shadow: 0 8px 20px -18px rgba(10,13,18,.45);
+  }
+
+  .eats-post-upload-chip .eats-svg-icon {
+    width: 14px;
+    height: 14px;
+    color: #6e7580;
   }
 
   .eats-post-upload-drop .eats-post-plus {
@@ -62427,7 +62669,8 @@ body.eats-app-shell .app-tab svg {
   .eats-post-selected {
     order: 2;
     display: grid;
-    gap: 9px;
+    min-width: 0;
+    gap: 10px;
   }
 
   .eats-post-selected[hidden] {
@@ -62436,8 +62679,12 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-selected-grid {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 4px;
+    margin: 0 -2px;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -62450,15 +62697,20 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-selected-thumb {
     position: relative;
-    flex: 0 0 100%;
-    width: 100%;
-    aspect-ratio: 16 / 9;
+    flex: 0 0 132px;
+    width: 132px;
+    height: 132px;
     overflow: hidden;
     border: 1px solid #e4e7ed;
     border-radius: 16px;
     background: #f5f6f8;
     scroll-snap-align: start;
     touch-action: pan-x;
+  }
+
+  .eats-post-selected-thumb.is-editing {
+    border-color: #111217;
+    box-shadow: 0 0 0 3px rgba(17, 18, 23, .08);
   }
 
   .eats-post-selected-thumb img {
@@ -62476,23 +62728,68 @@ body.eats-app-shell .app-tab svg {
     cursor: grabbing;
   }
 
-  .eats-post-selected-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
   .eats-post-selected-video {
     position: relative;
+    flex: 0 0 172px;
+    width: 172px;
+    height: 132px;
     overflow: hidden;
     border: 1px solid #e4e7ed;
     border-radius: 16px;
-    background: #050505;
-    aspect-ratio: 16 / 9;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,0) 42%),
+      linear-gradient(135deg, #16181d, #4a352f 52%, #181b22);
+    color: #fff;
     scroll-snap-align: start;
-    flex: 0 0 100%;
-    width: 100%;
+    display: grid;
+    align-content: end;
+    gap: 5px;
+    padding: 12px 12px 44px;
+  }
+
+  .eats-post-selected-video::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 72% 20%, rgba(255,255,255,.22), transparent 28%),
+      linear-gradient(0deg, rgba(0,0,0,.58), rgba(0,0,0,0) 58%);
+    pointer-events: none;
+  }
+
+  .eats-post-selected-video > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .eats-post-video-badge {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,.92);
+    color: #090a0c;
+    box-shadow: 0 14px 28px -18px rgba(0,0,0,.8);
+  }
+
+  .eats-post-video-badge .eats-svg-icon {
+    width: 17px;
+    height: 17px;
+    transform: translateX(1px);
+  }
+
+  .eats-post-selected-video strong {
+    font-size: 13px;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .eats-post-selected-video span {
+    color: rgba(255,255,255,.72);
+    font-size: 11.5px;
+    line-height: 1.2;
+    font-weight: 560;
   }
 
   .eats-post-video-play {
@@ -62559,10 +62856,19 @@ body.eats-app-shell .app-tab svg {
     gap: 10px;
     color: #737b87;
     font-size: 12px;
-    font-weight: 760;
+    font-weight: 560;
   }
 
-  .eats-post-selected-meta button {
+  .eats-post-selected-note {
+    display: block;
+    min-width: 0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .eats-post-selected-meta button,
+  .eats-post-media-action,
+  .eats-post-media-delete {
     height: 30px;
     padding: 0 12px;
     border: 1px solid #e3e6eb;
@@ -62570,7 +62876,60 @@ body.eats-app-shell .app-tab svg {
     background: #fff;
     color: #111217;
     font-size: 12px;
-    font-weight: 820;
+    font-weight: 650;
+  }
+
+  .eats-post-media-actions {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  .eats-post-media-action,
+  .eats-post-media-delete {
+    height: 28px;
+    min-width: 0;
+    padding: 0 9px;
+    border-color: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.94);
+    color: #14161b;
+    box-shadow: 0 10px 22px -18px rgba(0,0,0,.8);
+    pointer-events: auto;
+  }
+
+  .eats-post-media-delete {
+    color: #b42318;
+  }
+
+  .eats-post-media-index {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    z-index: 2;
+    min-width: 25px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.62);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1;
+  }
+
+  .eats-post-selected-video .eats-post-media-actions {
+    left: 12px;
+    right: auto;
+    bottom: 10px;
   }
 
   .eats-post-helper {
@@ -62588,9 +62947,10 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-restaurant-input-shell {
     position: relative;
+    border-radius: 16px;
   }
 
-  .eats-post-restaurant-input-shell .eats-svg-icon {
+  .eats-post-restaurant-input-shell > .eats-svg-icon:first-child {
     position: absolute;
     left: 15px;
     top: 50%;
@@ -62601,18 +62961,52 @@ body.eats-app-shell .app-tab svg {
     pointer-events: none;
   }
 
+  .eats-post-restaurant-chevron {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    color: #757c86;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform .18s ease;
+  }
+
+  .eats-post-restaurant-search.is-open .eats-post-restaurant-chevron {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
   .eats-post-restaurant-input {
     width: 100%;
+    max-width: 100%;
     min-height: 58px;
-    padding: 0 14px 0 44px;
+    padding: 0 46px 0 44px;
     border: 1px solid #e8ebf0;
     border-radius: 16px;
     background: #fff;
     color: #111217;
     font: inherit;
     font-size: 14px;
-    font-weight: 850;
+    font-weight: 650;
     outline: none;
+    cursor: pointer;
+  }
+
+  .eats-post-restaurant-input::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  .eats-post-restaurant-input::-webkit-search-cancel-button {
+    width: 16px;
+    height: 16px;
+    margin-right: 26px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #111217;
+    cursor: pointer;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 6 6 18M6 6l12 12' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 6 6 18M6 6l12 12' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
   }
 
   .eats-post-restaurant-input:focus {
@@ -62634,7 +63028,7 @@ body.eats-app-shell .app-tab svg {
     border: 1px solid #e0e4ea;
     border-radius: 17px;
     background: #fff;
-    box-shadow: 0 18px 42px -26px rgba(10, 13, 18, .42);
+    box-shadow: 0 18px 42px -26px rgba(10, 13, 18, .42), 0 0 0 1px rgba(255,255,255,.75);
     -webkit-overflow-scrolling: touch;
   }
 
@@ -62663,13 +63057,13 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-restaurant-option strong {
     font-size: 14px;
-    font-weight: 850;
+    font-weight: 680;
   }
 
   .eats-post-restaurant-option span {
     color: #777f8a;
     font-size: 12.5px;
-    font-weight: 700;
+    font-weight: 560;
   }
 
   .eats-post-confirmation-pill {
@@ -62725,6 +63119,7 @@ body.eats-app-shell .app-tab svg {
 
   .eats-post-caption {
     width: 100%;
+    max-width: 100%;
     min-height: 118px;
     padding: 13px 14px;
     border: 1px solid #e4e7ed;
@@ -62743,7 +63138,7 @@ body.eats-app-shell .app-tab svg {
 
   #write-review-modal-root {
     z-index: 18000;
-    display: flex;
+    display: flex !important;
     align-items: flex-end;
     justify-content: center;
     background: rgba(5,5,6,.36);
@@ -62769,11 +63164,33 @@ body.eats-app-shell .app-tab svg {
     padding: 0 18px calc(18px + env(safe-area-inset-bottom));
     border-radius: 28px 28px 0 0;
     box-shadow: 0 -18px 45px rgba(15,18,24,.18);
+    opacity: 0;
     transform: translateY(30px);
   }
 
   #write-review-modal-root.open .write-review-dialog {
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  #write-review-modal-root.eats-write-review-visible {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: rgba(5,5,6,.36) !important;
+  }
+
+  #write-review-modal-root.eats-write-review-visible .write-review-dialog {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
 
   #write-review-modal-root .write-review-form {
@@ -62911,10 +63328,15 @@ body.eats-app-shell .app-tab svg {
               <div class="eats-review-metrics">${metricsFor(rating)}</div>
               <div class="eats-review-footer">
                 <button class="eats-review-like" type="button" data-eats-review-like data-likes="${likes}" aria-pressed="false">${heartSvg}<span>${likes} Likes</span></button>
-                <button type="button" aria-label="Share review ${reviewIndex + 1}">
-                  <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
-                  Share
-                </button>
+                <span class="eats-review-actions">
+                  <button class="eats-review-bookmark" type="button" data-eats-review-bookmark aria-label="Bookmark review ${reviewIndex + 1}" aria-pressed="false">
+                    <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="eats-review-bookmark-shape" d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z" fill="transparent" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button class="eats-review-share" type="button" aria-label="Share review ${reviewIndex + 1}">
+                    <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-share"></use></svg>
+                    Share
+                  </button>
+                </span>
               </div>
             </div>
           </article>
@@ -62924,6 +63346,38 @@ body.eats-app-shell .app-tab svg {
       feed.dataset.polished = 'round-three';
     };
 
+    const reviewRestaurantRows = (query = '') => {
+      const value = query.trim().toLowerCase();
+      const matches = restaurants.filter(([name, area, rating]) => {
+        const haystack = `${name} ${area} ${rating}`.toLowerCase();
+        return !value || haystack.includes(value);
+      });
+      if (!matches.length) {
+        return '<div class="eats-review-restaurant-empty">No restaurants found. Try another name or locality.</div>';
+      }
+      return matches.map(([name, area, rating, image]) => `
+        <button class="eats-review-restaurant-option" type="button" data-eats-review-restaurant="${escapeHtml(name)}">
+          <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
+          <span class="eats-review-restaurant-copy">
+            <strong>${escapeHtml(name)}</strong>
+            <span class="eats-review-restaurant-meta">
+              <span class="eats-review-restaurant-area">${escapeHtml(area)}</span>
+              <span aria-hidden="true"> · </span>
+              <span class="eats-review-restaurant-rating">${escapeHtml(rating)} ★</span>
+            </span>
+          </span>
+          <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      `).join('');
+    };
+
+    const updateReviewPickerSearch = (sheet) => {
+      const input = sheet?.querySelector('[data-eats-review-search]');
+      const list = sheet?.querySelector('[data-eats-review-restaurant-list]');
+      if (!list) return;
+      list.innerHTML = reviewRestaurantRows(input?.value || '');
+    };
+
     const ensureReviewPicker = () => {
       let sheet = document.querySelector('[data-eats-review-select-sheet]');
       if (sheet) return sheet;
@@ -62931,6 +63385,7 @@ body.eats-app-shell .app-tab svg {
       sheet.className = 'eats-review-select-sheet';
       sheet.dataset.eatsReviewSelectSheet = 'true';
       sheet.hidden = true;
+      sheet.setAttribute('aria-hidden', 'true');
       sheet.innerHTML = `
         <button class="eats-review-select-scrim" type="button" data-eats-review-select-close aria-label="Close restaurant selector"></button>
         <div class="eats-review-select-panel" role="dialog" aria-modal="true" aria-label="Choose restaurant">
@@ -62944,14 +63399,12 @@ body.eats-app-shell .app-tab svg {
               <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-close-x"></use></svg>
             </button>
           </div>
-          <div class="eats-review-restaurant-list">
-            ${restaurants.map(([name, area, rating, image]) => `
-              <button class="eats-review-restaurant-option" type="button" data-eats-review-restaurant="${escapeHtml(name)}">
-                <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
-                <span><strong>${escapeHtml(name)}</strong><span>${escapeHtml(area)} · ${escapeHtml(rating)} ★</span></span>
-                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            `).join('')}
+          <label class="eats-review-select-search">
+            <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3M10.8 18.2a7.4 7.4 0 1 1 0-14.8 7.4 7.4 0 0 1 0 14.8Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            <input type="search" data-eats-review-search placeholder="Search restaurants" autocomplete="off" inputmode="search">
+          </label>
+          <div class="eats-review-restaurant-list" data-eats-review-restaurant-list>
+            ${reviewRestaurantRows()}
           </div>
         </div>
       `;
@@ -62962,13 +63415,19 @@ body.eats-app-shell .app-tab svg {
     const openReviewPicker = () => {
       const sheet = ensureReviewPicker();
       sheet.hidden = false;
+      sheet.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('eats-review-picker-open');
       document.body.style.overflow = 'hidden';
+      updateReviewPickerSearch(sheet);
     };
 
     const closeReviewPicker = () => {
       const sheet = document.querySelector('[data-eats-review-select-sheet]');
-      if (!sheet) return;
-      sheet.hidden = true;
+      if (sheet) {
+        sheet.hidden = true;
+        sheet.setAttribute('aria-hidden', 'true');
+      }
+      document.body.classList.remove('eats-review-picker-open');
       if (!document.body.classList.contains('write-review-lock')) document.body.style.overflow = '';
     };
 
@@ -62977,12 +63436,40 @@ body.eats-app-shell .app-tab svg {
       const title = document.getElementById('writeReviewDialogTitle');
       if (!root) return;
       if (title) title.textContent = `Write a review on ${restaurantName}`;
+      root.querySelector('#writeReviewForm')?.reset();
+      root.querySelectorAll('[data-star]').forEach((button) => {
+        button.classList.remove('active');
+        button.setAttribute('aria-checked', 'false');
+      });
+      root.querySelectorAll('.wr-metric-row').forEach((row) => {
+        row.dataset.score = '0';
+        row.querySelectorAll('[data-score]').forEach((button) => button.classList.remove('active'));
+      });
+      root.querySelectorAll('.wr-photo-thumb').forEach((thumb) => thumb.remove());
+      root.querySelector('.wr-photo-preview')?.setAttribute('hidden', '');
+      root.querySelector('.wr-photo-button')?.classList.remove('has-preview');
       root.hidden = false;
+      root.removeAttribute('hidden');
+      root.setAttribute('aria-hidden', 'false');
+      root.classList.add('eats-write-review-visible');
+      root.style.setProperty('display', 'flex', 'important');
+      root.style.setProperty('position', 'fixed', 'important');
+      root.style.setProperty('inset', '0', 'important');
+      root.style.setProperty('z-index', '2147483647', 'important');
+      root.style.setProperty('visibility', 'visible', 'important');
+      root.style.setProperty('opacity', '1', 'important');
+      root.style.setProperty('pointer-events', 'auto', 'important');
       document.body.style.overflow = 'hidden';
       document.body.classList.add('write-review-lock');
       const dialog = root.querySelector('.write-review-dialog');
-      if (dialog) dialog.scrollTop = 0;
-      window.requestAnimationFrame(() => root.classList.add('open'));
+      if (dialog) {
+        dialog.scrollTop = 0;
+        dialog.style.setProperty('opacity', '1', 'important');
+        dialog.style.setProperty('transform', 'translateY(0)', 'important');
+        dialog.style.setProperty('visibility', 'visible', 'important');
+        dialog.style.setProperty('pointer-events', 'auto', 'important');
+      }
+      window.requestAnimationFrame(() => root.classList.add('open', 'eats-write-review-visible'));
     };
 
     const updateReviewHeaderVisibility = () => {
@@ -63025,7 +63512,7 @@ body.eats-app-shell .app-tab svg {
           <div class="eats-post-composer-body">
             <div class="eats-post-form-card">
               <section class="eats-post-card eats-post-upload-card">
-                <span class="eats-post-label">Media</span>
+                <span class="eats-post-label eats-post-media-label">Media<span class="eats-post-media-count" data-eats-post-media-count hidden></span></span>
                 <div class="eats-post-selected" data-eats-post-selected hidden></div>
                 <button class="eats-post-upload-drop" type="button" data-eats-post-upload>
                   <span class="eats-post-upload-drop-inner">
@@ -63034,6 +63521,16 @@ body.eats-app-shell .app-tab svg {
                     </span>
                     <strong>Upload photo/video</strong>
                     <span>Select up to 10 photos or 1 video</span>
+                    <span class="eats-post-upload-actions" aria-hidden="true">
+                      <span class="eats-post-upload-chip" data-eats-post-upload-photos>
+                        <svg class="eats-svg-icon" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8 14 2.2-2.2a1 1 0 0 1 1.4 0L14 14.2l1-1a1 1 0 0 1 1.4 0L20 16.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/></svg>
+                        Photos
+                      </span>
+                      <span class="eats-post-upload-chip" data-eats-post-dummy-video>
+                        <svg class="eats-svg-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg>
+                        Video
+                      </span>
+                    </span>
                   </span>
                 </button>
                 <input class="eats-post-file-input" type="file" accept="image/*,video/*" multiple data-eats-post-file-input hidden>
@@ -63043,11 +63540,12 @@ body.eats-app-shell .app-tab svg {
                 <div class="eats-post-restaurant-search" data-eats-post-restaurant-search>
                   <div class="eats-post-restaurant-input-shell">
                     <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    <input class="eats-post-restaurant-input" type="search" value="Royal China · Bandra West" placeholder="Search for a restaurant" autocomplete="off" data-eats-post-restaurant-input aria-label="Search restaurant">
+                    <input class="eats-post-restaurant-input" type="search" value="Royal China · Bandra West" placeholder="Search for a restaurant" autocomplete="off" data-eats-post-restaurant-input aria-label="Choose restaurant" aria-haspopup="listbox" aria-expanded="false">
+                    <svg class="eats-post-restaurant-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <input type="hidden" value="Royal China" data-eats-post-restaurant>
-                  <div class="eats-post-restaurant-results" data-eats-post-restaurant-results hidden>
-                    ${restaurants.map(([name, area], index) => `<button class="eats-post-restaurant-option" type="button" data-eats-post-restaurant-option="${index}"><strong>${escapeHtml(name)}</strong><span>${escapeHtml(area)}</span></button>`).join('')}
+                  <div class="eats-post-restaurant-results" data-eats-post-restaurant-results role="listbox" hidden>
+                    ${restaurants.map(([name, area], index) => `<button class="eats-post-restaurant-option" type="button" role="option" data-eats-post-restaurant-option="${index}"><strong>${escapeHtml(name)}</strong><span>${escapeHtml(area)}</span></button>`).join('')}
                   </div>
                 </div>
               </section>
@@ -63070,9 +63568,13 @@ body.eats-app-shell .app-tab svg {
     };
 
     let postMediaItems = [];
+    let postMediaEditingIndex = -1;
     const clearPostMedia = () => {
-      postMediaItems.forEach((item) => URL.revokeObjectURL(item.src));
+      postMediaItems.forEach((item) => {
+        if (item.src && item.src.startsWith('blob:')) URL.revokeObjectURL(item.src);
+      });
       postMediaItems = [];
+      postMediaEditingIndex = -1;
     };
 
     const postRestaurantOptions = (query = '') => {
@@ -63085,14 +63587,24 @@ body.eats-app-shell .app-tab svg {
         })
         .slice(0, 6);
       if (!matches.length) {
-        return '<button class="eats-post-restaurant-option" type="button" disabled><strong>No restaurant found</strong><span>Try another name or locality</span></button>';
+        return '<button class="eats-post-restaurant-option" type="button" role="option" disabled><strong>No restaurant found</strong><span>Try another name or locality</span></button>';
       }
       return matches.map(({ name, area, index }) => `
-        <button class="eats-post-restaurant-option" type="button" data-eats-post-restaurant-option="${index}">
+        <button class="eats-post-restaurant-option" type="button" role="option" data-eats-post-restaurant-option="${index}">
           <strong>${escapeHtml(name)}</strong>
           <span>${escapeHtml(area)}</span>
         </button>
       `).join('');
+    };
+
+    const setPostRestaurantDropdown = (root, open) => {
+      const search = root?.querySelector('[data-eats-post-restaurant-search]');
+      const input = root?.querySelector('[data-eats-post-restaurant-input]');
+      const results = root?.querySelector('[data-eats-post-restaurant-results]');
+      if (!search || !input || !results) return;
+      search.classList.toggle('is-open', open);
+      input.setAttribute('aria-expanded', String(open));
+      results.hidden = !open;
     };
 
     const updatePostRestaurantSearch = (root) => {
@@ -63100,7 +63612,7 @@ body.eats-app-shell .app-tab svg {
       const results = root?.querySelector('[data-eats-post-restaurant-results]');
       if (!input || !results) return;
       results.innerHTML = postRestaurantOptions(input.value);
-      results.hidden = false;
+      setPostRestaurantDropdown(root, true);
     };
 
     const selectPostRestaurant = (root, index) => {
@@ -63109,34 +63621,17 @@ body.eats-app-shell .app-tab svg {
       const [name, area] = data;
       const input = root?.querySelector('[data-eats-post-restaurant-input]');
       const hidden = root?.querySelector('[data-eats-post-restaurant]');
-      const results = root?.querySelector('[data-eats-post-restaurant-results]');
       if (input) input.value = `${name} · ${area}`;
       if (hidden) hidden.value = name;
-      if (results) results.hidden = true;
+      setPostRestaurantDropdown(root, false);
     };
 
     let postToastTimer = null;
     const showPostConfirmation = () => {
-      let toast = document.querySelector('[data-eats-post-confirmation]');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.className = 'eats-post-confirmation-pill';
-        toast.dataset.eatsPostConfirmation = 'true';
-        toast.setAttribute('role', 'status');
-        toast.setAttribute('aria-live', 'polite');
-        toast.setAttribute('aria-hidden', 'true');
-        toast.innerHTML = '<span aria-hidden="true"><svg class="eats-svg-icon" viewBox="0 0 24 24"><path d="m7 12.5 3.2 3.2L17.5 8" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Your Eat has been posted.</strong>';
-        document.body.appendChild(toast);
-      }
       window.clearTimeout(postToastTimer);
-      toast.setAttribute('aria-hidden', 'false');
-      toast.classList.remove('show');
-      void toast.offsetWidth;
-      toast.classList.add('show');
-      postToastTimer = window.setTimeout(() => {
-        toast.classList.remove('show');
-        toast.setAttribute('aria-hidden', 'true');
-      }, 3000);
+      if (typeof window.showEatsStatus === 'function') {
+        postToastTimer = window.setTimeout(() => window.showEatsStatus('Your Eat has been posted.', 'success'), 80);
+      }
     };
 
     const bindCropGestures = (root) => {
@@ -63144,6 +63639,7 @@ body.eats-app-shell .app-tab svg {
         if (image.dataset.cropBound) return;
         image.dataset.cropBound = 'true';
         let start = null;
+        const cropEnabled = () => image.closest('.eats-post-selected-thumb')?.classList.contains('is-editing');
         const applyCrop = () => {
           const scale = Number(image.dataset.cropScale || '1');
           const x = Number(image.dataset.cropX || '0');
@@ -63155,7 +63651,7 @@ body.eats-app-shell .app-tab svg {
         const distance = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
         const center = (a, b) => ({ x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 });
         image.addEventListener('touchstart', (event) => {
-          if (event.touches.length < 2) {
+          if (!cropEnabled()) {
             start = null;
             return;
           }
@@ -63165,13 +63661,28 @@ body.eats-app-shell .app-tab svg {
             y: Number(image.dataset.cropY || '0'),
             scale: Number(image.dataset.cropScale || '1')
           };
+          if (touches.length === 1) {
+            start = { mode: 'pan', base, x: touches[0].clientX, y: touches[0].clientY };
+            return;
+          }
+          if (touches.length < 2) {
+            start = null;
+            return;
+          }
           const midpoint = center(touches[0], touches[1]);
-          start = { base, distance: distance(touches[0], touches[1]), x: midpoint.x, y: midpoint.y };
+          start = { mode: 'pinch', base, distance: distance(touches[0], touches[1]), x: midpoint.x, y: midpoint.y };
         }, { passive: true });
         image.addEventListener('touchmove', (event) => {
-          if (!start || event.touches.length < 2) return;
+          if (!start || !cropEnabled()) return;
           event.preventDefault();
           const touches = Array.from(event.touches);
+          if (start.mode === 'pan' && touches.length === 1) {
+            image.dataset.cropX = String(start.base.x + (touches[0].clientX - start.x));
+            image.dataset.cropY = String(start.base.y + (touches[0].clientY - start.y));
+            applyCrop();
+            return;
+          }
+          if (touches.length < 2) return;
           const midpoint = center(touches[0], touches[1]);
           const nextScale = Math.max(1, Math.min(3, start.base.scale * (distance(touches[0], touches[1]) / Math.max(1, start.distance))));
           image.dataset.cropScale = String(nextScale);
@@ -63181,6 +63692,7 @@ body.eats-app-shell .app-tab svg {
         }, { passive: false });
         image.addEventListener('touchend', () => { start = null; }, { passive: true });
         image.addEventListener('wheel', (event) => {
+          if (!cropEnabled()) return;
           event.preventDefault();
           const current = Number(image.dataset.cropScale || '1');
           const next = Math.max(1, Math.min(3, current + (event.deltaY < 0 ? .08 : -.08)));
@@ -63190,20 +63702,81 @@ body.eats-app-shell .app-tab svg {
       });
     };
 
-    const renderPostMedia = (root, fileList) => {
-      const files = Array.from(fileList || []);
+    const syncPostMediaState = (root) => {
       const selected = root?.querySelector('[data-eats-post-selected]');
       const action = root?.querySelector('[data-eats-post-submit]');
       const card = root?.querySelector('.eats-post-upload-card');
       if (!selected) return;
       const uploadLabel = root?.querySelector('.eats-post-upload-drop strong');
-      if (!files.length) {
-        clearPostMedia();
+      const mediaCount = root?.querySelector('[data-eats-post-media-count]');
+      if (!postMediaItems.length) {
         selected.hidden = true;
         selected.innerHTML = '';
         card?.classList.remove('has-media');
         if (uploadLabel) uploadLabel.textContent = 'Upload photo/video';
+        if (mediaCount) {
+          mediaCount.textContent = '';
+          mediaCount.hidden = true;
+        }
         if (action) action.disabled = true;
+        return;
+      }
+      const hasVideo = postMediaItems.some((item) => item.type === 'video');
+      const photos = postMediaItems.filter((item) => item.type === 'image');
+      const countCopy = hasVideo
+        ? '1 video selected'
+        : `${photos.length}/10 photos selected`;
+      const editCopy = postMediaEditingIndex >= 0 && photos[postMediaEditingIndex]
+        ? `Editing photo ${postMediaEditingIndex + 1}`
+        : 'Swipe to preview. Edit or delete any item.';
+      const tiles = postMediaItems.map((item, index) => {
+        if (item.type === 'video') {
+          return `
+            <article class="eats-post-selected-video" aria-label="${escapeHtml(item.name || 'Demo video')}">
+              <span class="eats-post-video-badge" aria-hidden="true">
+                <svg class="eats-svg-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg>
+              </span>
+              <strong>${escapeHtml(item.name || 'Demo video')}</strong>
+              <span>No preview needed</span>
+              <span class="eats-post-media-actions">
+                <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}">Delete</button>
+              </span>
+            </article>
+          `;
+        }
+        return `
+          <article class="eats-post-selected-thumb${postMediaEditingIndex === index ? ' is-editing' : ''}">
+            <span class="eats-post-media-index">${index + 1}</span>
+            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.name)}" loading="lazy" data-eats-crop-media data-media-index="${index}">
+            <span class="eats-post-media-actions">
+              <button class="eats-post-media-action" type="button" data-eats-post-edit="${index}">${postMediaEditingIndex === index ? 'Done' : 'Edit'}</button>
+              <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}">Delete</button>
+            </span>
+          </article>
+        `;
+      }).join('');
+      selected.innerHTML = `
+        <div class="eats-post-selected-grid" aria-label="Selected media">${tiles}</div>
+        <div class="eats-post-selected-meta">
+          <span class="eats-post-selected-note">${editCopy}</span>
+        </div>
+      `;
+      selected.hidden = false;
+      card?.classList.add('has-media');
+      if (uploadLabel) uploadLabel.textContent = 'Add media';
+      if (mediaCount) {
+        mediaCount.textContent = countCopy;
+        mediaCount.hidden = false;
+      }
+      if (action) action.disabled = false;
+      bindCropGestures(root);
+    };
+
+    const renderPostMedia = (root, fileList) => {
+      const files = Array.from(fileList || []);
+      if (!files.length) {
+        clearPostMedia();
+        syncPostMediaState(root);
         return;
       }
       const videoFile = files.find((file) => file.type.startsWith('video/'));
@@ -63211,20 +63784,6 @@ body.eats-app-shell .app-tab svg {
         clearPostMedia();
         const src = URL.createObjectURL(videoFile);
         postMediaItems = [{ type: 'video', src, name: videoFile.name || 'Selected video' }];
-        selected.innerHTML = `
-          <div class="eats-post-selected-grid">
-            <div class="eats-post-selected-video">
-              <video src="${src}" playsinline muted preload="metadata"></video>
-              <button class="eats-post-video-play" type="button" data-eats-post-video-open="${escapeHtml(src)}" aria-label="Play selected video">
-                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg>
-              </button>
-            </div>
-          </div>
-          <div class="eats-post-selected-meta">
-            <span>1 video selected</span>
-            <button type="button" data-eats-post-clear>Clear</button>
-          </div>
-        `;
       } else {
         if (postMediaItems.some((item) => item.type === 'video')) clearPostMedia();
         const remaining = Math.max(0, 10 - postMediaItems.length);
@@ -63232,25 +63791,29 @@ body.eats-app-shell .app-tab svg {
           const src = URL.createObjectURL(file);
           postMediaItems.push({ type: 'image', src, name: file.name || 'Selected photo' });
         });
-        if (!postMediaItems.length) return;
-        const slides = postMediaItems.map((item, index) => `
-          <span class="eats-post-selected-thumb">
-            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.name)}" loading="lazy" data-eats-crop-media data-media-index="${index}">
-          </span>
-        `).join('');
-        selected.innerHTML = `
-          <div class="eats-post-selected-grid">${slides}</div>
-          <div class="eats-post-selected-meta">
-            <span>${postMediaItems.length}/10 photos selected</span>
-            <button type="button" data-eats-post-clear>Clear</button>
-          </div>
-        `;
       }
-      selected.hidden = false;
-      card?.classList.add('has-media');
-      if (uploadLabel) uploadLabel.textContent = 'Add media';
-      if (action) action.disabled = false;
-      bindCropGestures(root);
+      syncPostMediaState(root);
+    };
+
+    const addDummyPostVideo = (root) => {
+      clearPostMedia();
+      postMediaItems = [{ type: 'video', dummy: true, name: 'Demo video' }];
+      syncPostMediaState(root);
+    };
+
+    const removePostMediaItem = (root, index) => {
+      const item = postMediaItems[index];
+      if (!item) return;
+      if (item.src && item.src.startsWith('blob:')) URL.revokeObjectURL(item.src);
+      postMediaItems.splice(index, 1);
+      if (postMediaEditingIndex === index) postMediaEditingIndex = -1;
+      else if (postMediaEditingIndex > index) postMediaEditingIndex -= 1;
+      syncPostMediaState(root);
+    };
+
+    const togglePostMediaEdit = (root, index) => {
+      postMediaEditingIndex = postMediaEditingIndex === index ? -1 : index;
+      syncPostMediaState(root);
     };
 
     const openPostComposer = () => {
@@ -63355,6 +63918,33 @@ body.eats-app-shell .app-tab svg {
         return;
       }
 
+      const dummyVideoButton = event.target.closest('[data-eats-post-dummy-video]');
+      if (dummyVideoButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        const root = dummyVideoButton.closest('[data-eats-post-composer]');
+        addDummyPostVideo(root);
+        return;
+      }
+
+      const removeMediaButton = event.target.closest('[data-eats-post-remove]');
+      if (removeMediaButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        const root = removeMediaButton.closest('[data-eats-post-composer]');
+        removePostMediaItem(root, Number(removeMediaButton.dataset.eatsPostRemove));
+        return;
+      }
+
+      const editMediaButton = event.target.closest('[data-eats-post-edit]');
+      if (editMediaButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        const root = editMediaButton.closest('[data-eats-post-composer]');
+        togglePostMediaEdit(root, Number(editMediaButton.dataset.eatsPostEdit));
+        return;
+      }
+
       const uploadButton = event.target.closest('[data-eats-post-upload]');
       if (uploadButton) {
         event.preventDefault();
@@ -63373,8 +63963,24 @@ body.eats-app-shell .app-tab svg {
         return;
       }
 
+      const postRestaurantShell = event.target.closest('.eats-post-restaurant-input-shell');
+      if (postRestaurantShell) {
+        const root = postRestaurantShell.closest('[data-eats-post-composer]');
+        const input = root?.querySelector('[data-eats-post-restaurant-input]');
+        if (input && event.target !== input) {
+          event.preventDefault();
+          input.focus();
+        }
+        updatePostRestaurantSearch(root);
+        return;
+      }
+
       if (event.target.closest('[data-eats-post-submit]')) {
         event.preventDefault();
+        const root = event.target.closest('[data-eats-post-composer]');
+        const input = root?.querySelector('[data-eats-post-file-input]');
+        if (input) input.value = '';
+        renderPostMedia(root, []);
         closePostComposer();
         showPostConfirmation();
         return;
@@ -63382,7 +63988,7 @@ body.eats-app-shell .app-tab svg {
 
       if (event.target.closest('[data-eats-review-compose]')) {
         event.preventDefault();
-        openExistingReviewModal('Royal China');
+        openReviewPicker();
         return;
       }
 
@@ -63395,9 +64001,11 @@ body.eats-app-shell .app-tab svg {
       const restaurantOption = event.target.closest('[data-eats-review-restaurant]');
       if (restaurantOption) {
         event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
         const restaurant = restaurantOption.dataset.eatsReviewRestaurant || 'Royal China';
         closeReviewPicker();
-        openExistingReviewModal(restaurant);
+        window.requestAnimationFrame(() => openExistingReviewModal(restaurant));
         return;
       }
 
@@ -63416,6 +64024,11 @@ body.eats-app-shell .app-tab svg {
     }, true);
 
     document.addEventListener('input', (event) => {
+      const reviewSearch = event.target.closest('[data-eats-review-search]');
+      if (reviewSearch) {
+        updateReviewPickerSearch(reviewSearch.closest('[data-eats-review-select-sheet]'));
+        return;
+      }
       const input = event.target.closest('[data-eats-post-restaurant-input]');
       if (!input) return;
       const root = input.closest('[data-eats-post-composer]');
@@ -63429,10 +64042,26 @@ body.eats-app-shell .app-tab svg {
       updatePostRestaurantSearch(root);
     }, true);
 
+    document.addEventListener('keydown', (event) => {
+      const input = event.target.closest('[data-eats-post-restaurant-input]');
+      if (!input) return;
+      const root = input.closest('[data-eats-post-composer]');
+      if (event.key === 'Escape') {
+        setPostRestaurantDropdown(root, false);
+        input.blur();
+        return;
+      }
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        updatePostRestaurantSearch(root);
+        root?.querySelector('[data-eats-post-restaurant-option]:not(:disabled)')?.focus();
+      }
+    }, true);
+
     document.addEventListener('click', (event) => {
       document.querySelectorAll('[data-eats-post-restaurant-results]:not([hidden])').forEach((results) => {
         const search = results.closest('[data-eats-post-restaurant-search]');
-        if (search && !search.contains(event.target)) results.hidden = true;
+        if (search && !search.contains(event.target)) setPostRestaurantDropdown(search.closest('[data-eats-post-composer]'), false);
       });
     });
   })();
@@ -63516,12 +64145,12 @@ body.eats-app-shell .app-tab svg {
 
   .eats-partner-kicker,
   .eats-partner-section-label,
-  .eats-partner-field span,
+  .eats-partner-field > span,
   .eats-partner-upload strong {
     display: block;
     color: #8b9099;
     font-size: 10.5px;
-    font-weight: 850;
+    font-weight: 680;
     letter-spacing: .12em;
     text-transform: uppercase;
   }
@@ -63529,7 +64158,7 @@ body.eats-app-shell .app-tab svg {
   .eats-partner-title-row h2 {
     margin: 3px 0 4px;
     font-size: 24px;
-    font-weight: 900;
+    font-weight: 760;
     line-height: .98;
     letter-spacing: 0;
   }
@@ -63538,7 +64167,7 @@ body.eats-app-shell .app-tab svg {
     margin: 0;
     color: #696f7a;
     font-size: 13.5px;
-    font-weight: 650;
+    font-weight: 560;
     line-height: 1.35;
   }
 
@@ -63660,14 +64289,14 @@ body.eats-app-shell .app-tab svg {
 
   .eats-partner-found-list strong {
     font-size: 14px;
-    font-weight: 850;
+    font-weight: 650;
   }
 
   .eats-partner-found-list em {
     color: #777d87;
     font-size: 12.5px;
     font-style: normal;
-    font-weight: 650;
+    font-weight: 500;
   }
 
   .eats-partner-card {
@@ -63684,6 +64313,14 @@ body.eats-app-shell .app-tab svg {
 
   .eats-partner-section-label {
     margin-bottom: 12px;
+  }
+
+  .eats-partner-section-note {
+    margin: -4px 0 14px;
+    color: #8b9099;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.35;
   }
 
   .eats-partner-grid {
@@ -63717,7 +64354,7 @@ body.eats-app-shell .app-tab svg {
     color: #111217;
     font: inherit;
     font-size: 14.5px;
-    font-weight: 690;
+    font-weight: 520;
     padding: 0 13px;
     outline: none;
   }
@@ -63751,6 +64388,147 @@ body.eats-app-shell .app-tab svg {
     box-shadow: 0 0 0 3px rgba(17, 18, 23, .07);
   }
 
+  .eats-partner-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m6 9 6 6 6-6' fill='none' stroke='%238b9099' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    background-size: 18px 18px;
+    padding-right: 38px;
+  }
+
+  .eats-partner-phone-shell {
+    min-height: 50px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #dfe3ea;
+    border-radius: 15px;
+    background: #fff;
+  }
+
+  .eats-partner-phone-shell:focus-within {
+    border-color: #111217;
+    box-shadow: 0 0 0 3px rgba(17, 18, 23, .07);
+  }
+
+  .eats-partner-phone-prefix {
+    align-self: stretch;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 62px;
+    padding: 0 13px;
+    border-right: 1px solid #dfe3ea;
+    background: #f3f4f6;
+    color: #111217;
+    font-size: 14.5px;
+    font-weight: 560;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .eats-partner-phone-shell input {
+    min-height: 48px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none !important;
+  }
+
+  .eats-partner-field.is-readonly .eats-partner-phone-shell {
+    border-color: #e1e4e9;
+    background: #f3f4f6;
+  }
+
+  .eats-partner-field.is-readonly .eats-partner-phone-prefix {
+    background: #eceef2;
+    color: #646b76;
+  }
+
+  .eats-partner-role-field {
+    position: relative;
+  }
+
+  .eats-partner-role-trigger {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 13px;
+    border: 1px solid #dfe3ea;
+    border-radius: 15px;
+    background: #fff;
+    color: #111217;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 520;
+    text-align: left;
+  }
+
+  .eats-partner-role-trigger svg {
+    width: 18px;
+    height: 18px;
+    color: #8b9099;
+    flex: 0 0 auto;
+    transition: transform .16s ease;
+  }
+
+  .eats-partner-role-field.is-open .eats-partner-role-trigger {
+    border-color: #111217;
+    box-shadow: 0 0 0 3px rgba(17, 18, 23, .07);
+  }
+
+  .eats-partner-role-field.is-open .eats-partner-role-trigger svg {
+    transform: rotate(180deg);
+  }
+
+  .eats-partner-role-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    z-index: 6;
+    display: grid;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid #dfe3ea;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 18px 42px -28px rgba(10, 13, 18, .42);
+  }
+
+  .eats-partner-role-menu[hidden] {
+    display: none !important;
+  }
+
+  .eats-partner-role-menu button {
+    min-height: 38px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: #111217;
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 520;
+    text-align: left;
+    padding: 0 10px;
+  }
+
+  .eats-partner-role-menu button:hover,
+  .eats-partner-role-menu button:focus-visible {
+    background: #f4f5f7;
+    outline: none;
+  }
+
+  .eats-partner-role-menu button.is-active {
+    background: #111217;
+    color: #fff;
+  }
+
   .eats-partner-field.is-invalid input,
   .eats-partner-field.is-invalid select,
   .eats-partner-field.is-invalid textarea,
@@ -63763,7 +64541,7 @@ body.eats-app-shell .app-tab svg {
     margin-top: 5px;
     color: #b42318;
     font-size: 11.5px;
-    font-weight: 750;
+    font-weight: 560;
   }
 
   .eats-partner-upload {
@@ -63829,9 +64607,9 @@ body.eats-app-shell .app-tab svg {
     display: inline-grid;
     place-items: center;
     padding: 0;
-    border: 1px solid #dce1e8;
-    border-radius: 999px;
-    background: #fff;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
     color: #111217;
   }
 
@@ -63841,7 +64619,6 @@ body.eats-app-shell .app-tab svg {
   }
 
   .eats-partner-doc-field.is-uploaded .eats-partner-upload-icon {
-    border-color: #b8dec4;
     background: #edf9f1;
     color: #277a43;
   }
@@ -63874,7 +64651,7 @@ body.eats-app-shell .app-tab svg {
     display: block;
     color: #111217;
     font-size: 13px;
-    font-weight: 850;
+    font-weight: 620;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -63885,7 +64662,7 @@ body.eats-app-shell .app-tab svg {
     margin-top: 2px;
     color: #777f8a;
     font-size: 11.5px;
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .eats-partner-upload-actions {
@@ -63904,7 +64681,7 @@ body.eats-app-shell .app-tab svg {
     color: #111217;
     font: inherit;
     font-size: 12px;
-    font-weight: 850;
+    font-weight: 600;
   }
 
   .eats-partner-upload-preview button[data-partner-upload-remove] {
@@ -63929,11 +64706,14 @@ body.eats-app-shell .app-tab svg {
 
   .eats-partner-staff-card .eats-partner-grid {
     grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .eats-partner-remove {
     width: 34px;
     height: 34px;
+    grid-column: 2;
+    justify-self: end;
     border: 1px solid #e3e6eb;
     border-radius: 999px;
     background: #fff;
@@ -63944,13 +64724,14 @@ body.eats-app-shell .app-tab svg {
   .eats-partner-add {
     width: 100%;
     min-height: 48px;
-    border: 1px solid #dfe3ea;
-    border-radius: 16px;
-    background: #fff;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: #111217;
     font: inherit;
     font-size: 14px;
-    font-weight: 820;
+    font-weight: 650;
+    text-align: left;
   }
 
   .eats-partner-terms {
@@ -63963,7 +64744,7 @@ body.eats-app-shell .app-tab svg {
     padding: 12px;
     color: #666d79;
     font-size: 12.5px;
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.45;
   }
 
@@ -63983,7 +64764,7 @@ body.eats-app-shell .app-tab svg {
     color: #111217;
     padding: 0;
     font: inherit;
-    font-weight: 850;
+    font-weight: 650;
     text-decoration: underline;
     text-underline-offset: 2px;
   }
@@ -64027,7 +64808,7 @@ body.eats-app-shell .app-tab svg {
   .eats-partner-preview-card h3 {
     margin: 0;
     font-size: 16px;
-    font-weight: 900;
+    font-weight: 680;
     color: #111217;
   }
 
@@ -64089,7 +64870,7 @@ body.eats-app-shell .app-tab svg {
     margin: 0;
     color: #111217;
     font-size: 20px;
-    font-weight: 950;
+    font-weight: 720;
     letter-spacing: 0;
   }
 
@@ -64111,7 +64892,7 @@ body.eats-app-shell .app-tab svg {
     padding-top: 15px;
     color: #545b66;
     font-size: 13.5px;
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.52;
   }
 
@@ -64147,7 +64928,7 @@ body.eats-app-shell .app-tab svg {
     padding: 0 14px;
     font: inherit;
     font-size: 13px;
-    font-weight: 820;
+    font-weight: 620;
     white-space: nowrap;
   }
 
@@ -64156,6 +64937,37 @@ body.eats-app-shell .app-tab svg {
     border-color: #111217;
     background: #111217;
     color: #fff;
+  }
+
+  .eats-partner-billing-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    margin-top: 12px;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .eats-partner-billing-tabs button {
+    width: 100%;
+  }
+
+  .eats-partner-save-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #e6f4ea;
+    color: #126338;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .eats-partner-save-badge[hidden],
+  .eats-partner-annual-note[hidden] {
+    display: none !important;
   }
 
   .eats-partner-plan {
@@ -64173,21 +64985,27 @@ body.eats-app-shell .app-tab svg {
     align-items: center;
     gap: 10px;
     font-size: 16px;
-    font-weight: 900;
+    font-weight: 680;
   }
 
   .eats-partner-plan strong span {
     color: #111217;
     font-size: 20px;
-    font-weight: 950;
+    font-weight: 760;
     line-height: 1.05;
+  }
+
+  .eats-partner-price small {
+    color: #535b66;
+    font-size: 13px;
+    font-weight: 500;
   }
 
   .eats-partner-plan p {
     margin: 8px 0 0;
     color: #6a707b;
     font-size: 12.5px;
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.4;
   }
 
@@ -64206,7 +65024,7 @@ body.eats-app-shell .app-tab svg {
     gap: 8px;
     color: #303641;
     font-size: 13px;
-    font-weight: 760;
+    font-weight: 560;
     line-height: 1.3;
   }
 
@@ -64217,7 +65035,7 @@ body.eats-app-shell .app-tab svg {
     margin-top: -1px;
     color: #2f8d4e;
     font-size: 15px;
-    font-weight: 900;
+    font-weight: 700;
     line-height: 18px;
     text-align: center;
   }
@@ -64246,7 +65064,7 @@ body.eats-app-shell .app-tab svg {
     color: #111217;
     font: inherit;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .eats-partner-wallet-list {
@@ -64263,7 +65081,24 @@ body.eats-app-shell .app-tab svg {
     margin-top: 12px;
     color: #6d7480;
     font-size: 12.5px;
-    font-weight: 700;
+    font-weight: 500;
+  }
+
+  .eats-partner-billing-notice {
+    margin: 14px 0 0;
+    padding: 12px;
+    border: 1px solid #f6ad3c;
+    border-radius: 12px;
+    background: #fff8e8;
+    color: #7a4c05;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .eats-partner-billing-notice strong {
+    color: #6f4300;
+    font-weight: 650;
   }
 
   .eats-partner-success {
@@ -64275,8 +65110,8 @@ body.eats-app-shell .app-tab svg {
   }
 
   .eats-partner-success-mark {
-    width: 72px;
-    height: 72px;
+    width: 62px;
+    height: 62px;
     border-radius: 999px;
     background: #eefbf2;
     color: #248a47;
@@ -64295,7 +65130,7 @@ body.eats-app-shell .app-tab svg {
     margin: 0;
     color: #111217;
     font-size: 27px;
-    font-weight: 950;
+    font-weight: 760;
     letter-spacing: 0;
   }
 
@@ -64304,7 +65139,7 @@ body.eats-app-shell .app-tab svg {
     margin: 10px auto 0;
     color: #666d79;
     font-size: 14px;
-    font-weight: 650;
+    font-weight: 500;
     line-height: 1.45;
   }
 
@@ -64323,7 +65158,15 @@ body.eats-app-shell .app-tab svg {
     border-radius: 999px;
     font: inherit;
     font-size: 15px;
-    font-weight: 900;
+    font-weight: 680;
+  }
+
+  .eats-partner-footer.is-success {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .eats-partner-footer.is-success .eats-partner-back {
+    display: none;
   }
 
   .eats-partner-back {
@@ -64398,7 +65241,7 @@ body.eats-app-shell .app-tab svg {
       ['Plan & Pay', 'Plan & Payment', 'Choose billing and activate the partner plan.'],
       ['Done', "You're in!", 'Your dashboard is ready.']
     ];
-    const nextText = ['Next', 'Next', 'Next', 'Pay ₹13,999 & Activate', 'Done'];
+    const nextText = ['Next', 'Next', 'Next', 'Pay ₹13,999 & Activate', 'Go to Dashboard →'];
     const partnerListings = [
       ['Royal China', 'Shop no 101, Pali Hill', 'Bandra West', 'Mumbai', 'Maharashtra', '400050'],
       ['Trishna', '7, Sai Baba Marg, Kala Ghoda', 'Fort', 'Mumbai', 'Maharashtra', '400001'],
@@ -64411,17 +65254,35 @@ body.eats-app-shell .app-tab svg {
     ];
     const planBenefits = {
       silver: [
-        'Table booking and pickup controls',
-        'Reviews dashboard with response tools',
-        'Listing edits, photos, hours, and compliance fields',
-        'Standard support and monthly settlement reports'
+        'Full profile & listing management',
+        'Table bookings',
+        'Pickup orders',
+        'Review responses & rating management',
+        'Availability & hours management',
+        'Notifications',
+        'Standard customer support'
       ],
       gold: [
-        'Everything in Silver',
-        'Priority support for high-volume restaurant teams',
-        'Richer analytics for bookings, reviews, and campaigns',
-        'Promoted discovery tools and faster partner approvals'
+        'Pre-order dining',
+        'Advanced slot customisation',
+        'Block specific dates',
+        'In-depth insights',
+        'Upload Eats',
+        'Higher listing visibility',
+        'Priority customer support',
+        'Early access to new features'
       ]
+    };
+    const roleOptions = ['Staff', 'Manager', 'Cashier', 'Captain', 'Supervisor'];
+    const planPricing = {
+      silver: {
+        monthly: { display: 13999, total: 13999 },
+        annual: { display: 8333, total: 99999, save: 'Save 40%' }
+      },
+      gold: {
+        monthly: { display: 19999, total: 19999 },
+        annual: { display: 16666, total: 199999, save: 'Save 17%' }
+      }
     };
 
     let currentStep = 1;
@@ -64469,6 +65330,30 @@ body.eats-app-shell .app-tab svg {
         <em class="eats-partner-error" aria-live="polite"></em>
       </label>`;
 
+    const phoneField = (label, id, value = '', placeholder = '10920 39813', extra = '') => `
+      <label class="eats-partner-field eats-partner-phone-field ${extra.includes('readonly') ? 'is-readonly' : ''}">
+        <span>${escapeHtml(label)}</span>
+        <div class="eats-partner-phone-shell">
+          <span class="eats-partner-phone-prefix">+91</span>
+          <input id="${id}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" type="tel" inputmode="numeric" maxlength="11" ${extra}>
+        </div>
+        <em class="eats-partner-error" aria-live="polite"></em>
+      </label>`;
+
+    const roleField = (label, id, options, value = 'Staff') => `
+      <label class="eats-partner-field eats-partner-role-field">
+        <span>${escapeHtml(label)}</span>
+        <input id="${id}" value="${escapeHtml(value)}" data-partner-role-value hidden>
+        <button class="eats-partner-role-trigger" type="button" data-partner-role-toggle aria-expanded="false">
+          <span data-partner-role-label>${escapeHtml(value)}</span>
+          <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="eats-partner-role-menu" data-partner-role-menu hidden>
+          ${options.map((option) => `<button class="${option === value ? 'is-active' : ''}" type="button" data-partner-role-option="${escapeHtml(option)}">${escapeHtml(option)}</button>`).join('')}
+        </div>
+        <em class="eats-partner-error" aria-live="polite"></em>
+      </label>`;
+
     const docField = (label, id, value, uploadLabel) => `
       <div class="eats-partner-field eats-partner-doc-field">
         <span>${escapeHtml(label)}</span>
@@ -64494,19 +65379,18 @@ body.eats-app-shell .app-tab svg {
     const termsBlock = () => `
       <label class="eats-partner-terms bottom" data-partner-terms>
         <input type="checkbox" data-partner-required>
-        <span>By signing up, you agree to the MouthShut Eats <a href="#" data-partner-static-link="terms">Terms of Service</a>, <a href="#" data-partner-static-link="agreement">Partner Agreement</a>, and <a href="#" data-partner-static-link="privacy">Privacy Policy</a>.</span>
+        <span>By signing up, you agree to the MouthShut Eats <a href="#" data-partner-static-link>Terms of Service</a>, <a href="#" data-partner-static-link>Partner Agreement</a>, and <a href="#" data-partner-static-link>Privacy Policy</a>.</span>
       </label>
       <em class="eats-partner-error" data-partner-terms-error aria-live="polite"></em>`;
 
     const staffCard = (index) => `
       <div class="eats-partner-staff-card" data-partner-staff-card>
-        <strong>Staff ${index}</strong>
-        ${index > 1 ? '<button class="eats-partner-remove" type="button" data-partner-remove-staff aria-label="Remove staff">×</button>' : '<span></span>'}
-        <div class="eats-partner-grid two">
-          ${field('Full name', `partner-staff-name-${index}`, '', 'Staff name')}
-          ${field('Role', `partner-staff-role-${index}`, '', 'Manager')}
-          ${field('Phone', `partner-staff-phone-${index}`, '', '10 digit number', 'inputmode="numeric"')}
-          ${field('Email', `partner-staff-email-${index}`, '', 'staff@restaurant.com', 'type="email"')}
+        ${index > 1 ? '<button class="eats-partner-remove" type="button" data-partner-remove-staff aria-label="Remove staff">×</button>' : ''}
+        <div class="eats-partner-grid">
+          ${field('Full name', `partner-staff-name-${index}`, '', 'Enter full name')}
+          ${phoneField('Phone number', `partner-staff-phone-${index}`)}
+          ${field('Email address', `partner-staff-email-${index}`, '', 'Enter email address', 'type="email"')}
+          ${roleField('Role', `partner-staff-role-${index}`, roleOptions)}
         </div>
       </div>`;
 
@@ -64552,9 +65436,10 @@ body.eats-app-shell .app-tab svg {
                 </div>
                 <div class="eats-partner-grid" style="margin-top:12px;">
                   ${field('Address line 1', 'partner-address-1', 'Shop no 101, Pali Hill', 'Building / street address', 'readonly data-partner-required')}
+                  ${field('Address line 2 (optional)', 'partner-address-2', '', '', '')}
                 </div>
                 <div class="eats-partner-grid two" style="margin-top:12px;">
-                  ${field('Locality', 'partner-address-2', 'Bandra West', 'Area / locality', 'readonly data-partner-required')}
+                  ${field('Locality', 'partner-locality', 'Bandra West', 'Area / locality', 'readonly data-partner-required')}
                   ${field('City', 'partner-city', 'Mumbai', 'Mumbai', 'readonly data-partner-required')}
                   ${field('State', 'partner-state', 'Maharashtra', 'Maharashtra', 'readonly data-partner-required')}
                   ${field('PIN Code', 'partner-pin', '400050', '400050', 'readonly inputmode="numeric" maxlength="6" data-partner-required')}
@@ -64575,16 +65460,13 @@ body.eats-app-shell .app-tab svg {
                 <span class="eats-partner-section-label">Owner Details</span>
                 <div class="eats-partner-grid">
                   ${field('Full name', 'partner-owner-name', 'Kashif Farooqui', 'Owner full name', 'readonly data-partner-required')}
-                  <label class="eats-partner-field is-readonly">
-                    <span>Phone number</span>
-                    <input id="partner-owner-phone" value="9966666676" placeholder="10 digit number" readonly inputmode="numeric" maxlength="10" data-partner-required>
-                    <em class="eats-partner-error" aria-live="polite"></em>
-                  </label>
+                  ${phoneField('Phone number', 'partner-owner-phone', '99666 66676', '10920 39813', 'readonly data-partner-required')}
                   ${field('Email address', 'partner-owner-email', 'kashif@mouthshut.com', 'owner@restaurant.com', 'readonly type="email" data-partner-required')}
                 </div>
               </div>
               <div class="eats-partner-card">
-                <span class="eats-partner-section-label">Staff access</span>
+                <span class="eats-partner-section-label">Staff (optional)</span>
+                <p class="eats-partner-section-note">Add staff who will manage your dashboard</p>
                 <div class="eats-partner-staff" data-partner-staff-list>${staffCard(1)}</div>
                 <button class="eats-partner-add" type="button" data-partner-add-staff style="margin-top:12px;">+ Add staff member</button>
               </div>
@@ -64594,15 +65476,16 @@ body.eats-app-shell .app-tab svg {
               <div class="eats-partner-card">
                 <span class="eats-partner-section-label">Payout account</span>
                 <div class="eats-partner-grid">
-                  ${field('Full name as per bank', 'partner-bank-holder', 'Kashif Farooqui', 'Account holder name', 'data-partner-required')}
+                  ${field('Full name as per bank', 'partner-bank-holder', '', 'Account holder name', 'data-partner-required')}
                 </div>
                 <div class="eats-partner-grid two" style="margin-top:12px;">
-                  ${field('Bank name', 'partner-bank-name', 'HDFC Bank', 'HDFC Bank', 'data-partner-required')}
-                  ${field('Branch', 'partner-bank-branch', 'Bandra West', 'Bandra West', 'data-partner-required')}
-                  ${field('Account number', 'partner-account-number', '50100293017611', 'Account number', 'inputmode="numeric" data-partner-required')}
-                  ${field('IFSC code', 'partner-ifsc', 'HDFC0000321', 'HDFC0000321', 'data-partner-required')}
+                  ${field('Bank name', 'partner-bank-name', '', 'e.g. HDFC Bank', 'data-partner-required')}
+                  ${field('Branch', 'partner-bank-branch', '', 'e.g. Bandra West', 'data-partner-required')}
+                  ${field('Account number', 'partner-account-number', '', 'Account number', 'inputmode="numeric" data-partner-required')}
+                  ${field('IFSC code', 'partner-ifsc', '', 'HDFC0000321', 'data-partner-required')}
                 </div>
               </div>
+              ${termsBlock()}
             </section>
 
             <section class="eats-partner-step" data-partner-step="4" hidden>
@@ -64613,14 +65496,15 @@ body.eats-app-shell .app-tab svg {
                   <button type="button" data-partner-plan="gold">Gold</button>
                 </div>
                 <div class="eats-partner-plan" data-partner-plan-card>
-                  <strong><span data-partner-plan-name>Silver Plan</span><span data-partner-price>₹13,999</span></strong>
+                  <strong><span data-partner-plan-name>Silver Plan</span><span class="eats-partner-price" data-partner-price>₹13,999<small>/month</small></span></strong>
+                  <p class="eats-partner-annual-note" data-partner-annual-note hidden>₹99,999 billed annually</p>
                   <ul class="eats-partner-plan-benefits" data-partner-plan-benefits>
                     ${planBenefits.silver.map((benefit) => `<li>${escapeHtml(benefit)}</li>`).join('')}
                   </ul>
                 </div>
-                <div class="eats-partner-plan-tabs" style="margin-top:12px;">
+                <div class="eats-partner-plan-tabs eats-partner-billing-tabs">
                   <button class="is-active" type="button" data-partner-billing="monthly">Monthly</button>
-                  <button type="button" data-partner-billing="annual">Annually · save 15%</button>
+                  <button type="button" data-partner-billing="annual">Annually · save 40%</button>
                 </div>
               </div>
               <div class="eats-partner-card">
@@ -64629,15 +65513,16 @@ body.eats-app-shell .app-tab svg {
                   <button class="is-active" type="button" data-partner-pay-tab="card">Card</button>
                   <button type="button" data-partner-pay-tab="upi">UPI</button>
                   <button type="button" data-partner-pay-tab="netbanking">Net Banking</button>
+                  <button type="button" data-partner-pay-tab="wallet">Wallet</button>
                 </div>
                 <div class="eats-partner-pay-panel is-active" data-partner-pay-panel="card">
                   <div class="eats-partner-grid">
-                    ${field('Card number', 'partner-card-number', '', '1234 5678 9012 3456', 'inputmode="numeric" data-partner-required')}
+                    ${field('Card number', 'partner-card-number', '', '1234 5678 9012 3456', 'inputmode="numeric" maxlength="19" autocomplete="cc-number" data-partner-required')}
                     ${field('Name on card', 'partner-card-name', '', 'Name on card', 'data-partner-required')}
                   </div>
                   <div class="eats-partner-grid two" style="margin-top:12px;">
-                    ${field('Expiry', 'partner-card-expiry', '', 'MM / YY', 'data-partner-required')}
-                    ${field('CVV', 'partner-card-cvv', '', '123', 'inputmode="numeric" maxlength="3" data-partner-required')}
+                    ${field('Expiry', 'partner-card-expiry', '', 'MM/YY', 'inputmode="numeric" maxlength="5" autocomplete="cc-exp" data-partner-required')}
+                    ${field('CVV', 'partner-card-cvv', '', '1234', 'inputmode="numeric" maxlength="4" autocomplete="cc-csc" data-partner-required')}
                   </div>
                 </div>
                 <div class="eats-partner-pay-panel" data-partner-pay-panel="upi">
@@ -64649,17 +65534,23 @@ body.eats-app-shell .app-tab svg {
                     <button type="button">HDFC</button><button type="button">ICICI</button><button type="button">SBI</button><button type="button">Axis</button>
                   </div>
                 </div>
+                <div class="eats-partner-pay-panel" data-partner-pay-panel="wallet">
+                  <div class="eats-partner-wallet-list">
+                    <button type="button">Paytm</button><button type="button">PhonePe</button><button type="button">Amazon Pay</button>
+                  </div>
+                </div>
                 <p class="eats-partner-secure">${icon('<path d="M12 3 5 6v5c0 4.2 2.8 7.8 7 9 4.2-1.2 7-4.8 7-9V6l-7-3Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>')} Payments are secured and encrypted.</p>
+                <p class="eats-partner-billing-notice"><strong>Recurring billing notice:</strong> By completing this purchase, you authorise MouthShut Eats to charge your selected payment method on the selected billing cycle until you cancel. You can cancel any time from your partner dashboard.</p>
               </div>
-              ${termsBlock()}
             </section>
 
             <section class="eats-partner-step" data-partner-step="5" hidden>
               <div class="eats-partner-success">
                 <div>
                   <span class="eats-partner-success-mark">${checkIcon}</span>
-                  <h3>Your dashboard is ready</h3>
-                  <p>We are reviewing your FSSAI, GST and PAN. This usually takes 24 hours.</p>
+                  <h3>You're in!</h3>
+                  <p>Your dashboard is ready.</p>
+                  <p>We're reviewing your FSSAI, GST and PAN. This usually takes 24 hours.</p>
                 </div>
               </div>
             </section>
@@ -64677,6 +65568,15 @@ body.eats-app-shell .app-tab svg {
             </header>
             <img alt="Uploaded document preview" data-partner-preview-image>
           </article>
+        </div>
+        <div class="eats-partner-legal" data-partner-legal-modal hidden>
+          <article class="eats-partner-legal-card" role="dialog" aria-modal="true" aria-label="Partner legal document">
+            <header>
+              <h3 data-partner-legal-title>Terms of Service</h3>
+              <button type="button" data-partner-legal-close aria-label="Close legal document">×</button>
+            </header>
+            <div class="eats-partner-legal-copy" data-partner-legal-copy></div>
+          </article>
         </div>`;
       document.body.appendChild(root);
       return root;
@@ -64691,7 +65591,7 @@ body.eats-app-shell .app-tab svg {
 
     const validateStep = (root, step) => {
       clearInvalid(root);
-      if (step === 4) {
+      if (step === 3) {
         const terms = root.querySelector('[data-partner-terms] input');
         if (terms && !terms.checked) {
           root.querySelector('[data-partner-terms]')?.classList.add('is-invalid');
@@ -64727,23 +65627,32 @@ body.eats-app-shell .app-tab svg {
     const updatePlan = (root) => {
       const isGold = currentPlan === 'gold';
       const isAnnual = currentBilling === 'annual';
-      const monthlyPrice = isGold ? 19999 : 13999;
-      const annualPrice = isGold ? 199999 : 99999;
-      const price = isAnnual ? annualPrice : monthlyPrice;
-      const priceLabel = isAnnual
-        ? `₹${price.toLocaleString('en-IN')} billed annually`
-        : `₹${price.toLocaleString('en-IN')}/month`;
+      const pricing = planPricing[currentPlan] || planPricing.silver;
+      const activePrice = pricing[isAnnual ? 'annual' : 'monthly'];
+      const payTotal = activePrice.total;
       const planName = root.querySelector('[data-partner-plan-name]');
       const planPrice = root.querySelector('[data-partner-price]');
+      const annualNote = root.querySelector('[data-partner-annual-note]');
+      const saveBadge = root.querySelector('[data-partner-save-badge]');
       const benefits = root.querySelector('[data-partner-plan-benefits]');
       const next = root.querySelector('[data-partner-next]');
       if (planName) planName.textContent = isGold ? 'Gold Plan' : 'Silver Plan';
-      if (planPrice) planPrice.textContent = priceLabel;
+      if (planPrice) planPrice.innerHTML = `₹${activePrice.display.toLocaleString('en-IN')}<small>/month</small>`;
+      if (annualNote) {
+        annualNote.textContent = `₹${activePrice.total.toLocaleString('en-IN')} billed annually`;
+        annualNote.hidden = !isAnnual;
+      }
+      if (saveBadge) {
+        saveBadge.textContent = activePrice.save || '';
+        saveBadge.hidden = !isAnnual;
+      }
+      const annualButton = root.querySelector('[data-partner-billing="annual"]');
+      if (annualButton) annualButton.textContent = `Annually · ${pricing.annual.save.toLowerCase()}`;
       if (benefits) {
         const items = planBenefits[currentPlan] || planBenefits.silver;
         benefits.innerHTML = items.map((benefit) => `<li>${escapeHtml(benefit)}</li>`).join('');
       }
-      if (next && currentStep === 4) next.textContent = `Pay ₹${price.toLocaleString('en-IN')} & Activate`;
+      if (next && currentStep === 4) next.textContent = `Pay ₹${payTotal.toLocaleString('en-IN')} & Activate`;
     };
 
     const setStep = (root, step) => {
@@ -64760,6 +65669,7 @@ body.eats-app-shell .app-tab svg {
       });
       const back = root.querySelector('[data-partner-back]');
       const next = root.querySelector('[data-partner-next]');
+      root.querySelector('.eats-partner-footer')?.classList.toggle('is-success', currentStep === 5);
       if (back) back.disabled = currentStep === 1;
       if (next) next.textContent = nextText[currentStep - 1];
       updatePlan(root);
@@ -64792,7 +65702,8 @@ body.eats-app-shell .app-tab svg {
         'partner-brand': brand,
         'partner-legal': '',
         'partner-address-1': address1,
-        'partner-address-2': address2,
+        'partner-address-2': '',
+        'partner-locality': address2,
         'partner-city': city,
         'partner-state': state,
         'partner-pin': pin
@@ -64898,6 +65809,64 @@ body.eats-app-shell .app-tab svg {
       if (modal) modal.hidden = true;
     };
 
+    const closeRoleMenus = (root, except = null) => {
+      root.querySelectorAll('.eats-partner-role-field.is-open').forEach((fieldNode) => {
+        if (fieldNode === except) return;
+        fieldNode.classList.remove('is-open');
+        fieldNode.querySelector('[data-partner-role-toggle]')?.setAttribute('aria-expanded', 'false');
+        const menu = fieldNode.querySelector('[data-partner-role-menu]');
+        if (menu) menu.hidden = true;
+      });
+    };
+
+    const toggleRoleMenu = (button) => {
+      const root = button.closest('#eats-partner-onboarding-root');
+      const fieldNode = button.closest('.eats-partner-role-field');
+      const menu = fieldNode?.querySelector('[data-partner-role-menu]');
+      if (!root || !fieldNode || !menu) return;
+      const open = !fieldNode.classList.contains('is-open');
+      closeRoleMenus(root, fieldNode);
+      fieldNode.classList.toggle('is-open', open);
+      button.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+    };
+
+    const chooseRole = (button) => {
+      const fieldNode = button.closest('.eats-partner-role-field');
+      if (!fieldNode) return;
+      const value = button.dataset.partnerRoleOption || button.textContent.trim();
+      const input = fieldNode.querySelector('[data-partner-role-value]');
+      const label = fieldNode.querySelector('[data-partner-role-label]');
+      if (input) input.value = value;
+      if (label) label.textContent = value;
+      fieldNode.querySelectorAll('[data-partner-role-option]').forEach((option) => {
+        option.classList.toggle('is-active', option === button);
+      });
+      closeRoleMenus(fieldNode.closest('#eats-partner-onboarding-root') || document, null);
+    };
+
+    const formatPartnerInput = (input) => {
+      const id = input.id;
+      if (input.closest('.eats-partner-phone-shell')) {
+        const digits = input.value.replace(/\D/g, '').slice(0, 10);
+        input.value = digits.length > 5 ? `${digits.slice(0, 5)} ${digits.slice(5)}` : digits;
+        return;
+      }
+      if (id === 'partner-card-number') {
+        const digits = input.value.replace(/\D/g, '').slice(0, 16);
+        input.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+        return;
+      }
+      if (id === 'partner-card-expiry') {
+        const digits = input.value.replace(/\D/g, '').slice(0, 4);
+        input.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+        return;
+      }
+      if (id === 'partner-card-cvv') {
+        input.value = input.value.replace(/\D/g, '').slice(0, 4);
+      }
+    };
+
     window.openEatsPartnerOnboarding = openOnboarding;
     window.closeEatsPartnerOnboarding = closeOnboarding;
     document.addEventListener('openEatsPartnerOnboarding', openOnboarding);
@@ -64914,6 +65883,20 @@ body.eats-app-shell .app-tab svg {
 
       const root = event.target.closest('#eats-partner-onboarding-root');
       if (!root) return;
+
+      const roleToggle = event.target.closest('[data-partner-role-toggle]');
+      if (roleToggle) {
+        event.preventDefault();
+        toggleRoleMenu(roleToggle);
+        return;
+      }
+
+      const roleOption = event.target.closest('[data-partner-role-option]');
+      if (roleOption) {
+        event.preventDefault();
+        chooseRole(roleOption);
+        return;
+      }
 
       if (event.target.closest('[data-partner-static-link]')) {
         event.preventDefault();
@@ -65034,6 +66017,8 @@ body.eats-app-shell .app-tab svg {
     }, true);
 
     document.addEventListener('input', (event) => {
+      const formattedInput = event.target.closest('#partner-card-number, #partner-card-expiry, #partner-card-cvv, .eats-partner-phone-shell input');
+      if (formattedInput) formatPartnerInput(formattedInput);
       const search = event.target.closest('[data-partner-search]');
       if (!search) return;
       const root = search.closest('#eats-partner-onboarding-root');
@@ -65050,6 +66035,9 @@ body.eats-app-shell .app-tab svg {
     document.addEventListener('click', (event) => {
       document.querySelectorAll('#eats-partner-onboarding-root .eats-partner-search.is-open').forEach((wrap) => {
         if (!wrap.contains(event.target)) wrap.classList.remove('is-open');
+      });
+      document.querySelectorAll('#eats-partner-onboarding-root').forEach((root) => {
+        if (!event.target.closest('.eats-partner-role-field')) closeRoleMenus(root);
       });
     });
 
@@ -65606,7 +66594,7 @@ body.eats-app-shell .app-tab svg {
     .eats-partner-kicker,
     .eats-partner-step-copy,
     .eats-partner-section-label,
-    .eats-partner-field span,
+    .eats-partner-field > span,
     .eats-partner-upload-preview span,
     .eats-partner-secure,
     .eats-partner-success p
@@ -65805,6 +66793,9 @@ body.eats-app-shell .app-tab svg {
     .eats-post-restaurant-input,
     .eats-partner-search,
     .eats-partner-search input,
+    .eats-partner-phone-shell,
+    .eats-partner-role-trigger,
+    .eats-partner-role-menu,
     .eats-partner-field input,
     .eats-partner-field select,
     .eats-partner-field textarea,
@@ -65833,6 +66824,29 @@ body.eats-app-shell .app-tab svg {
     border-color: rgba(255,255,255,.5) !important;
     box-shadow: 0 0 0 3px rgba(255,255,255,.08) !important;
     outline: none !important;
+  }
+
+  body.eats-dark-mode .eats-partner-phone-prefix {
+    background: rgba(255,255,255,.06) !important;
+    border-color: var(--dm-line-strong) !important;
+    color: var(--dm-text-soft) !important;
+    -webkit-text-fill-color: var(--dm-text-soft) !important;
+  }
+
+  body.eats-dark-mode .eats-partner-role-menu button {
+    color: var(--dm-text) !important;
+    -webkit-text-fill-color: var(--dm-text) !important;
+  }
+
+  body.eats-dark-mode .eats-partner-role-menu button:hover,
+  body.eats-dark-mode .eats-partner-role-menu button:focus-visible {
+    background: var(--dm-surface-2) !important;
+  }
+
+  body.eats-dark-mode .eats-partner-role-menu button.is-active {
+    background: #f8fafc !important;
+    color: var(--dm-inverse) !important;
+    -webkit-text-fill-color: var(--dm-inverse) !important;
   }
 
   body.eats-dark-mode :is(:disabled, [disabled], [readonly], .is-readonly input, .is-readonly select, .is-readonly textarea, .eats-partner-field.is-readonly input, .eats-partner-field.is-readonly select, .eats-partner-field.is-readonly textarea) {
@@ -66145,6 +67159,134 @@ body.eats-app-shell .app-tab svg {
     -webkit-text-fill-color: var(--dm-success) !important;
   }
 
+  body.eats-app-shell .eats-post-composer-header h1 {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    line-height: 1.08 !important;
+  }
+
+  body.eats-app-shell :is(
+    .eats-post-composer-root,
+    .eats-post-composer-shell,
+    .eats-post-composer-body,
+    .eats-post-form-card,
+    .eats-post-card,
+    .eats-post-upload-drop,
+    .eats-post-restaurant-input,
+    .eats-post-caption,
+    .eats-post-selected,
+    .eats-post-selected-grid
+  ) {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-shell {
+    width: 100% !important;
+    max-width: 430px !important;
+    overflow-x: hidden !important;
+  }
+
+  body.eats-app-shell .eats-post-form-card {
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  body.eats-app-shell :is(.eats-post-upload-drop, .eats-post-restaurant-input, .eats-post-caption) {
+    width: 100% !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    padding: 0 16px 0 8px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    outline: 0 !important;
+    background: #111217 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop:hover {
+    border: 0 !important;
+    background: #111217 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop:focus-visible {
+    border: 0 !important;
+    background: #111217 !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 3px rgba(17, 18, 23, .16) !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop-inner {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-plus {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    background: rgba(255, 255, 255, .16) !important;
+    color: #fff !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-plus .eats-svg-icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong {
+    display: block !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  body.eats-app-shell :is(
+    .eats-post-upload-drop strong,
+    .eats-post-restaurant-option strong,
+    .eats-post-confirmation-pill strong,
+    .eats-post-selected-note strong
+  ) {
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell :is(
+    .eats-post-composer-action,
+    .eats-post-label,
+    .eats-post-restaurant-input,
+    .eats-post-caption,
+    .eats-post-selected-meta,
+    .eats-post-selected-meta button,
+    .eats-post-media-action,
+    .eats-post-media-delete,
+    .eats-post-upload-chip,
+    .eats-post-restaurant-option span
+  ) {
+    font-weight: 560 !important;
+  }
+
   body.eats-dark-mode .eats-post-video-modal {
     background: rgba(0,0,0,.9) !important;
   }
@@ -66180,13 +67322,13 @@ body.eats-app-shell .app-tab svg {
 
   body.eats-dark-mode .eats-partner-upload-icon {
     background: var(--dm-surface-3) !important;
-    border-color: var(--dm-line-strong) !important;
+    border: 0 !important;
     color: var(--dm-text-soft) !important;
   }
 
   body.eats-dark-mode .eats-partner-doc-field.is-uploaded .eats-partner-upload-icon {
     background: var(--dm-success-bg) !important;
-    border-color: rgba(104,220,142,.34) !important;
+    border: 0 !important;
     color: var(--dm-success) !important;
   }
 
@@ -68206,7 +69348,7 @@ body.eats-app-shell .app-tab svg {
     function markSeen() {
       try {
         localStorage.setItem(seenKey, 'true');
-      } catch (error) {}
+      } catch {}
     }
 
     function setStep(next) {
@@ -68829,8 +69971,8 @@ body.eats-app-shell .app-tab svg {
 </style>
 <style id="codex-eats-ai-blank-header-20260604">
   #ai-view .app-ai-head {
-    min-height: 112px !important;
-    height: 112px !important;
+    min-height: 46px !important;
+    height: 46px !important;
     padding: 0 !important;
     border-bottom: 0 !important;
     background: transparent !important;
@@ -68840,6 +69982,20 @@ body.eats-app-shell .app-tab svg {
   #ai-view .app-ai-head .app-ai-title-row,
   #ai-view #mouthshut-eats-ai-logo {
     display: none !important;
+  }
+
+  #ai-view .app-chat-log {
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    padding-top: 18px !important;
+  }
+
+  #ai-view .app-chat-log.has-messages {
+    justify-content: flex-start !important;
+  }
+
+  #ai-view .app-chat-log.has-messages .app-message:first-of-type {
+    margin-top: 0 !important;
   }
 </style>
 <style id="codex-bookmarks-locality-size-20260604">
@@ -68894,12 +70050,72 @@ body.eats-app-shell .app-tab svg {
     transform-origin: 50% 50%;
   }
 
+  #eats-view .eats-review-card {
+    position: relative;
+  }
+
+  #eats-view .eats-review-like {
+    color: #111217 !important;
+    -webkit-text-fill-color: #111217 !important;
+    transition: color .16s ease, transform .16s ease;
+  }
+
+  #eats-view .eats-review-like.is-liked {
+    color: #ff3b66 !important;
+    -webkit-text-fill-color: #ff3b66 !important;
+  }
+
+  #eats-view .eats-review-like.is-liked .eats-svg-icon path {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  #eats-view .eats-review-like.like-pop .eats-svg-icon {
+    animation: eatsActionHeartPop .64s cubic-bezier(.2,.78,.24,1) both;
+    transform-origin: 50% 50%;
+  }
+
+  #eats-view .eats-review-heart-burst {
+    position: absolute;
+    left: 62%;
+    top: 52%;
+    z-index: 6;
+    width: 78px;
+    height: 78px;
+    color: #ff3b66;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.55);
+    filter: drop-shadow(0 9px 24px rgba(255, 59, 102, .32));
+  }
+
+  #eats-view .eats-review-heart-burst .eats-svg-icon,
+  #eats-view .eats-review-heart-burst svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  #eats-view .eats-review-heart-burst path {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
+  #eats-view .eats-review-heart-burst.is-visible {
+    animation: eatsReviewHeartBurst .62s ease-out both;
+  }
+
   @keyframes eatsActionHeartPop {
     0% { transform: scale(1); filter: drop-shadow(0 2px 10px rgba(0,0,0,.46)); }
     22% { transform: scale(1.28); filter: drop-shadow(0 0 15px rgba(255,59,102,.54)); }
     48% { transform: scale(.96); }
     72% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(255,59,102,.36)); }
     100% { transform: scale(1); filter: drop-shadow(0 2px 10px rgba(0,0,0,.46)); }
+  }
+
+  @keyframes eatsReviewHeartBurst {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(.52); }
+    28% { opacity: .96; transform: translate(-50%, -50%) scale(1.08); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.44); }
   }
 </style>
 <style id="codex-eats-transparent-bottom-nav-20260604">
@@ -68938,6 +70154,38 @@ body.eats-app-shell .app-tab svg {
 
   :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab :is(span, svg, .eats-svg-icon),
   :is(body[data-app-view="eats"].eats-app-shell, body.eats-dark-mode[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab svg * {
+    color: currentColor !important;
+    -webkit-text-fill-color: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav {
+    border-top: 1px solid #eceef2 !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    color: #111217 !important;
+    box-shadow: 0 -10px 26px rgba(15, 23, 42, .08) !important;
+  }
+
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab {
+    background: transparent !important;
+    color: #8d95a3 !important;
+    -webkit-text-fill-color: #8d95a3 !important;
+    text-shadow: none !important;
+  }
+
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab > :is(.eats-svg-icon, span) {
+    transform: none !important;
+  }
+
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab:is(.active, [aria-current="page"]) {
+    color: #111217 !important;
+    -webkit-text-fill-color: #111217 !important;
+    font-weight: 720 !important;
+  }
+
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab :is(span, svg, .eats-svg-icon),
+  :is(body.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell, body.eats-dark-mode.eats-reviews-tab-open[data-app-view="eats"].eats-app-shell) #eats-app-bottom-nav .app-tab svg * {
     color: currentColor !important;
     -webkit-text-fill-color: currentColor !important;
     stroke: currentColor !important;
@@ -69016,6 +70264,114 @@ body.eats-app-shell .app-tab svg {
   #customer-settings-modal-root .cs-address-empty span {
     font-size: 13.5px !important;
     line-height: 1.32 !important;
+  }
+</style>
+<style id="codex-address-line-delete-confirm-20260605">
+  #customer-settings-modal-root .cs-address-sheet .cs-address-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #customer-settings-modal-root .cs-address-sheet .cs-address-field.full {
+    grid-column: 1 / -1 !important;
+  }
+
+  #customer-settings-modal-root .cs-address-card-actions {
+    gap: 10px !important;
+  }
+
+  #customer-settings-modal-root .cs-address-card-actions button {
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  #customer-settings-modal-root .cs-address-card-actions button svg {
+    width: 18px !important;
+    height: 18px !important;
+    stroke-width: 2.2px !important;
+  }
+
+  #customer-settings-modal-root .cs-address-card-actions button.danger {
+    color: #d92d20 !important;
+    border-color: #f5c8c3 !important;
+    background: #fff !important;
+  }
+
+  #customer-settings-modal-root .cs-address-card-actions button.danger svg {
+    color: #d92d20 !important;
+    stroke: currentColor !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-sheet {
+    max-height: min(360px, calc(100dvh - 18px)) !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-card {
+    display: grid !important;
+    gap: 10px !important;
+    padding: 8px 18px max(18px, env(safe-area-inset-bottom)) !important;
+    background: #fff !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-icon {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 999px !important;
+    display: grid !important;
+    place-items: center !important;
+    background: #fff1f0 !important;
+    color: #d92d20 !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke-width: 2.2px !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-card h3 {
+    margin: 0 !important;
+    color: #111217 !important;
+    font-size: 23px !important;
+    line-height: 1.1 !important;
+    font-weight: 820 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    margin-top: 8px !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-actions button {
+    min-height: 52px !important;
+    border-radius: 999px !important;
+    font: inherit !important;
+    font-size: 14px !important;
+    font-weight: 760 !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-actions .cs-ghost-btn {
+    border: 1px solid #e6e8ed !important;
+    background: #fff !important;
+    color: #4a4e57 !important;
+  }
+
+  #customer-settings-modal-root .cs-address-delete-actions .cs-danger-btn {
+    border: 1px solid #d92d20 !important;
+    background: #d92d20 !important;
+    color: #fff !important;
+  }
+
+  body.eats-dark-mode #customer-settings-modal-root .cs-address-delete-card {
+    background: var(--dm-surface) !important;
+  }
+
+  body.eats-dark-mode #customer-settings-modal-root .cs-address-delete-card h3 {
+    color: var(--dm-text) !important;
+    -webkit-text-fill-color: var(--dm-text) !important;
   }
 </style>
 <style id="codex-home-product-title-weight-soften-20260604">
@@ -69282,6 +70638,370 @@ body.eats-app-shell .app-tab svg {
   body.eats-app-shell #restaurant-view .pickup-stepper span *,
   body.eats-app-shell #restaurant-view .pickup-stepper-count,
   body.eats-app-shell #restaurant-view .pickup-stepper-count * {
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell .app-flow-tip {
+    padding: 14px 38px 14px 15px !important;
+    border-radius: 16px !important;
+    background: #f7f8fa !important;
+    border-color: #dde1e8 !important;
+    color: #15171c !important;
+    box-shadow: 0 16px 32px -22px rgba(18,22,31,.34) !important;
+  }
+
+  body.eats-app-shell .app-flow-tip::after {
+    background: #f7f8fa !important;
+    border-color: #dde1e8 !important;
+  }
+
+  body.eats-app-shell .app-flow-tip strong {
+    color: #17191f !important;
+    font-size: 13.5px !important;
+    line-height: 1.12 !important;
+  }
+
+  body.eats-app-shell .app-flow-tip p {
+    margin-top: 7px !important;
+    color: #5d626c !important;
+    font-size: 12px !important;
+    line-height: 1.42 !important;
+    font-weight: 560 !important;
+  }
+
+  body.eats-app-shell .app-flow-tip-close {
+    top: 9px !important;
+    right: 9px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    background: #edf0f4 !important;
+    color: #7a808b !important;
+  }
+
+  body.eats-app-shell .app-flow-tip-close svg {
+    display: block !important;
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  body.eats-app-shell #restaurant-view .booking-mode-actions .cta-secondary {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  body.eats-app-shell #restaurant-view .booking-mode-actions {
+    overflow: visible !important;
+  }
+
+  body.eats-app-shell #restaurant-view .booking-mode-actions .flow-tip-pickup {
+    top: -5px !important;
+    right: 10px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 13px !important;
+    min-width: 13px !important;
+    max-width: 13px !important;
+    height: 13px !important;
+    min-height: 13px !important;
+    max-height: 13px !important;
+    transform: none !important;
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    background: #fff !important;
+    color: #5f646d !important;
+  }
+
+  #booking-flow-root .bf-book-actions .bf-book-action-wrap .flow-tip-preorder,
+  body.eats-app-shell #booking-flow-root .bf-book-actions .bf-book-action-wrap .flow-tip-preorder {
+    top: -5px !important;
+    right: 10px !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 13px !important;
+    min-width: 13px !important;
+    max-width: 13px !important;
+    height: 13px !important;
+    min-height: 13px !important;
+    max-height: 13px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(12,13,16,.14) !important;
+    border-radius: 999px !important;
+    transform: none !important;
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+    background: #fff !important;
+    color: #5f646d !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos {
+    --eats-review-photo-frame-height: 210px;
+    width: 100% !important;
+    height: var(--eats-review-photo-frame-height) !important;
+    display: grid !important;
+    gap: 4px !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    background: #f1f3f6 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-1 {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: 1fr !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-3 .eats-review-photo:first-child {
+    grid-row: 1 / span 2 !important;
+    grid-column: 1 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-3 .eats-review-photo:nth-child(2) {
+    grid-row: 1 !important;
+    grid-column: 2 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos.photos-3 .eats-review-photo:nth-child(3) {
+    grid-row: 2 !important;
+    grid-column: 2 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos .eats-review-photo,
+  body.eats-app-shell #eats-view .eats-review-photos.photos-1 .eats-review-photo {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-photos .eats-review-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+  }
+
+  @media (max-width: 390px) {
+    body.eats-app-shell #eats-view .eats-review-photos {
+      --eats-review-photo-frame-height: 196px;
+    }
+  }
+
+  body.eats-app-shell #eats-view .eats-review-author strong,
+  body.eats-app-shell #eats-view .eats-review-title-row h3 {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-like,
+  body.eats-app-shell #eats-view .eats-review-like span {
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media {
+    gap: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-grid {
+    display: flex !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 2px 2px 6px !important;
+    margin: 0 !important;
+    scroll-snap-type: x proximity !important;
+    touch-action: pan-x !important;
+    overscroll-behavior-x: contain !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb,
+  body.eats-app-shell .eats-post-selected-video {
+    flex: 0 0 132px !important;
+    width: 132px !important;
+    height: 165px !important;
+    aspect-ratio: 4 / 5 !important;
+    border-radius: 16px !important;
+    scroll-snap-align: start !important;
+    touch-action: pan-x !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb img {
+    touch-action: pan-x !important;
+    cursor: default !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb.is-editing,
+  body.eats-app-shell .eats-post-selected-thumb.is-editing img {
+    touch-action: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb.is-editing img {
+    cursor: grab !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-video {
+    padding: 12px 12px 44px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-meta {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    color: #747b86 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-note {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-note {
+    color: #747b86 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop {
+    justify-self: stretch !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 16px 0 8px !important;
+    border: 1px solid #111217 !important;
+    outline: 1px solid rgba(255, 255, 255, .5) !important;
+    outline-offset: -3px !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 12px !important;
+    padding-right: 0 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    margin-left: auto !important;
+    min-width: 0 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-share,
+  body.eats-app-shell #eats-view .eats-review-bookmark {
+    flex: 0 0 auto !important;
+    border: 1px solid #e4e7ed !important;
+    background: #fff !important;
+    color: #111217 !important;
+    -webkit-text-fill-color: #111217 !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-share {
+    min-width: 78px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark .eats-svg-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark:not(.is-saved) .eats-svg-icon,
+  body.eats-app-shell #eats-view .eats-review-bookmark:not(.is-saved) .eats-svg-icon *,
+  body.eats-app-shell #eats-view .eats-review-bookmark:not(.is-saved) .eats-svg-icon use {
+    fill: transparent !important;
+    stroke: currentColor !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark .eats-review-bookmark-shape {
+    fill: transparent !important;
+    stroke: currentColor !important;
+    stroke-width: 1.8 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark.is-saved {
+    color: #050505 !important;
+    -webkit-text-fill-color: #050505 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark.is-saved .eats-review-bookmark-shape,
+  body.eats-app-shell #eats-view .eats-review-bookmark.is-saved .eats-svg-icon,
+  body.eats-app-shell #eats-view .eats-review-bookmark.is-saved .eats-svg-icon *,
+  body.eats-app-shell #eats-view .eats-review-bookmark.is-saved .eats-svg-icon use {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-bookmark.save-pop .eats-svg-icon {
+    animation: eatsActionHeartPop .64s cubic-bezier(.2,.78,.24,1) both !important;
+    transform-origin: 50% 50% !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-card .eats-review-author > strong,
+  body.eats-app-shell #eats-view .eats-review-card .eats-review-title-row > h3 {
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell #eats-view .eats-review-card .eats-review-author > span {
     font-weight: 500 !important;
   }
 </style>
