@@ -8225,7 +8225,7 @@ body.dashboard-embed-open {
   <symbol id="eats-icon-bookmark" viewBox="0 0 24 24">
 <path
     d="M7.25 4.25h9.5a1 1 0 0 1 1 1v14.5L12 16.25l-5.75 3.5V5.25a1 1 0 0 1 1-1Z"
-    fill="none"
+    fill="var(--eats-bookmark-fill, none)"
     stroke="currentColor"
     stroke-width="1"
     stroke-linecap="round"
@@ -24427,7 +24427,6 @@ dGV4dD4KPC9zdmc+Cg==
       <button type="button" data-theme-choice="android" aria-selected="false">Android</button>
     </div>
     <button class="app-onboarding-launch" type="button" data-app-onboarding-open>Onboarding</button>
-    <button class="app-tutorial-launch" type="button" data-app-tutorial-open>Flow guides</button>
   </div>
 </section>
 
@@ -24435,7 +24434,7 @@ dGV4dD4KPC9zdmc+Cg==
   <div class="eats-onboarding-phone">
     <article class="eats-onboarding-slide is-active" data-onboarding-step="0">
       <figure class="eats-onboarding-hero">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=82" alt="">
+        <img class="eats-onboarding-logo" src="eats-logo.svg" alt="MouthShut Eats">
       </figure>
       <div class="eats-onboarding-copy">
         <h2>Find the best tables in your city</h2>
@@ -24454,7 +24453,7 @@ dGV4dD4KPC9zdmc+Cg==
 
     <article class="eats-onboarding-slide" data-onboarding-step="1">
       <figure class="eats-onboarding-hero">
-        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=82" alt="">
+        <img class="eats-onboarding-logo" src="eats-logo.svg" alt="MouthShut Eats">
       </figure>
       <div class="eats-onboarding-copy">
         <h2>No more waiting around.</h2>
@@ -24473,7 +24472,7 @@ dGV4dD4KPC9zdmc+Cg==
 
     <article class="eats-onboarding-slide" data-onboarding-step="2">
       <figure class="eats-onboarding-hero eats-onboarding-hero-tall">
-        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=82" alt="">
+        <img class="eats-onboarding-logo" src="eats-logo.svg" alt="MouthShut Eats">
       </figure>
       <div class="eats-onboarding-copy">
         <h2>Join Mouthshut Eats.</h2>
@@ -24488,34 +24487,6 @@ dGV4dD4KPC9zdmc+Cg==
     </article>
   </div>
 </section>
-
-<section id="appTutorialOverlay" class="app-tutorial-overlay" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="appTutorialTitle">
-  <div class="app-tutorial-scrim"></div>
-  <div class="app-tutorial-spotlight" aria-hidden="true"></div>
-  <article class="app-tutorial-card" data-tutorial-card>
-    <button class="app-tutorial-close" type="button" data-app-tutorial-close aria-label="Close tutorial"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-close-x"></use></svg>
-    </button>
-    <p class="app-screen-kicker">Tutorial</p>
-    <h2 id="appTutorialTitle" data-tutorial-title>Welcome to Eats</h2>
-    <p data-tutorial-copy>Use this walkthrough shell for the onboarding steps and copy we add next.</p>
-    <div class="app-tutorial-progress">
-      <div class="app-tutorial-dots" data-tutorial-dots aria-hidden="true"></div>
-      <span data-tutorial-count>1 / 1</span>
-    </div>
-    <div class="app-tutorial-actions">
-      <button type="button" data-app-tutorial-prev>Back</button>
-      <button type="button" data-app-tutorial-close>Skip</button>
-      <button type="button" data-app-tutorial-next>Next</button>
-    </div>
-  </article>
-</section>
-
-<div id="appFlowTip" class="app-flow-tip" hidden role="status" aria-live="polite">
-  <button class="app-flow-tip-close" type="button" data-flow-tip-close aria-label="Close tip"><svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-close-x"></use></svg>
-  </button>
-  <strong data-flow-tip-title></strong>
-  <p data-flow-tip-copy></p>
-</div>
 
 <nav id="eats-app-bottom-nav" class="app-bottom-nav" aria-label="Eats app tabs">
   <span class="app-liquid-nav-lens" aria-hidden="true"></span>
@@ -26036,7 +26007,9 @@ dGV4dD4KPC9zdmc+Cg==
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
-    bookmark.classList.toggle('active');
+    const saved = bookmark.classList.toggle('active');
+    bookmark.classList.toggle('is-saved', saved);
+    bookmark.setAttribute('aria-pressed', String(saved));
   });
   function openRestaurantBookingFromCard(event) {
     event.preventDefault();
@@ -44995,196 +44968,17 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
       else window.location.hash = route;
     }
 
-    const tutorialSteps = [
-      {
-        route: 'restaurant',
-        target: '#restaurant-view .booking-mode-actions',
-        placement: 'center',
-        title: 'Flow guides',
-        copy: 'The only guided walkthroughs should teach the three flows: Table Booking, Pre-Order, and Pickup.'
-      },
-      {
-        route: 'restaurant',
-        target: '#restaurant-view .booking-mode-actions .cta-primary',
-        title: 'Table Booking',
-        copy: 'Reserve a table first. The flow teaches guests, date, time, review details, and confirmation.'
-      },
-      {
-        route: 'restaurant',
-        target: '#restaurant-view .side-cta-row .pre-order',
-        title: 'Pre-Order',
-        copy: 'Pre-order is dining-in plus dishes chosen in advance. The review page should send users back before pickup education starts.'
-      },
-      {
-        route: 'restaurant',
-        target: '#restaurant-view .booking-mode-actions .cta-secondary',
-        title: 'Pickup',
-        copy: 'Pickup teaches users how to order food for collection without reserving a table.'
-      }
-    ];
+    const tutorialSteps = [];
     let tutorialIndex = 0;
     let tutorialScrollY = 0;
 
-    function setTutorialOverlay(open) {
-      const overlay = document.getElementById('appTutorialOverlay');
-      if (!overlay) return;
-      if (open) {
-        setThemeSheet(false);
-        setProfilePush(false);
-        routeTo('restaurant');
-        tutorialIndex = 0;
-        tutorialScrollY = window.scrollY || 0;
-        overlay.hidden = false;
-        overlay.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('app-tutorial-open');
-        document.documentElement.classList.add('app-tutorial-open');
-        requestAnimationFrame(() => {
-          overlay.classList.add('open');
-          updateTutorialStep();
-        });
-        return;
-      }
-      overlay.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('app-tutorial-open');
-      document.documentElement.classList.remove('app-tutorial-open');
-      window.setTimeout(() => {
-        if (!overlay.classList.contains('open')) overlay.hidden = true;
-      }, 220);
-    }
+    function setTutorialOverlay() {}
 
-    function updateTutorialStep() {
-      const overlay = document.getElementById('appTutorialOverlay');
-      if (!overlay || overlay.hidden) return;
-      const step = tutorialSteps[tutorialIndex] || tutorialSteps[0];
-      const card = overlay.querySelector('[data-tutorial-card]');
-      const title = overlay.querySelector('[data-tutorial-title]');
-      const copy = overlay.querySelector('[data-tutorial-copy]');
-      const dots = overlay.querySelector('[data-tutorial-dots]');
-      const count = overlay.querySelector('[data-tutorial-count]');
-      const prev = overlay.querySelector('[data-app-tutorial-prev]');
-      const next = overlay.querySelector('[data-app-tutorial-next]');
-      if (step.route && document.body.dataset.appView !== step.route) {
-        routeTo(step.route);
-        requestAnimationFrame(updateTutorialStep);
-        return;
-      }
-      const target = document.querySelector(step.target);
-      if (target && step.placement !== 'center') {
-        const rectBefore = target.getBoundingClientRect();
-        const fixedTarget = target.matches('.app-bottom-nav, .booking-mode-actions');
-        const navAllowance = fixedTarget ? 140 : 92;
-        const availableHeight = window.innerHeight - (navAllowance * 2);
-        const targetVisible = fixedTarget || (rectBefore.height > availableHeight
-          ? rectBefore.top >= navAllowance && rectBefore.top <= window.innerHeight - navAllowance
-          : rectBefore.top >= navAllowance && rectBefore.bottom <= window.innerHeight - navAllowance);
-        if (!targetVisible) {
-          target.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
-          requestAnimationFrame(updateTutorialStep);
-          return;
-        }
-      }
-      if (title) title.textContent = step.title;
-      if (copy) copy.textContent = step.copy;
-      if (count) count.textContent = `${tutorialIndex + 1} / ${tutorialSteps.length}`;
-      if (dots) {
-        dots.replaceChildren(...tutorialSteps.map((_, index) => {
-          const dot = document.createElement('span');
-          dot.className = index === tutorialIndex ? 'active' : '';
-          return dot;
-        }));
-      }
-      if (prev) prev.disabled = tutorialIndex === 0;
-      if (next) next.textContent = tutorialIndex === tutorialSteps.length - 1 ? 'Done' : 'Next';
+    function updateTutorialStep() {}
 
-      const rect = target?.getBoundingClientRect();
-      const safeLeft = 16;
-      const safeRight = window.innerWidth - 16;
-      const cardWidth = Math.min(360, window.innerWidth - 32);
-      const estimatedCardHeight = card ? Math.max(190, card.offsetHeight || 0) : 214;
-      if (step.placement === 'center' || !rect || rect.width === 0 || rect.height === 0) {
-        const spotlightW = Math.min(window.innerWidth - 32, 390);
-        const spotlightH = Math.min(window.innerHeight - 120, 260);
-        overlay.style.setProperty('--tutorial-x', `${Math.max(16, (window.innerWidth - spotlightW) / 2)}px`);
-        overlay.style.setProperty('--tutorial-y', `${Math.max(76, (window.innerHeight - spotlightH) / 2 - 64)}px`);
-        overlay.style.setProperty('--tutorial-w', `${spotlightW}px`);
-        overlay.style.setProperty('--tutorial-h', `${spotlightH}px`);
-        overlay.style.setProperty('--tutorial-r', '28px');
-        overlay.style.setProperty('--tutorial-card-x', `${Math.max(16, (window.innerWidth - cardWidth) / 2)}px`);
-        overlay.style.setProperty('--tutorial-card-y', `${Math.max(24, (window.innerHeight - estimatedCardHeight) / 2)}px`);
-        overlay.style.setProperty('--tutorial-card-bottom', 'auto');
-        overlay.dataset.tutorialPlacement = 'center';
-        if (card) card.style.width = `${cardWidth}px`;
-        return;
-      }
+    function closeFlowTip() {}
 
-      const pad = 8;
-      const x = Math.max(12, rect.left - pad);
-      const y = Math.max(12, rect.top - pad);
-      const w = Math.min(window.innerWidth - x - 12, rect.width + pad * 2);
-      const h = Math.min(window.innerHeight - y - 12, rect.height + pad * 2);
-      const cardX = Math.min(Math.max(safeLeft, rect.left + rect.width / 2 - cardWidth / 2), safeRight - cardWidth);
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      const placeBelow = spaceBelow >= estimatedCardHeight + 24 || spaceBelow >= spaceAbove;
-      const cardY = placeBelow
-        ? Math.min(window.innerHeight - estimatedCardHeight - 16, rect.bottom + 18)
-        : Math.max(16, rect.top - estimatedCardHeight - 18);
-
-      overlay.style.setProperty('--tutorial-x', `${x}px`);
-      overlay.style.setProperty('--tutorial-y', `${y}px`);
-      overlay.style.setProperty('--tutorial-w', `${w}px`);
-      overlay.style.setProperty('--tutorial-h', `${h}px`);
-      overlay.style.setProperty('--tutorial-r', `${Math.min(28, Math.max(16, h / 4))}px`);
-      overlay.style.setProperty('--tutorial-card-x', `${cardX}px`);
-      overlay.style.setProperty('--tutorial-card-y', `${cardY}px`);
-      overlay.style.setProperty('--tutorial-card-bottom', 'auto');
-      overlay.dataset.tutorialPlacement = placeBelow ? 'below' : 'above';
-      if (card) card.style.width = `${cardWidth}px`;
-    }
-
-    function closeFlowTip() {
-      const tip = document.getElementById('appFlowTip');
-      if (!tip) return;
-      tip.hidden = true;
-      tip.classList.remove('open');
-      document.querySelectorAll('[data-flow-tip][aria-expanded="true"]').forEach(trigger => {
-        trigger.setAttribute('aria-expanded', 'false');
-      });
-    }
-
-    function openFlowTip(trigger) {
-      const tip = document.getElementById('appFlowTip');
-      if (!tip || !trigger) return;
-      const title = tip.querySelector('[data-flow-tip-title]');
-      const copy = tip.querySelector('[data-flow-tip-copy]');
-      if (title) title.textContent = trigger.dataset.flowTipTitle || 'Tip';
-      if (copy) copy.textContent = trigger.dataset.flowTipCopy || '';
-      document.querySelectorAll('[data-flow-tip]').forEach(item => {
-        item.setAttribute('aria-expanded', item === trigger ? 'true' : 'false');
-      });
-      tip.hidden = false;
-      tip.classList.add('open');
-
-      const pickupButton = trigger.classList.contains('flow-tip-pickup')
-        ? trigger.closest('.booking-mode-actions')?.querySelector('.cta-secondary')
-        : null;
-      const rect = (pickupButton || trigger).getBoundingClientRect();
-      const arrowRect = trigger.getBoundingClientRect();
-      const tipWidth = Math.min(trigger.classList.contains('flow-tip-pickup') ? 238 : 260, window.innerWidth - 28);
-      const tipHeight = Math.max(96, tip.offsetHeight || 96);
-      const left = Math.min(Math.max(14, rect.left + rect.width / 2 - tipWidth / 2), window.innerWidth - tipWidth - 14);
-      const arrowX = Math.min(Math.max(34, arrowRect.left + arrowRect.width / 2 - left), tipWidth - 34);
-      const hasRoomAbove = rect.top > tipHeight + 18;
-      const top = hasRoomAbove
-        ? Math.max(14, rect.top - tipHeight - 12)
-        : Math.min(window.innerHeight - tipHeight - 14, rect.bottom + 12);
-      tip.style.setProperty('--flow-tip-x', `${left}px`);
-      tip.style.setProperty('--flow-tip-y', `${top}px`);
-      tip.style.setProperty('--flow-tip-w', `${tipWidth}px`);
-      tip.style.setProperty('--flow-tip-arrow-x', `${arrowX}px`);
-      tip.dataset.placement = hasRoomAbove ? 'above' : 'below';
-    }
+    function openFlowTip() {}
 
     function setLocationPanel(open) {
       if (!locationPanel || !locationTrigger) return;
@@ -45541,53 +45335,9 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
         return;
       }
 
-      if (event.target.closest('[data-app-tutorial-open]')) {
-        event.preventDefault();
-        setTutorialOverlay(true);
-        return;
-      }
-
-      const flowTipTrigger = event.target.closest('[data-flow-tip]');
-      if (flowTipTrigger) {
+      if (event.target.closest('[data-app-tutorial-open], [data-flow-tip], [data-flow-tip-close], [data-app-tutorial-close], [data-app-tutorial-prev], [data-app-tutorial-next]')) {
         event.preventDefault();
         event.stopPropagation();
-        if (flowTipTrigger.getAttribute('aria-expanded') === 'true') closeFlowTip();
-        else openFlowTip(flowTipTrigger);
-        return;
-      }
-
-      if (event.target.closest('[data-flow-tip-close]')) {
-        event.preventDefault();
-        closeFlowTip();
-        return;
-      }
-
-      if (!event.target.closest('#appFlowTip')) closeFlowTip();
-
-      if (event.target.closest('[data-app-tutorial-close]')) {
-        event.preventDefault();
-        setTutorialOverlay(false);
-        return;
-      }
-
-      const tutorialPrev = event.target.closest('[data-app-tutorial-prev]');
-      if (tutorialPrev) {
-        event.preventDefault();
-        tutorialIndex = Math.max(0, tutorialIndex - 1);
-        updateTutorialStep();
-        return;
-      }
-
-      const tutorialNext = event.target.closest('[data-app-tutorial-next]');
-      if (tutorialNext) {
-        event.preventDefault();
-        if (tutorialIndex >= tutorialSteps.length - 1) {
-          setTutorialOverlay(false);
-          return;
-        }
-        tutorialSteps[tutorialIndex]?.onNext?.();
-        tutorialIndex += 1;
-        updateTutorialStep();
         return;
       }
 
@@ -45732,8 +45482,6 @@ body:not([data-eats-auth-state="signed-in"]) #profile-view .app-profile-group[ar
       if (!flowTipTrigger?.closest?.('#booking-flow-root, .pickup-customize-scope')) return;
       event.preventDefault();
       event.stopPropagation();
-      if (flowTipTrigger.getAttribute('aria-expanded') === 'true') closeFlowTip();
-      else openFlowTip(flowTipTrigger);
     }, true);
 
     if (navbar) {
@@ -63537,6 +63285,14 @@ body.eats-app-shell .app-tab svg {
               </section>
               <section class="eats-post-card">
                 <span class="eats-post-label">Restaurant</span>
+                <button class="eats-post-restaurant-identity" type="button" data-eats-post-restaurant-identity aria-expanded="false">
+                  <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=220&q=80" alt="Royal China">
+                  <span>
+                    <strong>Royal China</strong>
+                    <em>Bandra West, Mumbai</em>
+                  </span>
+                  <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
                 <div class="eats-post-restaurant-search" data-eats-post-restaurant-search>
                   <div class="eats-post-restaurant-input-shell">
                     <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -63551,9 +63307,10 @@ body.eats-app-shell .app-tab svg {
               </section>
               <section class="eats-post-card">
                 <span class="eats-post-label">Caption</span>
-                <textarea class="eats-post-caption" data-eats-post-caption placeholder="Write a caption for your Eats post"></textarea>
+                <textarea class="eats-post-caption" data-eats-post-caption placeholder="Write a caption..."></textarea>
               </section>
             </div>
+            <button class="eats-post-composer-bottom-action" type="button" data-eats-post-submit disabled>Post Eat</button>
           </div>
         </div>
         <div class="eats-post-video-modal" data-eats-post-video-modal hidden>
@@ -63604,6 +63361,7 @@ body.eats-app-shell .app-tab svg {
       if (!search || !input || !results) return;
       search.classList.toggle('is-open', open);
       input.setAttribute('aria-expanded', String(open));
+      root?.querySelector('[data-eats-post-restaurant-identity]')?.setAttribute('aria-expanded', String(open));
       results.hidden = !open;
     };
 
@@ -63623,6 +63381,14 @@ body.eats-app-shell .app-tab svg {
       const hidden = root?.querySelector('[data-eats-post-restaurant]');
       if (input) input.value = `${name} · ${area}`;
       if (hidden) hidden.value = name;
+      const identity = root?.querySelector('[data-eats-post-restaurant-identity]');
+      if (identity) {
+        identity.querySelector('img')?.setAttribute('src', data[3]);
+        const title = identity.querySelector('strong');
+        const subtitle = identity.querySelector('em');
+        if (title) title.textContent = name;
+        if (subtitle) subtitle.textContent = `${area}, Mumbai`;
+      }
       setPostRestaurantDropdown(root, false);
     };
 
@@ -63704,7 +63470,8 @@ body.eats-app-shell .app-tab svg {
 
     const syncPostMediaState = (root) => {
       const selected = root?.querySelector('[data-eats-post-selected]');
-      const action = root?.querySelector('[data-eats-post-submit]');
+      const actions = root ? Array.from(root.querySelectorAll('[data-eats-post-submit]')) : [];
+      const uploadButton = root?.querySelector('[data-eats-post-upload]');
       const card = root?.querySelector('.eats-post-upload-card');
       if (!selected) return;
       const uploadLabel = root?.querySelector('.eats-post-upload-drop strong');
@@ -63718,14 +63485,19 @@ body.eats-app-shell .app-tab svg {
           mediaCount.textContent = '';
           mediaCount.hidden = true;
         }
-        if (action) action.disabled = true;
+        if (uploadButton) {
+          uploadButton.disabled = false;
+          uploadButton.classList.remove('is-maxed');
+        }
+        actions.forEach((action) => { action.disabled = true; });
         return;
       }
       const hasVideo = postMediaItems.some((item) => item.type === 'video');
       const photos = postMediaItems.filter((item) => item.type === 'image');
+      const maxedPhotos = !hasVideo && photos.length >= 10;
       const countCopy = hasVideo
-        ? '1 video selected'
-        : `${photos.length}/10 photos selected`;
+        ? '1 video'
+        : `${photos.length} of 10`;
       const editCopy = postMediaEditingIndex >= 0 && photos[postMediaEditingIndex]
         ? `Editing photo ${postMediaEditingIndex + 1}`
         : 'Swipe to preview. Edit or delete any item.';
@@ -63738,26 +63510,38 @@ body.eats-app-shell .app-tab svg {
               </span>
               <strong>${escapeHtml(item.name || 'Demo video')}</strong>
               <span>No preview needed</span>
-              <span class="eats-post-media-actions">
-                <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}">Delete</button>
-              </span>
+              <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}" aria-label="Delete selected video">
+                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-trash-delete"></use></svg>
+              </button>
             </article>
           `;
         }
         return `
           <article class="eats-post-selected-thumb${postMediaEditingIndex === index ? ' is-editing' : ''}">
-            <span class="eats-post-media-index">${index + 1}</span>
+            <span class="eats-post-media-index">${index + 1}/${photos.length || postMediaItems.length}</span>
             <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.name)}" loading="lazy" data-eats-crop-media data-media-index="${index}">
+            ${photos.length > 1 ? `
+              <button class="eats-post-carousel-arrow eats-post-carousel-prev" type="button" data-eats-post-carousel="prev" aria-label="Previous photo">
+                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="eats-post-carousel-arrow eats-post-carousel-next" type="button" data-eats-post-carousel="next" aria-label="Next photo">
+                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            ` : ''}
             <span class="eats-post-media-actions">
               <button class="eats-post-media-action" type="button" data-eats-post-edit="${index}">${postMediaEditingIndex === index ? 'Done' : 'Edit'}</button>
-              <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}">Delete</button>
+              <button class="eats-post-media-delete" type="button" data-eats-post-remove="${index}" aria-label="Delete selected photo">
+                <svg class="eats-svg-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#eats-icon-trash-delete"></use></svg>
+              </button>
             </span>
           </article>
         `;
       }).join('');
+      const dots = Array.from({ length: Math.min(5, Math.max(1, photos.length || postMediaItems.length)) }, (_, index) => `<span class="${index === 0 ? 'is-active' : ''}"></span>`).join('');
       selected.innerHTML = `
         <div class="eats-post-selected-grid" aria-label="Selected media">${tiles}</div>
         <div class="eats-post-selected-meta">
+          <span class="eats-post-selected-dots" aria-hidden="true">${dots}</span>
           <span class="eats-post-selected-note">${editCopy}</span>
         </div>
       `;
@@ -63768,8 +63552,28 @@ body.eats-app-shell .app-tab svg {
         mediaCount.textContent = countCopy;
         mediaCount.hidden = false;
       }
-      if (action) action.disabled = false;
+      if (uploadButton) {
+        uploadButton.disabled = maxedPhotos;
+        uploadButton.classList.toggle('is-maxed', maxedPhotos);
+      }
+      actions.forEach((action) => { action.disabled = false; });
       bindCropGestures(root);
+      bindPostMediaCarousel(root);
+    };
+
+    const bindPostMediaCarousel = (root) => {
+      const grid = root?.querySelector('.eats-post-selected-grid');
+      const dots = root ? Array.from(root.querySelectorAll('.eats-post-selected-dots span')) : [];
+      if (!grid || !dots.length) return;
+      const updateDots = () => {
+        const index = Math.max(0, Math.min(dots.length - 1, Math.round(grid.scrollLeft / Math.max(1, grid.clientWidth))));
+        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === index));
+      };
+      if (!grid.dataset.eatsPostCarouselBound) {
+        grid.dataset.eatsPostCarouselBound = 'true';
+        grid.addEventListener('scroll', () => window.requestAnimationFrame(updateDots), { passive: true });
+      }
+      updateDots();
     };
 
     const renderPostMedia = (root, fileList) => {
@@ -63895,6 +63699,19 @@ body.eats-app-shell .app-tab svg {
         return;
       }
 
+      const postRestaurantIdentity = event.target.closest('[data-eats-post-restaurant-identity]');
+      if (postRestaurantIdentity) {
+        event.preventDefault();
+        event.stopPropagation();
+        const root = postRestaurantIdentity.closest('[data-eats-post-composer]');
+        const search = root?.querySelector('[data-eats-post-restaurant-search]');
+        const results = root?.querySelector('[data-eats-post-restaurant-results]');
+        const nextOpen = !search?.classList.contains('is-open');
+        if (results) results.innerHTML = postRestaurantOptions('');
+        setPostRestaurantDropdown(root, nextOpen);
+        return;
+      }
+
       const postVideoOpen = event.target.closest('[data-eats-post-video-open]');
       if (postVideoOpen) {
         event.preventDefault();
@@ -63942,6 +63759,18 @@ body.eats-app-shell .app-tab svg {
         event.stopPropagation();
         const root = editMediaButton.closest('[data-eats-post-composer]');
         togglePostMediaEdit(root, Number(editMediaButton.dataset.eatsPostEdit));
+        return;
+      }
+
+      const carouselButton = event.target.closest('[data-eats-post-carousel]');
+      if (carouselButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        const grid = carouselButton.closest('[data-eats-post-selected]')?.querySelector('.eats-post-selected-grid');
+        if (grid) {
+          const direction = carouselButton.dataset.eatsPostCarousel === 'prev' ? -1 : 1;
+          grid.scrollBy({ left: direction * grid.clientWidth, behavior: 'smooth' });
+        }
         return;
       }
 
@@ -69683,6 +69512,27 @@ body.eats-app-shell .app-tab svg {
     }
   }
 </style>
+<style id="codex-onboarding-logo-canvas-20260606">
+  .eats-first-onboarding .eats-onboarding-hero,
+  .eats-first-onboarding .eats-onboarding-hero-tall {
+    display: grid !important;
+    place-items: start center !important;
+    padding-top: max(34px, env(safe-area-inset-top)) !important;
+    background: #fff !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-hero .eats-onboarding-logo,
+  .eats-first-onboarding .eats-onboarding-hero-tall .eats-onboarding-logo {
+    width: min(132px, 34vw) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 58px !important;
+    flex: 0 0 auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+  }
+</style>
 <style id="codex-settings-order-card-weight-soften-20260604">
   #customer-settings-modal-root .cs-order-title-block h3,
   #customer-settings-modal-root .cs-order-title-row h3 {
@@ -70194,6 +70044,118 @@ body.eats-app-shell .app-tab svg {
     stroke: currentColor !important;
   }
 
+</style>
+<style id="codex-liquid-glass-stable-nav-and-actions-20260607">
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon {
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,.68) !important;
+    background:
+      radial-gradient(circle at 30% 0%, rgba(255,255,255,.78), rgba(255,255,255,0) 46%),
+      linear-gradient(135deg, rgba(255,255,255,.54), rgba(255,255,255,.18) 48%, rgba(255,255,255,.38)) !important;
+    color: #111827 !important;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.92),
+      inset 0 -1px 1px rgba(255,255,255,.26),
+      0 16px 34px -22px rgba(18,24,38,.62),
+      0 1px 2px rgba(18,24,38,.10) !important;
+    backdrop-filter: blur(18px) saturate(1.35) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.35) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"] #restaurant-view .restaurant-mobile-topbar .restaurant-top-actions .restaurant-top-icon .eats-svg-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav {
+    left: 50% !important;
+    right: auto !important;
+    bottom: max(28px, calc(env(safe-area-inset-bottom) + 24px)) !important;
+    width: var(--eats-liquid-nav-width) !important;
+    min-height: 58px !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    padding: 4px 5px !important;
+    transform: translateX(-50%) translateZ(0) !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255,255,255,.68) !important;
+    border-radius: 999px !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.56), rgba(255,255,255,.18) 32%, rgba(255,255,255,.07) 100%),
+      radial-gradient(ellipse at 50% -34%, rgba(255,255,255,.92), rgba(255,255,255,.16) 44%, rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse at 16% 115%, rgba(130,210,255,.20), rgba(130,210,255,0) 48%),
+      radial-gradient(ellipse at 88% 118%, rgba(255,190,170,.18), rgba(255,190,170,0) 48%),
+      rgba(255,255,255,.045) !important;
+    background-color: rgba(255,255,255,.045) !important;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.98),
+      inset 0 -1px 1px rgba(255,255,255,.24),
+      inset 0 14px 22px -18px rgba(255,255,255,.86),
+      inset 0 -18px 26px -18px rgba(19,24,31,.18),
+      inset 18px 0 30px -26px rgba(255,255,255,.62),
+      inset -18px 0 30px -26px rgba(49,56,66,.18),
+      0 18px 44px -28px rgba(9,15,24,.48),
+      0 2px 7px -4px rgba(9,15,24,.30) !important;
+    backdrop-filter: blur(24px) saturate(290%) brightness(1.22) contrast(1.08) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(290%) brightness(1.22) contrast(1.08) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-liquid-nav-lens {
+    display: block !important;
+    width: var(--eats-liquid-lens-w, calc((100% - 21px) / 4)) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab {
+    display: flex !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: rgba(38,43,50,.64) !important;
+    -webkit-text-fill-color: rgba(38,43,50,.64) !important;
+    text-shadow: 0 1px 0 rgba(255,255,255,.42) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab > :is(.eats-svg-icon, span) {
+    transform: none !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab:is(.active, [aria-current="page"]) {
+    color: #05070a !important;
+    -webkit-text-fill-color: #05070a !important;
+    background: transparent !important;
+    font-weight: 720 !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab:is(.active, [aria-current="page"]) > :is(.eats-svg-icon, span) {
+    transform: translateY(-1px) scale(1.015) !important;
+  }
+
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab :is(span, svg, .eats-svg-icon),
+  body[data-eats-theme="liquid-glass"].eats-app-shell #eats-app-bottom-nav .app-tab svg * {
+    color: currentColor !important;
+    -webkit-text-fill-color: currentColor !important;
+    stroke: currentColor !important;
+  }
 </style>
 <style id="codex-auth-brand-icons-20260604">
   .mouthshut-navbar-extract #authModal .auth-step[data-step="phone"] .social-btn .auth-brand-icon {
@@ -71008,5 +70970,1079 @@ body.eats-app-shell .app-tab svg {
     font-weight: 500 !important;
   }
 </style>
+<style id="codex-post-eats-preview-redesign-20260607">
+  body.eats-app-shell .eats-post-composer-root {
+    background: #fff !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-shell {
+    max-width: 430px !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #fff !important;
+    color: #090a0d !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 12 !important;
+    min-height: 74px !important;
+    padding: max(12px, env(safe-area-inset-top)) 18px 14px !important;
+    display: grid !important;
+    grid-template-columns: 54px 1fr 82px !important;
+    align-items: center !important;
+    border-bottom: 1px solid #edf0f4 !important;
+    background: rgba(255,255,255,.96) !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back {
+    width: 44px !important;
+    height: 44px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #05070a !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back .eats-svg-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-header h1 {
+    justify-self: center !important;
+    margin: 0 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-action {
+    justify-self: end !important;
+    width: 72px !important;
+    min-width: 72px !important;
+    height: 52px !important;
+    border: 0 !important;
+    border-radius: 28px !important;
+    background: #090a0d !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-action:disabled {
+    background: #a0a0a0 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    padding: 0 16px calc(116px + env(safe-area-inset-bottom)) !important;
+    overflow-y: auto !important;
+    background: #fff !important;
+  }
+
+  body.eats-app-shell .eats-post-form-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  body.eats-app-shell .eats-post-card {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card {
+    order: 2 !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-restaurant-search) {
+    order: 1 !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption) {
+    order: 3 !important;
+    margin-top: 22px !important;
+  }
+
+  body.eats-app-shell .eats-post-label,
+  body.eats-app-shell .eats-post-restaurant-search,
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop-inner > span:not(.eats-post-plus):not(strong),
+  body.eats-app-shell .eats-post-media-action,
+  body.eats-app-shell .eats-post-selected-note {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity {
+    min-height: 92px !important;
+    display: grid !important;
+    grid-template-columns: 58px minmax(0, 1fr) 32px !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 18px 0 !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity img {
+    width: 58px !important;
+    height: 58px !important;
+    border-radius: 999px !important;
+    object-fit: cover !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity span {
+    min-width: 0 !important;
+    display: grid !important;
+    gap: 3px !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity strong {
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    color: #090a0d !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity em {
+    font-style: normal !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    color: #6f7682 !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity > .eats-svg-icon {
+    width: 24px !important;
+    height: 24px !important;
+    color: #5e6672 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media {
+    gap: 0 !important;
+  }
+
+  body.eats-app-shell .eats-post-selected {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-grid {
+    display: flex !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    border-radius: 14px !important;
+    scrollbar-width: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb,
+  body.eats-app-shell .eats-post-selected-video {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1.38 / 1 !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: #090a0d !important;
+    overflow: hidden !important;
+    scroll-snap-align: start !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transform: translate(var(--crop-x, 0), var(--crop-y, 0)) scale(var(--crop-scale, 1)) !important;
+  }
+
+  body.eats-app-shell .eats-post-media-index {
+    left: 14px !important;
+    top: 14px !important;
+    min-width: 58px !important;
+    height: 46px !important;
+    padding: 0 13px !important;
+    border-radius: 24px !important;
+    background: rgba(0,0,0,.44) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell .eats-post-media-actions {
+    left: auto !important;
+    right: 12px !important;
+    top: 12px !important;
+    bottom: auto !important;
+    width: auto !important;
+    display: flex !important;
+    pointer-events: none !important;
+  }
+
+  body.eats-app-shell .eats-post-media-delete {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border: 1px solid rgba(255,255,255,.56) !important;
+    border-radius: 999px !important;
+    background: rgba(0,0,0,.50) !important;
+    color: #fff !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,.22) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    pointer-events: auto !important;
+  }
+
+  body.eats-app-shell .eats-post-media-delete .eats-svg-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-arrow {
+    position: absolute !important;
+    top: 67% !important;
+    z-index: 3 !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: grid !important;
+    place-items: center !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,.94) !important;
+    color: #05070a !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,.16) !important;
+    transform: translateY(-50%) !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-prev {
+    left: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-next {
+    right: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-arrow .eats-svg-icon {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-meta {
+    position: relative !important;
+    min-height: 54px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots span {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: #d7dce3 !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots span.is-active {
+    background: #090a0d !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-count,
+  body.eats-app-shell .eats-post-media-count {
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    display: block !important;
+    color: #6f7682 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    transform: translateY(-50%) !important;
+  }
+
+  body.eats-app-shell .eats-post-media-count {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop {
+    width: min(220px, 78%) !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+    border: 1px solid #dfe4ec !important;
+    outline: 0 !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    color: #59616d !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-plus {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    background: transparent !important;
+    color: #59616d !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong {
+    display: block !important;
+    color: #59616d !important;
+    -webkit-text-fill-color: #59616d !important;
+    font-size: 16px !important;
+    font-weight: 650 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong::before {
+    content: "Add More Photos" !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong {
+    font-size: 0 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong::before {
+    font-size: 16px !important;
+  }
+
+  body.eats-app-shell .eats-post-caption {
+    min-height: 196px !important;
+    padding: 18px 18px 42px !important;
+    border: 1px solid #dfe4ec !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    color: #111217 !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    resize: none !important;
+  }
+
+  body.eats-app-shell .eats-post-caption::placeholder {
+    color: transparent !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption)::after {
+    content: "0 / 500" !important;
+    position: absolute !important;
+    right: 18px !important;
+    bottom: 18px !important;
+    color: #7a828e !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    pointer-events: none !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption) {
+    position: relative !important;
+  }
+
+  body.eats-app-shell .eats-post-caption:placeholder-shown {
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(#fff, #fff) border-box !important;
+  }
+
+  body.eats-app-shell .eats-post-caption:placeholder-shown + * {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption)::before {
+    content: "Write a caption..." !important;
+    position: absolute !important;
+    left: 18px !important;
+    top: 18px !important;
+    z-index: 1 !important;
+    color: #8e96a3 !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    pointer-events: none !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption:focus)::before,
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption:not(:placeholder-shown))::before {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-bottom-action {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px)) !important;
+    z-index: 14 !important;
+    width: min(398px, calc(100vw - 32px)) !important;
+    height: 58px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 26px !important;
+    background: #090a0d !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    transform: translateX(-50%) !important;
+    border: 0 !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-bottom-action:disabled {
+    background: #a0a0a0 !important;
+    cursor: default !important;
+  }
+
+  @media (max-width: 390px) {
+    body.eats-app-shell .eats-post-selected-thumb,
+    body.eats-app-shell .eats-post-selected-video {
+      aspect-ratio: 1.25 / 1 !important;
+    }
+
+    body.eats-app-shell .eats-post-caption {
+      min-height: 168px !important;
+    }
+  }
+</style>
+<style id="codex-post-eats-compact-polish-20260607">
+  body.eats-app-shell .eats-post-composer-header {
+    min-height: 64px !important;
+    padding: max(8px, env(safe-area-inset-top)) 16px 10px !important;
+    grid-template-columns: 42px 1fr 64px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back .eats-svg-icon {
+    width: 27px !important;
+    height: 27px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-header h1 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-action {
+    width: 58px !important;
+    min-width: 58px !important;
+    height: 44px !important;
+    border-radius: 23px !important;
+    font-size: 14px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-body {
+    padding: 0 16px calc(86px + env(safe-area-inset-bottom)) !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-restaurant-search) {
+    position: relative !important;
+    margin: 12px 0 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity {
+    width: 100% !important;
+    min-height: 64px !important;
+    grid-template-columns: 44px minmax(0, 1fr) 22px !important;
+    gap: 11px !important;
+    padding: 9px 12px !important;
+    border: 1px solid #e2e6ee !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    color: #090a0d !important;
+    text-align: left !important;
+    box-shadow: 0 12px 28px -24px rgba(15,23,42,.42) !important;
+    cursor: pointer !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity[aria-expanded="true"] {
+    border-color: #111217 !important;
+    box-shadow: 0 0 0 3px rgba(17,18,23,.06), 0 16px 34px -26px rgba(15,23,42,.5) !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity strong {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity em {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity > .eats-svg-icon {
+    width: 20px !important;
+    height: 20px !important;
+    transition: transform .18s ease !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-identity[aria-expanded="true"] > .eats-svg-icon {
+    transform: rotate(180deg) !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-search {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: calc(100% + 6px) !important;
+    z-index: 40 !important;
+    pointer-events: none !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-search.is-open {
+    pointer-events: auto !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-input-shell {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-results {
+    position: static !important;
+    max-height: 248px !important;
+    display: grid !important;
+    gap: 5px !important;
+    padding: 8px !important;
+    border: 1px solid #e0e4eb !important;
+    border-radius: 16px !important;
+    background: rgba(255,255,255,.98) !important;
+    box-shadow: 0 18px 44px -24px rgba(15,23,42,.46), 0 0 0 1px rgba(255,255,255,.8) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-results[hidden] {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-option {
+    min-height: 44px !important;
+    padding: 8px 10px !important;
+    border-radius: 11px !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-option strong {
+    font-size: 13.5px !important;
+    font-weight: 650 !important;
+  }
+
+  body.eats-app-shell .eats-post-restaurant-option span {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-drop {
+    min-height: 188px !important;
+    border-radius: 18px !important;
+    padding: 18px !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-drop .eats-post-plus {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-drop strong {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-drop-inner > span:not(.eats-post-plus):not(strong) {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-chip {
+    height: 34px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb,
+  body.eats-app-shell .eats-post-selected-video {
+    aspect-ratio: 1.58 / 1 !important;
+    border-radius: 15px !important;
+  }
+
+  body.eats-app-shell .eats-post-media-index {
+    left: 12px !important;
+    top: 12px !important;
+    min-width: 54px !important;
+    height: 38px !important;
+    padding: 0 12px !important;
+    border-radius: 20px !important;
+    background: rgba(0,0,0,.58) !important;
+    font-size: 15px !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
+  body.eats-app-shell .eats-post-media-actions {
+    inset: 0 !important;
+    display: block !important;
+  }
+
+  body.eats-app-shell .eats-post-media-delete {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    border: 1px solid rgba(255,255,255,.86) !important;
+    background: rgba(255,255,255,.96) !important;
+    color: #d92d20 !important;
+    box-shadow: 0 12px 26px -16px rgba(15,23,42,.62) !important;
+  }
+
+  body.eats-app-shell .eats-post-media-delete .eats-svg-icon,
+  body.eats-app-shell .eats-post-media-delete .eats-svg-icon * {
+    width: 19px !important;
+    height: 19px !important;
+    stroke-width: 1.35 !important;
+  }
+
+  body.eats-app-shell .eats-post-media-action {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 11px !important;
+    height: 32px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 14px !important;
+    border: 1px solid rgba(255,255,255,.76) !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,.94) !important;
+    color: #111217 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    box-shadow: 0 12px 24px -16px rgba(15,23,42,.54) !important;
+    transform: translateX(-50%) !important;
+    pointer-events: auto !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-thumb.is-editing {
+    outline: 2px solid rgba(17,18,23,.88) !important;
+    outline-offset: 2px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-arrow {
+    top: auto !important;
+    bottom: 11px !important;
+    width: 39px !important;
+    height: 39px !important;
+    background: rgba(255,255,255,.96) !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-prev {
+    left: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-next {
+    right: 12px !important;
+  }
+
+  body.eats-app-shell .eats-post-carousel-arrow .eats-svg-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-meta {
+    min-height: 38px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots {
+    gap: 8px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots span {
+    width: 7px !important;
+    height: 7px !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-count {
+    font-size: 14px !important;
+    color: #737b87 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop {
+    width: min(196px, 72%) !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 16px !important;
+    border-color: #d9dee7 !important;
+    background: #fff !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop.is-maxed {
+    opacity: .52 !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-plus {
+    width: 21px !important;
+    height: 21px !important;
+    min-width: 21px !important;
+  }
+
+  body.eats-app-shell .eats-post-upload-card.has-media .eats-post-upload-drop strong::before {
+    font-size: 14px !important;
+    font-weight: 650 !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption) {
+    margin-top: 16px !important;
+    margin-bottom: 76px !important;
+  }
+
+  body.eats-app-shell .eats-post-caption {
+    min-height: 112px !important;
+    padding: 14px 15px !important;
+    border-radius: 16px !important;
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption)::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-card:has(.eats-post-caption)::before {
+    left: 15px !important;
+    top: 14px !important;
+    font-size: 15px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-bottom-action {
+    width: min(382px, calc(100vw - 32px)) !important;
+    height: 52px !important;
+    bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px)) !important;
+    border-radius: 24px !important;
+    font-size: 16px !important;
+  }
+
+  @media (max-width: 390px) {
+    body.eats-app-shell .eats-post-composer-body {
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+    }
+
+    body.eats-app-shell .eats-post-selected-thumb,
+    body.eats-app-shell .eats-post-selected-video {
+      aspect-ratio: 1.48 / 1 !important;
+    }
+  }
+</style>
+<style id="codex-bookmark-fill-black-20260607">
+  #restaurant-view .restaurant-top-icon:has(use[href="#eats-icon-bookmark"]),
+  .bookmark-btn:has(use[href="#eats-icon-bookmark"]) {
+    --eats-bookmark-fill: none;
+  }
+
+  #restaurant-view .restaurant-top-icon.is-saved:has(use[href="#eats-icon-bookmark"]),
+  #restaurant-view .restaurant-top-icon[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]),
+  .bookmark-btn.active:has(use[href="#eats-icon-bookmark"]),
+  .bookmark-btn.is-saved:has(use[href="#eats-icon-bookmark"]),
+  .bookmark-btn[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]) {
+    --eats-bookmark-fill: currentColor;
+    color: #050505 !important;
+    -webkit-text-fill-color: #050505 !important;
+  }
+
+  #restaurant-view .restaurant-top-icon.is-saved:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon,
+  #restaurant-view .restaurant-top-icon[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon,
+  .bookmark-btn.active:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon,
+  .bookmark-btn.is-saved:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon,
+  .bookmark-btn[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon {
+    color: #050505 !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  #restaurant-view .restaurant-top-icon.is-saved:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon use,
+  #restaurant-view .restaurant-top-icon[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon use,
+  .bookmark-btn.active:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon use,
+  .bookmark-btn.is-saved:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon use,
+  .bookmark-btn[aria-pressed="true"]:has(use[href="#eats-icon-bookmark"]) .eats-svg-icon use {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+</style>
+<style id="codex-remove-flow-guides-20260607">
+  .app-tutorial-launch,
+  .app-tutorial-overlay,
+  .app-flow-tip,
+  .flow-tip-trigger,
+  [data-app-tutorial-open],
+  [data-flow-tip],
+  [data-flow-tip-close] {
+    display: none !important;
+  }
+</style>
+<style id="codex-post-eats-count-back-polish-20260607">
+  body.eats-app-shell .eats-post-composer-header {
+    grid-template-columns: 48px 1fr 76px !important;
+    padding: 10px 16px !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border: 1px solid #e2e6ee !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    color: #050505 !important;
+    box-shadow: 0 10px 24px -20px rgba(15, 23, 42, .5) !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back .eats-svg-icon {
+    width: 25px !important;
+    height: 25px !important;
+    stroke-width: 2.6 !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-back:active {
+    transform: scale(.96) !important;
+    background: #f7f8fa !important;
+  }
+
+  body.eats-app-shell .eats-post-media-index {
+    left: 12px !important;
+    top: 12px !important;
+    width: auto !important;
+    min-width: 56px !important;
+    height: 34px !important;
+    padding: 0 13px !important;
+    border-radius: 999px !important;
+    background: rgba(8, 9, 11, .78) !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 720 !important;
+    line-height: 34px !important;
+    letter-spacing: 0 !important;
+    box-shadow: 0 10px 24px -16px rgba(0, 0, 0, .65), inset 0 0 0 1px rgba(255,255,255,.1) !important;
+    backdrop-filter: blur(14px) saturate(1.1) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(1.1) !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-meta {
+    min-height: 24px !important;
+    margin: 9px 0 4px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    grid-template-columns: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-count,
+  body.eats-app-shell .eats-post-selected-note {
+    display: none !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-dots {
+    justify-content: center !important;
+    margin: 0 auto !important;
+  }
+
+  body.eats-app-shell .eats-post-composer-bottom-action {
+    font-size: 16px !important;
+    font-weight: 740 !important;
+  }
+</style>
+<style id="codex-onboarding-weights-stable-text-20260607">
+  .eats-first-onboarding .eats-onboarding-hero,
+  .eats-first-onboarding .eats-onboarding-hero-tall {
+    height: 58dvh !important;
+    min-height: 360px !important;
+    max-height: 590px !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy {
+    display: grid !important;
+    grid-template-rows: 30px 92px 58px 1fr 64px !important;
+    align-items: start !important;
+    justify-items: center !important;
+    padding: 18px 30px 28px !important;
+    text-align: center !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-dots {
+    grid-row: 1 !important;
+    align-self: start !important;
+    margin: 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy h2 {
+    grid-row: 2 !important;
+    align-self: start !important;
+    max-width: 350px !important;
+    margin: 0 auto !important;
+    font-size: clamp(22px, 5.7vw, 26px) !important;
+    line-height: 1.13 !important;
+    font-weight: 590 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-copy p {
+    grid-row: 3 !important;
+    align-self: start !important;
+    max-width: 324px !important;
+    margin: 0 auto !important;
+    font-size: 15px !important;
+    line-height: 1.32 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-actions,
+  .eats-first-onboarding .eats-onboarding-login {
+    grid-row: 5 !important;
+    align-self: end !important;
+    margin-top: 0 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-actions button,
+  .eats-first-onboarding .eats-onboarding-skip,
+  .eats-first-onboarding .eats-onboarding-next,
+  .eats-first-onboarding .eats-onboarding-login,
+  .eats-first-onboarding .eats-onboarding-next span {
+    font-weight: 500 !important;
+  }
+
+  .eats-first-onboarding .eats-onboarding-next,
+  .eats-first-onboarding .eats-onboarding-login {
+    font-size: 17px !important;
+  }
+
+  @media (max-height: 720px) {
+    .eats-first-onboarding .eats-onboarding-hero,
+    .eats-first-onboarding .eats-onboarding-hero-tall {
+      height: 55dvh !important;
+      min-height: 310px !important;
+    }
+
+    .eats-first-onboarding .eats-onboarding-copy {
+      grid-template-rows: 28px 86px 54px 1fr 58px !important;
+      padding: 16px 28px 22px !important;
+    }
+  }
+</style>
+<style id="codex-post-eats-pill-arrow-polish-20260608">
+  body.eats-app-shell .eats-post-media-index {
+    left: 14px !important;
+    top: 14px !important;
+    min-width: 50px !important;
+    height: 32px !important;
+    padding: 0 12px !important;
+    border-radius: 16px !important;
+    background: rgba(10, 11, 13, .82) !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 650 !important;
+    line-height: 32px !important;
+    letter-spacing: 0 !important;
+    text-align: center !important;
+    box-shadow:
+      0 10px 22px -16px rgba(0, 0, 0, .72),
+      inset 0 0 0 1px rgba(255, 255, 255, .08) !important;
+    backdrop-filter: blur(12px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(1.15) !important;
+  }
+
+  body.eats-app-shell .eats-post-selected-grid:has(.eats-post-selected-thumb:only-child) .eats-post-carousel-arrow {
+    display: none !important;
+  }
+</style>
+<script id="codex-remove-flow-guides-20260607">
+  (() => {
+    const FLOW_GUIDE_SELECTOR = [
+      '#appTutorialOverlay',
+      '#appFlowTip',
+      '.app-tutorial-launch',
+      '.flow-tip-trigger',
+      '[data-app-tutorial-open]',
+      '[data-flow-tip]',
+      '[data-flow-tip-close]',
+      '[data-app-tutorial-close]',
+      '[data-app-tutorial-prev]',
+      '[data-app-tutorial-next]'
+    ].join(',');
+
+    const removeFlowGuides = () => {
+      document.documentElement.classList.remove('app-tutorial-open');
+      document.body?.classList.remove('app-tutorial-open');
+      document.querySelectorAll(FLOW_GUIDE_SELECTOR).forEach((node) => node.remove());
+    };
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest?.(FLOW_GUIDE_SELECTOR)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation?.();
+    }, true);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', removeFlowGuides, { once: true });
+    } else {
+      removeFlowGuides();
+    }
+
+    const observer = new MutationObserver(removeFlowGuides);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>
 </body>
 </html>
