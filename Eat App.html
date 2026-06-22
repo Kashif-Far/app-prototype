@@ -31420,7 +31420,7 @@ dGV4dD4KPC9zdmc+Cg==
 
   #booking-flow-root .bf-payment-method-sheet .bf-payment-sheet-page,
   .pickup-customize-scope .bf-payment-method-sheet .bf-payment-sheet-page {
-    width: min(540px, 100%);
+    width: min(760px, 100%);
     margin: 0 auto;
     display: grid;
     gap: 22px;
@@ -31432,7 +31432,7 @@ dGV4dD4KPC9zdmc+Cg==
     color: #17181d;
     font-size: 17px;
     line-height: 1.14;
-    font-weight: 800;
+    font-weight: 620;
   }
 
   #booking-flow-root .bf-payment-sheet-list,
@@ -31483,7 +31483,61 @@ dGV4dD4KPC9zdmc+Cg==
 
   #booking-flow-root .bf-payment-sheet-dropdown label,
   .pickup-customize-scope .bf-payment-sheet-dropdown label {
+    display: grid !important;
+    gap: 7px !important;
     margin-top: 0 !important;
+  }
+
+  #booking-flow-root .bf-payment-method-sheet .bf-payment-sheet-dropdown label > span,
+  .pickup-customize-scope .bf-payment-method-sheet .bf-payment-sheet-dropdown label > span {
+    display: block !important;
+    margin: 0 !important;
+    padding-left: 2px !important;
+    color: #8d919a !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 560 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+  }
+
+  #booking-flow-root .bf-payment-method-sheet .bf-payment-sheet-dropdown input,
+  #booking-flow-root .bf-payment-method-sheet .bf-payment-sheet-dropdown select,
+  .pickup-customize-scope .bf-payment-method-sheet .bf-payment-sheet-dropdown input,
+  .pickup-customize-scope .bf-payment-method-sheet .bf-payment-sheet-dropdown select {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    border: 1px solid #e0e3e8 !important;
+    border-radius: 13px !important;
+    padding: 0 14px !important;
+    background: #fff !important;
+    color: #15171d !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    font-weight: 430 !important;
+    letter-spacing: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  #booking-flow-root .bf-payment-sheet-dropdown input::placeholder,
+  .pickup-customize-scope .bf-payment-sheet-dropdown input::placeholder {
+    color: #9a9ea7 !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    font-weight: 430 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #booking-flow-root .bf-payment-sheet-dropdown input:focus,
+  #booking-flow-root .bf-payment-sheet-dropdown select:focus,
+  .pickup-customize-scope .bf-payment-sheet-dropdown input:focus,
+  .pickup-customize-scope .bf-payment-sheet-dropdown select:focus {
+    border-color: #111 !important;
+    box-shadow: 0 0 0 3px rgba(17,17,17,.08);
   }
 
   #booking-flow-root .bf-payment-sheet-logo,
@@ -31498,7 +31552,14 @@ dGV4dD4KPC9zdmc+Cg==
     background: #fff;
     font-size: 11px;
     line-height: 1;
-    font-weight: 780;
+    font-weight: 620;
+  }
+
+  #booking-flow-root .bf-payment-sheet-logo.visa,
+  #booking-flow-root .bf-payment-sheet-logo.gpay,
+  .pickup-customize-scope .bf-payment-sheet-logo.visa,
+  .pickup-customize-scope .bf-payment-sheet-logo.gpay {
+    font-weight: 640;
   }
 
   #booking-flow-root .bf-payment-sheet-logo svg,
@@ -31514,7 +31575,7 @@ dGV4dD4KPC9zdmc+Cg==
     color: #202329;
     font-size: 15px;
     line-height: 1.22;
-    font-weight: 720;
+    font-weight: 560;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -31554,6 +31615,179 @@ dGV4dD4KPC9zdmc+Cg==
     font-size: 12.5px;
     line-height: 1.42;
     font-weight: 560;
+  }
+
+  #booking-flow-root .bf-payment-selected-actions,
+  .pickup-customize-scope .bf-payment-selected-actions {
+    display: grid !important;
+    gap: 12px !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row,
+  .pickup-customize-scope .bf-payment-saved-row {
+    width: 100% !important;
+    min-height: 54px !important;
+    border: 1px solid #e0e3e8 !important;
+    border-radius: 13px !important;
+    background: #fff !important;
+    padding: 9px 12px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #17181d !important;
+    text-align: left !important;
+    font: inherit !important;
+    cursor: pointer !important;
+    outline: none !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row.is-selected,
+  .pickup-customize-scope .bf-payment-saved-row.is-selected {
+    border-color: #111 !important;
+    box-shadow: 0 0 0 1px #111 inset !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row span,
+  .pickup-customize-scope .bf-payment-saved-row span {
+    min-width: 0 !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row span span:first-child,
+  .pickup-customize-scope .bf-payment-saved-row span span:first-child {
+    color: #17181d !important;
+    font-size: 14px !important;
+    line-height: 1.15 !important;
+    font-weight: 560 !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row span span:last-child,
+  .pickup-customize-scope .bf-payment-saved-row span span:last-child {
+    color: #8d919a !important;
+    font-size: 11.5px !important;
+    line-height: 1.1 !important;
+    font-weight: 430 !important;
+  }
+
+  #booking-flow-root .bf-payment-saved-row > span:last-child[aria-hidden="true"],
+  .pickup-customize-scope .bf-payment-saved-row > span:last-child[aria-hidden="true"] {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 999px !important;
+  }
+
+  #booking-flow-root .bf-payment-preferred-control,
+  .pickup-customize-scope .bf-payment-preferred-control {
+    display: grid !important;
+    gap: 5px !important;
+    padding-top: 4px !important;
+  }
+
+  #booking-flow-root .bf-payment-preferred-control button,
+  .pickup-customize-scope .bf-payment-preferred-control button {
+    width: 100% !important;
+    min-height: 34px !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #202329 !important;
+    font: inherit !important;
+    text-align: left !important;
+    cursor: pointer !important;
+  }
+
+  #booking-flow-root .bf-payment-preferred-control button > span:first-child,
+  .pickup-customize-scope .bf-payment-preferred-control button > span:first-child {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 6px !important;
+    flex: 0 0 20px !important;
+  }
+
+  #booking-flow-root .bf-payment-preferred-control button > span:last-child,
+  .pickup-customize-scope .bf-payment-preferred-control button > span:last-child {
+    color: #202329 !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    font-weight: 560 !important;
+  }
+
+  #booking-flow-root .bf-payment-preferred-control > span,
+  .pickup-customize-scope .bf-payment-preferred-control > span {
+    padding-left: 30px !important;
+    color: #8d919a !important;
+    font-size: 11.25px !important;
+    line-height: 1.35 !important;
+    font-weight: 430 !important;
+  }
+
+  #booking-flow-root .bf-payment-add-instrument,
+  .pickup-customize-scope .bf-payment-add-instrument {
+    width: 100% !important;
+    min-height: 46px !important;
+    border: 1px dashed #e0e3e8 !important;
+    border-radius: 13px !important;
+    background: #fff !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #17181d !important;
+    font: inherit !important;
+    font-size: 13.5px !important;
+    line-height: 1 !important;
+    font-weight: 560 !important;
+    cursor: pointer !important;
+  }
+
+  #booking-flow-root .bf-payment-remove-instrument,
+  .pickup-customize-scope .bf-payment-remove-instrument {
+    width: fit-content !important;
+    min-height: 32px !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 0 0 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    color: #b42318 !important;
+    font: inherit !important;
+    font-size: 12.25px !important;
+    line-height: 1.1 !important;
+    font-weight: 560 !important;
+    cursor: pointer !important;
+  }
+
+  #booking-flow-root .bf-payment-remove-instrument svg,
+  .pickup-customize-scope .bf-payment-remove-instrument svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  #booking-flow-root .bf-payment-form-action,
+  .pickup-customize-scope .bf-payment-form-action {
+    width: 100% !important;
+    height: 44px !important;
+    margin-top: 2px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    display: grid !important;
+    place-items: center !important;
+    background: #080809 !important;
+    color: #fff !important;
+    font: inherit !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    font-weight: 560 !important;
+    cursor: pointer !important;
+  }
+
+  #booking-flow-root .bf-payment-form-action:active,
+  .pickup-customize-scope .bf-payment-form-action:active {
+    transform: translateY(1px);
   }
 
   /* REVERSIBLE BOOKING FULLSCREEN FLOW START */
@@ -32939,7 +33173,7 @@ function ReviewScreen({ state, cart, contact, setContact, instructions, setInstr
   const [termsOpen, setTermsOpen] = uS2(false);
   const [policyOpen, setPolicyOpen] = uS2(false);
   const [paymentOpen, setPaymentOpen] = uS2(false);
-  const [paymentMethod, setPaymentMethod] = uS2('add-card');
+  const [paymentMethod, setPaymentMethod] = uS2(() => getStoredBookingPaymentMethod());
   const [totalExpanded, setTotalExpanded] = uS2(true);
 
   return (
@@ -33104,13 +33338,14 @@ function ReviewScreen({ state, cart, contact, setContact, instructions, setInstr
 
       {/* Footer — payment + book */}
       <div style={{
-        padding: '14px 24px 22px',
-        display: 'flex', alignItems: 'center', gap: 14,
+        padding: '14px 20px 22px',
+        display: 'flex', alignItems: 'center', gap: 10,
+        minWidth: 0,
         borderTop: '1px solid var(--line-soft)',
       }}>
-        <PaymentMethodTrigger onClick={() => setPaymentOpen(true)} />
-        <Pill variant="primary" onClick={() => onBook({ foodSubtotal, cover, gst, total })} fullWidth>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <PaymentMethodTrigger value={paymentMethod} onClick={() => setPaymentOpen(true)} />
+        <Pill variant="primary" onClick={() => onBook({ foodSubtotal, cover, gst, total })} style={{ flex: '1 1 0', minWidth: 0, width: 'auto', padding: '0 18px' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, minWidth: 0, overflow: 'hidden' }}>
             {hasFood ? 'Book table with food' : 'Pay & book table'}
             <span style={{ opacity: 0.6 }}>•</span>
             <span style={{ fontVariantNumeric: 'tabular-nums' }}>₹{total.toLocaleString('en-IN')}</span>
@@ -33446,34 +33681,192 @@ function ParcelCartConflictModal({ open, item, onConfirm, onClose }) {
   );
 }
 
-function PaymentMethodTrigger({ onClick }) {
+function getBookingPaymentMethodLabel(id) {
+  return getBookingPaymentSelectionSummary(id).title;
+}
+
+const BOOKING_PAYMENT_PREFERENCE_KEY = 'mouthshut-eats-preferred-booking-payment-method';
+const BOOKING_PAYMENT_INSTRUMENTS_KEY = 'mouthshut-eats-booking-payment-instruments';
+const BOOKING_PAYMENT_METHOD_IDS = ['add-card', 'add-upi', 'net-banking'];
+const BOOKING_MAX_SAVED_CARDS = 5;
+const BOOKING_CARD_TOKEN_NOTE = 'Your card details are saved securely by our payment partner in line with RBI guidelines.';
+const BOOKING_UPI_SAVE_NOTE = 'Your UPI ID is saved securely for faster checkout. You can still choose another UPI ID for a single order without changing your preferred method.';
+
+function readBookingPaymentStore() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(BOOKING_PAYMENT_INSTRUMENTS_KEY) || 'null');
+    return {
+      cards: Array.isArray(parsed?.cards) ? parsed.cards : [],
+      upis: Array.isArray(parsed?.upis) ? parsed.upis : [],
+    };
+  } catch (err) {
+    return { cards: [], upis: [] };
+  }
+}
+
+function writeBookingPaymentStore(store) {
+  const next = {
+    cards: Array.isArray(store.cards) ? store.cards : [],
+    upis: Array.isArray(store.upis) ? store.upis : [],
+  };
+  try {
+    localStorage.setItem(BOOKING_PAYMENT_INSTRUMENTS_KEY, JSON.stringify(next));
+  } catch (err) {}
+  return next;
+}
+
+function selectionForCard(card) {
+  return card?.id ? `card:${card.id}` : 'add-card';
+}
+
+function selectionForUpi(upi) {
+  return upi?.id ? `upi:${upi.id}` : 'add-upi';
+}
+
+function getBookingSelectionGroup(selection) {
+  if (String(selection || '').startsWith('card:')) return 'add-card';
+  if (String(selection || '').startsWith('upi:')) return 'add-upi';
+  if (selection === 'net-banking') return 'net-banking';
+  if (BOOKING_PAYMENT_METHOD_IDS.includes(selection)) return selection;
+  return null;
+}
+
+function normalizeCardDigits(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function getCardBrand(digits) {
+  if (/^4/.test(digits)) return 'VISA';
+  if (/^(5[1-5]|2[2-7])/.test(digits)) return 'MASTERCARD';
+  if (/^3[47]/.test(digits)) return 'AMEX';
+  if (/^(60|65|81|82|508|607)/.test(digits)) return 'RUPAY';
+  return 'CARD';
+}
+
+function inferCardFundingType(digits) {
+  if (/^(60|65|81|82|508|607)/.test(digits)) return 'Debit Card';
+  return 'Credit Card';
+}
+
+function createBookingCardInstrument(form) {
+  const digits = normalizeCardDigits(form.cardNumber) || '4111111111111234';
+  const last4 = digits.slice(-4).padStart(4, '0');
+  return {
+    id: `card-${Date.now()}-${last4}`,
+    brand: getCardBrand(digits),
+    fundingType: inferCardFundingType(digits),
+    last4,
+    nickname: String(form.nickname || '').trim() || 'Personal card',
+    holderName: String(form.name || '').trim() || 'Kashif Farooqui',
+  };
+}
+
+function createBookingUpiInstrument(form) {
+  const upiId = String(form.upiId || '').trim() || 'kashif@icici';
+  return {
+    id: `upi-${Date.now()}`,
+    upiId,
+    label: upiId,
+  };
+}
+
+function getInstrumentFromSelection(selection, store = readBookingPaymentStore()) {
+  const raw = String(selection || '');
+  if (raw.startsWith('card:')) {
+    const id = raw.slice(5);
+    return store.cards.find(card => card.id === id) || null;
+  }
+  if (raw.startsWith('upi:')) {
+    const id = raw.slice(4);
+    return store.upis.find(upi => upi.id === id) || null;
+  }
+  return null;
+}
+
+function getBookingPaymentSelectionSummary(selection) {
+  const store = readBookingPaymentStore();
+  const raw = String(selection || '');
+  if (raw.startsWith('card:')) {
+    const card = getInstrumentFromSelection(raw, store);
+    if (card) return { title: card.fundingType || 'Credit Card', subtitle: `${card.brand || 'CARD'} ${card.last4}`, group: 'add-card' };
+  }
+  if (raw.startsWith('upi:')) {
+    const upi = getInstrumentFromSelection(raw, store);
+    if (upi) return { title: 'UPI', subtitle: upi.upiId, group: 'add-upi' };
+  }
+  if (selection === 'add-card') return { title: 'Credit Card', subtitle: '', group: 'add-card' };
+  if (selection === 'add-upi') return { title: 'UPI', subtitle: '', group: 'add-upi' };
+  if (selection === 'net-banking') return { title: 'Net banking', subtitle: '', group: 'net-banking' };
+  return { title: 'Payment method', subtitle: '', group: null };
+}
+
+function getStoredBookingPaymentMethod() {
+  try {
+    const stored = localStorage.getItem(BOOKING_PAYMENT_PREFERENCE_KEY);
+    const group = getBookingSelectionGroup(stored);
+    if (!group) return null;
+    if (group === 'add-card' && stored !== 'add-card') {
+      return getInstrumentFromSelection(stored) ? stored : null;
+    }
+    if (group === 'add-upi' && stored !== 'add-upi') {
+      return getInstrumentFromSelection(stored) ? stored : null;
+    }
+    return stored === 'net-banking' ? stored : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function storeBookingPaymentMethodPreference(selection) {
+  if (!getBookingSelectionGroup(selection)) return;
+  try {
+    localStorage.setItem(BOOKING_PAYMENT_PREFERENCE_KEY, selection);
+  } catch (err) {}
+}
+
+function PaymentMethodTrigger({ value, onClick }) {
+  const summary = getBookingPaymentSelectionSummary(value);
+  const label = summary.title;
+  const parts = label === 'Payment method' ? ['Payment', 'method'] : [label];
+  const triggerWidth = label === 'Payment method'
+    ? 82
+    : Math.round(Math.min(summary.subtitle ? 112 : 108, Math.max(summary.subtitle ? 96 : 88, (label.length * 6.4) + (summary.subtitle ? 32 : 28))));
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Open payment methods"
+      aria-label={value ? `Open payment methods, selected ${summary.subtitle ? `${label} ${summary.subtitle}` : label}` : 'Open payment methods'}
       style={{
         height: 52,
-        width: 82,
-        flex: '0 0 82px',
+        width: triggerWidth,
+        flex: `0 0 ${triggerWidth}px`,
         border: 'none',
         background: 'transparent',
         color: 'var(--ink-0)',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        gap: 4,
+        gap: 3,
         padding: 0,
         fontFamily: 'inherit',
-        fontSize: 13,
+        fontSize: 12.75,
         lineHeight: 1.05,
-        fontWeight: 620,
+        fontWeight: 500,
         cursor: 'pointer',
+        minWidth: 0,
       }}
     >
-      <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <span>Payment</span>
-        <span>method</span>
+      <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', minWidth: 0 }}>
+        {parts.map((part, index) => (
+          <span key={`${part}-${index}`} style={{ maxWidth: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {part}
+          </span>
+        ))}
+        {summary.subtitle ? (
+          <span style={{ marginTop: 4, color: 'var(--ink-3)', fontSize: 10.25, lineHeight: 1, fontWeight: 500, whiteSpace: 'nowrap', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {summary.subtitle}
+          </span>
+        ) : null}
       </span>
       <span style={{ display: 'inline-flex', color: 'var(--ink-2)', flexShrink: 0 }}>{React.cloneElement(I.chevUp, { size: 14 })}</span>
     </button>
@@ -33481,13 +33874,20 @@ function PaymentMethodTrigger({ onClick }) {
 }
 
 function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & book table', total = 0, onSubmit }) {
-  const [draft, setDraft] = uS2(value);
-  const [openForm, setOpenForm] = uS2(value || 'add-card');
+  const initialSelection = value || getStoredBookingPaymentMethod();
+  const [draft, setDraft] = uS2(initialSelection);
+  const [openForm, setOpenForm] = uS2(getBookingSelectionGroup(initialSelection) || 'add-card');
+  const [preferredSelection, setPreferredSelection] = uS2(() => getStoredBookingPaymentMethod());
+  const [paymentStore, setPaymentStore] = uS2(() => readBookingPaymentStore());
+  const [addingCard, setAddingCard] = uS2(false);
+  const [addingUpi, setAddingUpi] = uS2(false);
+  const [cardForm, setCardForm] = uS2({ cardNumber: '', name: '', expiry: '', cvv: '', nickname: '' });
+  const [upiForm, setUpiForm] = uS2({ upiId: '' });
   const groups = [
     {
       title: 'Cards',
       rows: [
-        { id: 'add-card', kind: 'card', label: I.card || <Svg><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></Svg>, name: 'Credit/Debit Card' },
+        { id: 'add-card', kind: 'card', label: I.card || <Svg><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></Svg>, name: 'Cards' },
       ],
     },
     {
@@ -33505,39 +33905,278 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
   ];
   uE2(() => {
     if (!open) return;
-    setDraft(value || 'add-card');
-    setOpenForm(value || 'add-card');
+    const nextStore = readBookingPaymentStore();
+    const nextPreferred = getStoredBookingPaymentMethod();
+    const nextSelection = value || nextPreferred;
+    setPaymentStore(nextStore);
+    setDraft(nextSelection);
+    setOpenForm(getBookingSelectionGroup(nextSelection) || 'add-card');
+    setPreferredSelection(nextPreferred);
+    setAddingCard(false);
+    setAddingUpi(false);
   }, [open, value]);
+  const refreshStore = nextStore => {
+    const saved = writeBookingPaymentStore(nextStore);
+    setPaymentStore(saved);
+    return saved;
+  };
+  const selectSelection = selection => {
+    setDraft(selection);
+    onChange(selection);
+  };
+  const preferredForMethod = method => {
+    if (method.id === 'add-card') {
+      const preferredCard = paymentStore.cards.find(card => selectionForCard(card) === preferredSelection);
+      return preferredCard ? selectionForCard(preferredCard) : (paymentStore.cards[0] ? selectionForCard(paymentStore.cards[0]) : 'add-card');
+    }
+    if (method.id === 'add-upi') {
+      const preferredUpi = paymentStore.upis.find(upi => selectionForUpi(upi) === preferredSelection);
+      return preferredUpi ? selectionForUpi(preferredUpi) : (paymentStore.upis[0] ? selectionForUpi(paymentStore.upis[0]) : 'add-upi');
+    }
+    return method.id;
+  };
   const selectMethod = method => {
-    const id = method.id;
-    const nextOpen = openForm === id ? null : id;
-    setDraft(id);
-    onChange(id);
+    const nextOpen = openForm === method.id ? null : method.id;
+    selectSelection(preferredForMethod(method));
     setOpenForm(nextOpen);
+    setAddingCard(false);
+    setAddingUpi(false);
+  };
+  const makePreferred = method => {
+    let selection = draft;
+    if (method.id === 'add-card') {
+      const selectedCard = getInstrumentFromSelection(draft, paymentStore);
+      if (!selectedCard || addingCard || draft === 'add-card') {
+        if (paymentStore.cards.length >= BOOKING_MAX_SAVED_CARDS) return;
+        const card = createBookingCardInstrument(cardForm);
+        const nextStore = refreshStore({ ...paymentStore, cards: [...paymentStore.cards, card] });
+        selection = selectionForCard(card);
+        setPaymentStore(nextStore);
+        setAddingCard(false);
+        setCardForm({ cardNumber: '', name: '', expiry: '', cvv: '', nickname: '' });
+      }
+    } else if (method.id === 'add-upi') {
+      const selectedUpi = getInstrumentFromSelection(draft, paymentStore);
+      if (!selectedUpi || addingUpi || draft === 'add-upi') {
+        const upi = createBookingUpiInstrument(upiForm);
+        const nextStore = refreshStore({ ...paymentStore, upis: [...paymentStore.upis, upi] });
+        selection = selectionForUpi(upi);
+        setPaymentStore(nextStore);
+        setAddingUpi(false);
+        setUpiForm({ upiId: '' });
+      }
+    } else {
+      selection = 'net-banking';
+    }
+    selectSelection(selection);
+    setOpenForm(method.id);
+    setPreferredSelection(selection);
+    storeBookingPaymentMethodPreference(selection);
+  };
+  const removeCard = card => {
+    const selection = selectionForCard(card);
+    const nextCards = paymentStore.cards.filter(item => item.id !== card.id);
+    const nextStore = refreshStore({ ...paymentStore, cards: nextCards });
+    const wasPreferred = preferredSelection === selection;
+    const wasSelected = draft === selection;
+    if (wasPreferred) {
+      try { localStorage.removeItem(BOOKING_PAYMENT_PREFERENCE_KEY); } catch (err) {}
+      setPreferredSelection(null);
+    }
+    if (wasSelected || wasPreferred) {
+      const fallback = nextCards[0] ? selectionForCard(nextCards[0]) : null;
+      setDraft(fallback);
+      onChange(fallback);
+      setOpenForm(fallback ? 'add-card' : 'add-card');
+      setAddingCard(!fallback);
+    }
+    setPaymentStore(nextStore);
+  };
+  const removeUpi = upi => {
+    const selection = selectionForUpi(upi);
+    const nextUpis = paymentStore.upis.filter(item => item.id !== upi.id);
+    const nextStore = refreshStore({ ...paymentStore, upis: nextUpis });
+    const wasPreferred = preferredSelection === selection;
+    const wasSelected = draft === selection;
+    if (wasPreferred) {
+      try { localStorage.removeItem(BOOKING_PAYMENT_PREFERENCE_KEY); } catch (err) {}
+      setPreferredSelection(null);
+    }
+    if (wasSelected || wasPreferred) {
+      const fallback = nextUpis[0] ? selectionForUpi(nextUpis[0]) : null;
+      setDraft(fallback);
+      onChange(fallback);
+      setOpenForm('add-upi');
+      setAddingUpi(!fallback);
+    }
+    setPaymentStore(nextStore);
+  };
+  const addCardFromSheet = () => {
+    if (paymentStore.cards.length >= BOOKING_MAX_SAVED_CARDS) return;
+    const card = createBookingCardInstrument(cardForm);
+    const nextStore = refreshStore({ ...paymentStore, cards: [...paymentStore.cards, card] });
+    const selection = selectionForCard(card);
+    setPaymentStore(nextStore);
+    setCardForm({ cardNumber: '', name: '', expiry: '', cvv: '', nickname: '' });
+    setAddingCard(false);
+    selectSelection(selection);
+  };
+  const addUpiFromSheet = () => {
+    const upi = createBookingUpiInstrument(upiForm);
+    const nextStore = refreshStore({ ...paymentStore, upis: [...paymentStore.upis, upi] });
+    const selection = selectionForUpi(upi);
+    setPaymentStore(nextStore);
+    setUpiForm({ upiId: '' });
+    setAddingUpi(false);
+    selectSelection(selection);
   };
   const submitPayment = () => {
-    onChange(draft);
+    let selection = draft;
+    const hasCardFormData = Object.values(cardForm).some(value => String(value || '').trim());
+    const hasUpiFormData = String(upiForm.upiId || '').trim();
+    if (draft === 'add-card' && hasCardFormData && paymentStore.cards.length < BOOKING_MAX_SAVED_CARDS) {
+      const card = createBookingCardInstrument(cardForm);
+      refreshStore({ ...paymentStore, cards: [...paymentStore.cards, card] });
+      selection = selectionForCard(card);
+    } else if (draft === 'add-upi' && hasUpiFormData) {
+      const upi = createBookingUpiInstrument(upiForm);
+      refreshStore({ ...paymentStore, upis: [...paymentStore.upis, upi] });
+      selection = selectionForUpi(upi);
+    }
+    onChange(selection);
     onClose();
     onSubmit?.();
   };
   const renderPaymentSheetForm = method => {
     if (method.id === 'add-upi') {
+      const selectedUpi = String(draft || '').startsWith('upi:') ? getInstrumentFromSelection(draft, paymentStore) : null;
+      const showUpiForm = addingUpi || paymentStore.upis.length === 0 || draft === 'add-upi';
       return (
         <div className="bf-payment-sheet-dropdown">
-          <PaymentInput label="UPI ID" placeholder="name@bank" />
+          {paymentStore.upis.map(upi => {
+            const selection = selectionForUpi(upi);
+            return (
+              <PaymentSavedInstrumentRow
+                key={upi.id}
+                title={upi.upiId}
+                subtitle="Saved UPI ID"
+                selected={draft === selection}
+                preferred={preferredSelection === selection}
+                onClick={() => { selectSelection(selection); setAddingUpi(false); }}
+              />
+            );
+          })}
+          {selectedUpi && !addingUpi ? (
+            <div className="bf-payment-selected-actions">
+              <PreferredPaymentMethodButton
+                active={preferredSelection === selectionForUpi(selectedUpi)}
+                onClick={() => makePreferred(method)}
+                note={BOOKING_UPI_SAVE_NOTE}
+              />
+              <RemovePaymentInstrumentButton label="Remove this UPI ID" onClick={() => removeUpi(selectedUpi)} />
+            </div>
+          ) : null}
+          {paymentStore.upis.length > 0 && !showUpiForm ? (
+            <AddPaymentInstrumentButton label="Add UPI ID" onClick={() => { setAddingUpi(true); selectSelection('add-upi'); }} />
+          ) : null}
+          {showUpiForm ? (
+            <React.Fragment>
+              <PaymentInput
+                label="UPI ID"
+                placeholder="kashif@icici"
+                value={upiForm.upiId}
+                onChange={event => setUpiForm({ upiId: event.target.value })}
+              />
+              <PreferredPaymentMethodButton
+                active={false}
+                onClick={() => makePreferred(method)}
+                note={BOOKING_UPI_SAVE_NOTE}
+              />
+              <button className="bf-payment-form-action" type="button" onClick={addUpiFromSheet}>Add UPI ID</button>
+            </React.Fragment>
+          ) : null}
         </div>
       );
     }
     if (method.id === 'add-card') {
+      const showCardForm = addingCard || paymentStore.cards.length === 0 || draft === 'add-card';
       return (
         <div className="bf-payment-sheet-dropdown">
-          <PaymentInput label="Card number" placeholder="1234 5678 9012 3456" />
-          <PaymentInput label="Name on card" placeholder="Kashif Farooqui" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 12 }}>
-            <PaymentInput label="Expiry" placeholder="MM/YY" />
-            <PaymentInput label="CVV" placeholder="123" />
-          </div>
-          <PaymentInput label="Nickname" placeholder="Personal card" />
+          {paymentStore.cards.map(card => {
+            const selection = selectionForCard(card);
+            const isSelectedCard = draft === selection;
+            return (
+              <React.Fragment key={card.id}>
+                <PaymentSavedInstrumentRow
+                  title={`${card.brand || 'CARD'} ${card.last4}`}
+                  subtitle={`**** **** **** ${card.last4}`}
+                  selected={isSelectedCard}
+                  preferred={preferredSelection === selection}
+                  onClick={() => { selectSelection(selection); setAddingCard(false); }}
+                />
+                {isSelectedCard && !addingCard ? (
+                  <div className="bf-payment-selected-actions">
+                    <PreferredPaymentMethodButton
+                      active={preferredSelection === selectionForCard(card)}
+                      onClick={() => makePreferred(method)}
+                      note={BOOKING_CARD_TOKEN_NOTE}
+                    />
+                    <RemovePaymentInstrumentButton label="Remove this card" onClick={() => removeCard(card)} />
+                  </div>
+                ) : null}
+              </React.Fragment>
+            );
+          })}
+          {paymentStore.cards.length > 0 && paymentStore.cards.length < BOOKING_MAX_SAVED_CARDS && !showCardForm ? (
+            <AddPaymentInstrumentButton label="Add card" onClick={() => { setAddingCard(true); selectSelection('add-card'); }} />
+          ) : null}
+          {paymentStore.cards.length >= BOOKING_MAX_SAVED_CARDS && !showCardForm ? (
+            <span style={{ fontSize: 11.5, lineHeight: 1.35, fontWeight: 500, color: 'var(--ink-4)' }}>
+              You can save up to 5 cards.
+            </span>
+          ) : null}
+          {showCardForm ? (
+            <React.Fragment>
+              <PaymentInput
+                label="Card number"
+                placeholder="1234 5678 9012 3456"
+                value={cardForm.cardNumber}
+                onChange={event => setCardForm({ ...cardForm, cardNumber: event.target.value })}
+              />
+              <PaymentInput
+                label="Name on card"
+                placeholder="Kashif Farooqui"
+                value={cardForm.name}
+                onChange={event => setCardForm({ ...cardForm, name: event.target.value })}
+              />
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 12 }}>
+                <PaymentInput
+                  label="Expiry"
+                  placeholder="MM/YY"
+                  value={cardForm.expiry}
+                  onChange={event => setCardForm({ ...cardForm, expiry: event.target.value })}
+                />
+                <PaymentInput
+                  label="CVV"
+                  placeholder="123"
+                  value={cardForm.cvv}
+                  onChange={event => setCardForm({ ...cardForm, cvv: event.target.value })}
+                />
+              </div>
+              <PaymentInput
+                label="Nickname"
+                placeholder="Personal card"
+                value={cardForm.nickname}
+                onChange={event => setCardForm({ ...cardForm, nickname: event.target.value })}
+              />
+              <PreferredPaymentMethodButton
+                active={false}
+                onClick={() => makePreferred(method)}
+                note={BOOKING_CARD_TOKEN_NOTE}
+              />
+              <button className="bf-payment-form-action" type="button" onClick={addCardFromSheet}>Add card</button>
+            </React.Fragment>
+          ) : null}
         </div>
       );
     }
@@ -33545,8 +34184,8 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
       return (
         <div className="bf-payment-sheet-dropdown">
           <label style={{ display: 'block' }}>
-            <span style={{ display: 'block', marginBottom: 8, fontSize: 12, fontWeight: 800, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.08em' }}>Select bank</span>
-            <select style={{ width: '100%', height: 52, borderRadius: 12, border: '1.5px solid var(--line)', padding: '0 14px', fontFamily: 'inherit', fontSize: 14, fontWeight: 650, background: '#fff', outline: 'none' }}>
+            <span style={{ display: 'block', marginBottom: 7, paddingLeft: 2, fontSize: 11, lineHeight: 1, fontWeight: 560, color: '#8d919a', textTransform: 'uppercase', letterSpacing: '.12em' }}>Select bank</span>
+            <select style={{ width: '100%', height: 44, borderRadius: 13, border: '1px solid #e0e3e8', padding: '0 14px', fontFamily: 'inherit', fontSize: 14, fontWeight: 430, color: '#15171d', background: '#fff', outline: 'none' }}>
               <option>HDFC Bank</option>
               <option>ICICI Bank</option>
               <option>State Bank of India</option>
@@ -33554,6 +34193,10 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
               <option>Kotak Mahindra Bank</option>
             </select>
           </label>
+          <PreferredPaymentMethodButton
+            active={preferredSelection === 'net-banking'}
+            onClick={() => makePreferred(method)}
+          />
         </div>
       );
     }
@@ -33573,7 +34216,7 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
         <button
           type="button"
           onClick={onClose}
-          aria-label="Back"
+          aria-label="Close payment methods"
           style={{
             width: 40, height: 40, borderRadius: 999,
             border: '1.5px solid var(--line)', background: '#fff',
@@ -33581,7 +34224,7 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
             cursor: 'pointer',
           }}
         >
-          {React.cloneElement(I.back, { size: 22 })}
+          {React.cloneElement(I.chevDown, { size: 22 })}
         </button>
         <h2 style={{ margin: 0, fontSize: 24, fontWeight: 820, color: 'var(--ink-0)', letterSpacing: '-0.02em' }}>Payment methods</h2>
         <span aria-hidden="true" />
@@ -33593,7 +34236,7 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
               <h3>{group.title}</h3>
               <div className="bf-payment-sheet-list">
                 {group.rows.map(method => {
-                  const active = draft === method.id;
+                  const active = getBookingSelectionGroup(draft) === method.id;
                   return (
                     <React.Fragment key={method.id}>
                       <button
@@ -33616,10 +34259,6 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
               </div>
             </section>
           ))}
-          <div className="bf-payment-sheet-note">
-            <strong>Secure payments</strong>
-            <span>Card numbers are never stored on MouthShut Eats.</span>
-          </div>
         </div>
       </ModalScroll>
       <div style={{
@@ -33639,13 +34278,183 @@ function PaymentMethodModal({ open, value, onChange, onClose, ctaLabel = 'Pay & 
   );
 }
 
-function PaymentInput({ label, placeholder }) {
+function PaymentSavedInstrumentRow({ title, subtitle, selected, preferred, onClick }) {
   return (
-    <label style={{ display: 'block', marginTop: 14 }}>
-      <span style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 800, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.05em' }}>{label}</span>
-      <input placeholder={placeholder} style={{
-        width: '100%', height: 46, borderRadius: 12, border: '1.5px solid var(--line)',
-        padding: '0 12px', fontFamily: 'inherit', fontSize: 14, fontWeight: 600,
+    <button
+      type="button"
+      className={`bf-payment-saved-row${selected ? ' is-selected' : ''}`}
+      onClick={onClick}
+      aria-pressed={selected}
+      style={{
+        width: '100%',
+        minHeight: 54,
+        border: selected ? '1.5px solid var(--ink-0)' : '1.5px solid var(--line)',
+        borderRadius: 13,
+        background: '#fff',
+        padding: '9px 12px',
+        display: 'grid',
+        gridTemplateColumns: 'minmax(0, 1fr) auto',
+        alignItems: 'center',
+        gap: 10,
+        color: 'var(--ink-0)',
+        textAlign: 'left',
+        fontFamily: 'inherit',
+        cursor: 'pointer',
+      }}
+    >
+      <span style={{ minWidth: 0 }}>
+        <span style={{ display: 'block', fontSize: 14, lineHeight: 1.15, fontWeight: 560, color: 'var(--ink-0)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</span>
+        <span style={{ display: 'block', marginTop: 4, fontSize: 11.5, lineHeight: 1.1, fontWeight: 430, color: 'var(--ink-4)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{subtitle}</span>
+      </span>
+      {preferred ? (
+        <span style={{
+          borderRadius: 999,
+          background: 'var(--ink-0)',
+          color: '#fff',
+          padding: '4px 8px',
+          fontSize: 10.5,
+          lineHeight: 1,
+          fontWeight: 560,
+          whiteSpace: 'nowrap',
+        }}>Preferred</span>
+      ) : (
+        <span
+          aria-hidden="true"
+          style={{
+            width: 20,
+            height: 20,
+            borderRadius: 999,
+            border: selected ? '1.5px solid var(--ink-0)' : '1.5px solid transparent',
+            background: selected ? 'var(--ink-0)' : 'transparent',
+            color: selected ? '#fff' : 'transparent',
+            display: 'grid',
+            placeItems: 'center',
+          }}
+        >
+          {React.cloneElement(I.check, { size: 13, stroke: 3 })}
+        </span>
+      )}
+    </button>
+  );
+}
+
+function RemovePaymentInstrumentButton({ label, onClick }) {
+  return (
+    <button
+      type="button"
+      className="bf-payment-remove-instrument"
+      onClick={onClick}
+      style={{
+        minHeight: 32,
+        width: 'fit-content',
+        border: 'none',
+        background: 'transparent',
+        padding: '0 0 0 30px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 7,
+        color: 'var(--limited-fg)',
+        fontFamily: 'inherit',
+        fontSize: 12.25,
+        lineHeight: 1.1,
+        fontWeight: 650,
+        cursor: 'pointer',
+      }}
+    >
+      <span style={{ display: 'inline-flex' }}>{React.cloneElement(I.trash, { size: 13 })}</span>
+      {label}
+    </button>
+  );
+}
+
+function AddPaymentInstrumentButton({ label, onClick }) {
+  return (
+    <button
+      type="button"
+      className="bf-payment-add-instrument"
+      onClick={onClick}
+      style={{
+        width: '100%',
+        minHeight: 46,
+        border: '1.5px dashed var(--line)',
+        borderRadius: 13,
+        background: '#fff',
+        padding: '0 12px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        color: 'var(--ink-0)',
+        fontFamily: 'inherit',
+        fontSize: 13.5,
+        fontWeight: 560,
+        cursor: 'pointer',
+      }}
+    >
+      <span style={{ display: 'inline-flex', color: 'var(--ink-2)' }}>{React.cloneElement(I.plus, { size: 16 })}</span>
+      {label}
+    </button>
+  );
+}
+
+function PreferredPaymentMethodButton({ active, onClick, note }) {
+  return (
+    <div className="bf-payment-preferred-control" style={{ display: 'grid', gap: 5, paddingTop: 4 }}>
+      <button
+        type="button"
+        aria-pressed={active}
+        onClick={onClick}
+        style={{
+          width: '100%',
+          minHeight: 34,
+          border: 'none',
+          background: 'transparent',
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          color: 'var(--ink-1)',
+          fontFamily: 'inherit',
+          textAlign: 'left',
+          cursor: 'pointer',
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            width: 20,
+            height: 20,
+            borderRadius: 6,
+            border: active ? '1.5px solid var(--ink-0)' : '1.5px solid var(--line)',
+            background: active ? 'var(--ink-0)' : '#fff',
+            color: active ? '#fff' : 'transparent',
+            display: 'grid',
+            placeItems: 'center',
+            flex: '0 0 20px',
+          }}
+        >
+          {React.cloneElement(I.check, { size: 14, stroke: 3 })}
+        </span>
+        <span style={{ fontSize: 13, lineHeight: 1.25, fontWeight: 560, color: 'var(--ink-1)' }}>
+          Make this my preferred payment method
+        </span>
+      </button>
+      {note ? (
+        <span style={{ paddingLeft: 30, fontSize: 11.25, lineHeight: 1.35, fontWeight: 430, color: 'var(--ink-4)' }}>
+          {note}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function PaymentInput({ label, placeholder, value, onChange }) {
+  return (
+    <label style={{ display: 'block', marginTop: 0 }}>
+      <span style={{ display: 'block', marginBottom: 7, paddingLeft: 2, fontSize: 11, lineHeight: 1, fontWeight: 560, color: '#8d919a', textTransform: 'uppercase', letterSpacing: '.12em' }}>{label}</span>
+      <input value={value} onChange={onChange} placeholder={placeholder} style={{
+        width: '100%', height: 44, borderRadius: 13, border: '1px solid #e0e3e8',
+        padding: '0 14px', fontFamily: 'inherit', fontSize: 14, fontWeight: 430,
+        color: '#15171d', background: '#fff',
         outline: 'none',
       }} />
     </label>
@@ -34274,6 +35083,22 @@ function CancelConfirmModal({ open, refundEligible, refundAmount, onClose, onCon
   );
 }
 
+window.EatsBookingPayment = {
+  readStore: readBookingPaymentStore,
+  writeStore: writeBookingPaymentStore,
+  selectionForCard,
+  selectionForUpi,
+  getSelectionGroup: getBookingSelectionGroup,
+  createCard: createBookingCardInstrument,
+  createUpi: createBookingUpiInstrument,
+  getInstrument: getInstrumentFromSelection,
+  getPreferred: getStoredBookingPaymentMethod,
+  setPreferred: storeBookingPaymentMethodPreference,
+  maxCards: BOOKING_MAX_SAVED_CARDS,
+  cardNote: BOOKING_CARD_TOKEN_NOTE,
+  upiNote: BOOKING_UPI_SAVE_NOTE,
+};
+
 Object.assign(window, { ReviewScreen, ConfirmScreen, CancelBookingModal, CancelConfirmModal, CartLine, BillCustomizationTags, RepeatChoiceModal, TermsModal, CancellationPolicyModal, PaymentMethodModal, PaymentGatewayStep, SharePopover });
 </script>
 
@@ -34289,7 +35114,7 @@ function PickupReviewScreen({ cart, contact, setContact, instructions, setInstru
   const [termsOpen, setTermsOpen] = bfUseState(false);
   const [policyOpen, setPolicyOpen] = bfUseState(false);
   const [paymentOpen, setPaymentOpen] = bfUseState(false);
-  const [paymentMethod, setPaymentMethod] = bfUseState('add-card');
+  const [paymentMethod, setPaymentMethod] = bfUseState(() => getStoredBookingPaymentMethod());
   const [totalExpanded, setTotalExpanded] = bfUseState(true);
 
   return (
@@ -34444,13 +35269,14 @@ function PickupReviewScreen({ cart, contact, setContact, instructions, setInstru
       </ModalScroll>
 
       <div style={{
-        padding: '14px 24px 22px',
-        display: 'flex', alignItems: 'center', gap: 14,
+        padding: '14px 20px 22px',
+        display: 'flex', alignItems: 'center', gap: 10,
+        minWidth: 0,
         borderTop: '1px solid var(--line-soft)',
       }}>
-        <PaymentMethodTrigger onClick={() => setPaymentOpen(true)} />
-        <Pill variant="primary" onClick={() => onPay({ foodSubtotal, gst, total })} fullWidth>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <PaymentMethodTrigger value={paymentMethod} onClick={() => setPaymentOpen(true)} />
+        <Pill variant="primary" onClick={() => onPay({ foodSubtotal, gst, total })} style={{ flex: '1 1 0', minWidth: 0, width: 'auto', padding: '0 18px' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, minWidth: 0, overflow: 'hidden' }}>
             Pay for pickup
             <span style={{ opacity: 0.6 }}>•</span>
             <span style={{ fontVariantNumeric: 'tabular-nums' }}>₹{total.toLocaleString('en-IN')}</span>
@@ -37279,161 +38105,364 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
   }
 
   function PaymentsSection() {
+    const paymentApi = window.EatsBookingPayment || {};
+    const readStore = paymentApi.readStore || (() => ({ cards: [], upis: [] }));
+    const writeStore = paymentApi.writeStore || (store => store);
     const [openForm, setOpenForm] = useState(null);
-    const [upiId, setUpiId] = useState('');
-    const [upiError, setUpiError] = useState('');
-    const [cardDraft, setCardDraft] = useState({ number: '', name: '', expiry: '', cvv: '', nickname: '' });
-    const [cardError, setCardError] = useState('');
-    const isValidUpiId = value => /^[a-zA-Z0-9._-]{2,64}@[a-zA-Z][a-zA-Z0-9.-]{2,64}$/.test(value.trim());
+    const [paymentStore, setPaymentStore] = useState(() => readStore());
+    const [preferredSelection, setPreferredSelection] = useState(() => paymentApi.getPreferred?.() || null);
+    const [selectedPayment, setSelectedPayment] = useState(() => paymentApi.getPreferred?.() || null);
+    const [addingCard, setAddingCard] = useState(false);
+    const [addingUpi, setAddingUpi] = useState(false);
+    const [upiDraft, setUpiDraft] = useState({ upiId: '' });
+    const [cardDraft, setCardDraft] = useState({ cardNumber: '', name: '', expiry: '', cvv: '', nickname: '' });
+    const checkIcon = <Svg size={13}><path d="M5 12l4 4L19 7" /></Svg>;
     const formatCardNumber = value => value.replace(/\D/g, '').slice(0, 19).replace(/(.{4})/g, '$1 ').trim();
     const formatExpiry = value => {
       const digits = value.replace(/\D/g, '').slice(0, 4);
       return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
     };
     const updateCardDraft = (key, value) => {
-      const nextValue = key === 'number' ? formatCardNumber(value) : key === 'expiry' ? formatExpiry(value) : key === 'cvv' ? value.replace(/\D/g, '').slice(0, 4) : value;
+      const nextValue = key === 'cardNumber' ? formatCardNumber(value) : key === 'expiry' ? formatExpiry(value) : key === 'cvv' ? value.replace(/\D/g, '').slice(0, 4) : value;
       setCardDraft(prev => ({ ...prev, [key]: nextValue }));
-      if (cardError) setCardError('');
     };
-    const validateCardDraft = () => {
-      const digits = cardDraft.number.replace(/\D/g, '');
-      const expiry = cardDraft.expiry.match(/^(\d{2})\/(\d{2})$/);
-      const month = expiry ? Number(expiry[1]) : 0;
-      return digits.length >= 13 && digits.length <= 19 && cardDraft.name.trim().length > 2 && expiry && month >= 1 && month <= 12 && /^\d{3,4}$/.test(cardDraft.cvv);
+    const groups = [
+      { title: 'Cards', rows: [{ id: 'add-card', kind: 'card', label: Icons.card, name: 'Credit/Debit Card' }] },
+      { title: 'UPI', rows: [{ id: 'add-upi', kind: 'upi', label: 'UPI', name: 'Add UPI ID' }] },
+      { title: 'Net Banking', rows: [{ id: 'net-banking', kind: 'netbanking', label: 'NB', name: 'Net banking' }] },
+    ];
+    const refreshStore = nextStore => {
+      const saved = writeStore(nextStore);
+      setPaymentStore(saved);
+      return saved;
     };
-    const submitUpi = event => {
-      event.preventDefault();
-      if (!isValidUpiId(upiId)) {
-        setUpiError('Enter a valid UPI ID, for example name@bank');
-        return;
+    const getGroup = selection => paymentApi.getSelectionGroup?.(selection) || (selection === 'net-banking' ? 'net-banking' : null);
+    const cardSelection = card => paymentApi.selectionForCard?.(card) || `card:${card.id}`;
+    const upiSelection = upi => paymentApi.selectionForUpi?.(upi) || `upi:${upi.id}`;
+    const getInstrument = selection => paymentApi.getInstrument?.(selection, paymentStore) || null;
+    const selectPayment = selection => setSelectedPayment(selection);
+    const preferredForMethod = method => {
+      if (method.id === 'add-card') {
+        const preferredCard = paymentStore.cards.find(card => cardSelection(card) === preferredSelection);
+        return preferredCard ? cardSelection(preferredCard) : (paymentStore.cards[0] ? cardSelection(paymentStore.cards[0]) : 'add-card');
       }
-      setUpiError('');
-      setOpenForm(null);
-      window.showEatsStatus?.('UPI ID added for demo', 'success');
-    };
-    const submitCard = event => {
-      event.preventDefault();
-      if (!validateCardDraft()) {
-        setCardError('Enter a valid card number, name, expiry, and CVV.');
-        return;
+      if (method.id === 'add-upi') {
+        const preferredUpi = paymentStore.upis.find(upi => upiSelection(upi) === preferredSelection);
+        return preferredUpi ? upiSelection(preferredUpi) : (paymentStore.upis[0] ? upiSelection(paymentStore.upis[0]) : 'add-upi');
       }
-      setCardError('');
-      setOpenForm(null);
-      window.showEatsStatus?.('Card added for demo', 'success');
+      return 'net-banking';
     };
+    const openMethod = method => {
+      const isOpen = openForm === method.id;
+      setOpenForm(isOpen ? null : method.id);
+      selectPayment(preferredForMethod(method));
+      setAddingCard(false);
+      setAddingUpi(false);
+    };
+    const saveCard = () => {
+      if ((paymentStore.cards || []).length >= (paymentApi.maxCards || 5)) return null;
+      const card = paymentApi.createCard?.(cardDraft) || {
+        id: `card-${Date.now()}`,
+        brand: 'VISA',
+        fundingType: 'Credit Card',
+        last4: (cardDraft.cardNumber.replace(/\D/g, '').slice(-4) || '1234'),
+        nickname: cardDraft.nickname || 'Personal card',
+      };
+      const nextStore = refreshStore({ ...paymentStore, cards: [...(paymentStore.cards || []), card] });
+      setPaymentStore(nextStore);
+      setCardDraft({ cardNumber: '', name: '', expiry: '', cvv: '', nickname: '' });
+      setAddingCard(false);
+      selectPayment(cardSelection(card));
+      return cardSelection(card);
+    };
+    const saveUpi = () => {
+      const upi = paymentApi.createUpi?.(upiDraft) || { id: `upi-${Date.now()}`, upiId: upiDraft.upiId || 'kashif@icici' };
+      const nextStore = refreshStore({ ...paymentStore, upis: [...(paymentStore.upis || []), upi] });
+      setPaymentStore(nextStore);
+      setUpiDraft({ upiId: '' });
+      setAddingUpi(false);
+      selectPayment(upiSelection(upi));
+      return upiSelection(upi);
+    };
+    const makePreferred = method => {
+      let selection = selectedPayment;
+      if (method.id === 'add-card') {
+        const selectedCard = getInstrument(selection);
+        if (!selectedCard || addingCard || selection === 'add-card') selection = saveCard();
+      } else if (method.id === 'add-upi') {
+        const selectedUpi = getInstrument(selection);
+        if (!selectedUpi || addingUpi || selection === 'add-upi') selection = saveUpi();
+      } else {
+        selection = 'net-banking';
+        selectPayment(selection);
+      }
+      if (!selection) return;
+      paymentApi.setPreferred?.(selection);
+      setPreferredSelection(selection);
+      setOpenForm(method.id);
+      window.showEatsStatus?.('Preferred payment method updated', 'success');
+    };
+    const removeCard = card => {
+      const selection = cardSelection(card);
+      const nextCards = (paymentStore.cards || []).filter(item => item.id !== card.id);
+      const nextStore = refreshStore({ ...paymentStore, cards: nextCards });
+      const fallback = nextCards[0] ? cardSelection(nextCards[0]) : 'add-card';
+      if (preferredSelection === selection) {
+        try { localStorage.removeItem('mouthshut-eats-preferred-booking-payment-method'); } catch {}
+        setPreferredSelection(null);
+      }
+      if (selectedPayment === selection || preferredSelection === selection) selectPayment(fallback);
+      setPaymentStore(nextStore);
+      setAddingCard(nextCards.length === 0);
+      window.showEatsStatus?.('Card removed', 'success');
+    };
+    const removeUpi = upi => {
+      const selection = upiSelection(upi);
+      const nextUpis = (paymentStore.upis || []).filter(item => item.id !== upi.id);
+      const nextStore = refreshStore({ ...paymentStore, upis: nextUpis });
+      const fallback = nextUpis[0] ? upiSelection(nextUpis[0]) : 'add-upi';
+      if (preferredSelection === selection) {
+        try { localStorage.removeItem('mouthshut-eats-preferred-booking-payment-method'); } catch {}
+        setPreferredSelection(null);
+      }
+      if (selectedPayment === selection || preferredSelection === selection) selectPayment(fallback);
+      setPaymentStore(nextStore);
+      setAddingUpi(nextUpis.length === 0);
+      window.showEatsStatus?.('UPI ID removed', 'success');
+    };
+    const addCardFromForm = event => {
+      event.preventDefault();
+      const selection = saveCard();
+      if (selection) window.showEatsStatus?.('Card added', 'success');
+    };
+    const addUpiFromForm = event => {
+      event.preventDefault();
+      const selection = saveUpi();
+      if (selection) window.showEatsStatus?.('UPI ID added', 'success');
+    };
+    const renderSavedInstrument = ({ title, subtitle, selected, preferred, onClick }) => (
+      <button
+        type="button"
+        className={`cs-payment-saved-row${selected ? ' is-selected' : ''}`}
+        aria-pressed={selected}
+        onClick={onClick}
+      >
+        <span>
+          <strong>{title}</strong>
+          <small>{subtitle}</small>
+        </span>
+        {preferred ? (
+          <em>Preferred</em>
+        ) : (
+          <i aria-hidden="true">{selected ? checkIcon : null}</i>
+        )}
+      </button>
+    );
+    const renderPreferredControl = (active, onClick, note) => (
+      <div className="cs-payment-preferred-control">
+        <button type="button" aria-pressed={active} onClick={onClick}>
+          <span aria-hidden="true">{active ? checkIcon : null}</span>
+          <strong>Make this my preferred payment method</strong>
+        </button>
+        {note ? <p>{note}</p> : null}
+      </div>
+    );
+    const renderRemoveCard = card => (
+      <button className="cs-payment-remove-card" type="button" onClick={() => removeCard(card)}>
+        {Icons.trash}<span>Remove this card</span>
+      </button>
+    );
+    const renderRemoveUpi = upi => (
+      <button className="cs-payment-remove-card" type="button" onClick={() => removeUpi(upi)}>
+        {Icons.trash}<span>Remove this UPI ID</span>
+      </button>
+    );
+    const renderAddInstrument = (label, onClick) => (
+      <button className="cs-payment-add-instrument" type="button" onClick={onClick}>
+        <span aria-hidden="true">+</span><strong>{label}</strong>
+      </button>
+    );
     const renderPaymentForm = method => {
       if (method.id === 'add-upi') {
+        const selectedUpi = String(selectedPayment || '').startsWith('upi:') ? getInstrument(selectedPayment) : null;
+        const showUpiForm = addingUpi || (paymentStore.upis || []).length === 0 || selectedPayment === 'add-upi';
         return (
-          <form className="cs-payment-dropdown" id="cs-payment-form-add-upi" onSubmit={submitUpi} noValidate>
-            <label className={`cs-payment-field ${upiError ? 'is-error' : ''}`}>
-              <span>UPI ID</span>
-              <input
-                type="text"
-                inputMode="email"
-                autoComplete="off"
-                value={upiId}
-                onChange={event => {
-                  setUpiId(event.target.value);
-                  if (upiError) setUpiError('');
-                }}
-                placeholder="name@bank"
-                aria-invalid={upiError ? 'true' : 'false'}
-              />
-            </label>
-            {upiError ? <div className="cs-payment-error">{upiError}</div> : null}
-            <button className="cs-payment-form-action" type="submit">Add UPI ID</button>
-          </form>
+          <div className="cs-payment-dropdown" id="cs-payment-form-add-upi">
+            {(paymentStore.upis || []).map(upi => {
+              const selection = upiSelection(upi);
+              return (
+                <React.Fragment key={upi.id}>
+                  {renderSavedInstrument({
+                    title: upi.upiId,
+                    subtitle: 'Saved UPI ID',
+                    selected: selectedPayment === selection,
+                    preferred: preferredSelection === selection,
+                    onClick: () => { selectPayment(selection); setAddingUpi(false); },
+                  })}
+                </React.Fragment>
+              );
+            })}
+            {selectedUpi && !addingUpi ? (
+              <div className="cs-payment-selected-actions">
+                {renderPreferredControl(preferredSelection === upiSelection(selectedUpi), () => makePreferred(method), paymentApi.upiNote)}
+                {renderRemoveUpi(selectedUpi)}
+              </div>
+            ) : null}
+            {(paymentStore.upis || []).length > 0 && !showUpiForm ? renderAddInstrument('Add UPI ID', () => { setAddingUpi(true); selectPayment('add-upi'); }) : null}
+            {showUpiForm ? (
+              <form className="cs-payment-inner-form" onSubmit={addUpiFromForm} noValidate>
+                <label className="cs-payment-field">
+                  <span>UPI ID</span>
+                  <input
+                    type="text"
+                    inputMode="email"
+                    autoComplete="off"
+                    value={upiDraft.upiId}
+                    onChange={event => setUpiDraft({ upiId: event.target.value })}
+                    placeholder="kashif@icici"
+                  />
+                </label>
+                {renderPreferredControl(false, () => makePreferred(method), paymentApi.upiNote)}
+                <button className="cs-payment-form-action" type="submit">Add UPI ID</button>
+              </form>
+            ) : null}
+          </div>
         );
       }
       if (method.kind === 'card') {
+        const showCardForm = addingCard || (paymentStore.cards || []).length === 0 || selectedPayment === 'add-card';
         return (
-          <form className="cs-payment-dropdown" id={`cs-payment-form-${method.id}`} onSubmit={submitCard} noValidate>
-            <div className="cs-payment-fields">
-              <label className="cs-payment-field full">
-                <span>Card number</span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="cc-number"
-                  value={cardDraft.number}
-                  onChange={event => updateCardDraft('number', event.target.value)}
-                  placeholder="1234 5678 9012 3456"
-                />
-              </label>
-              <label className="cs-payment-field full">
-                <span>Name on card</span>
-                <input
-                  type="text"
-                  autoComplete="cc-name"
-                  value={cardDraft.name}
-                  onChange={event => updateCardDraft('name', event.target.value)}
-                  placeholder="Kashif Farooqui"
-                />
-              </label>
-              <label className="cs-payment-field">
-                <span>Expiry</span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="cc-exp"
-                  value={cardDraft.expiry}
-                  onChange={event => updateCardDraft('expiry', event.target.value)}
-                  placeholder="MM/YY"
-                />
-              </label>
-              <label className="cs-payment-field">
-                <span>CVV</span>
-                <input
-                  type="password"
-                  inputMode="numeric"
-                  autoComplete="cc-csc"
-                  value={cardDraft.cvv}
-                  onChange={event => updateCardDraft('cvv', event.target.value)}
-                  placeholder="123"
-                />
-              </label>
-              <label className="cs-payment-field full">
-                <span>Nickname</span>
-                <input
-                  type="text"
-                  value={cardDraft.nickname}
-                  onChange={event => updateCardDraft('nickname', event.target.value)}
-                  placeholder="Personal card"
-                />
-              </label>
-            </div>
-            {cardError ? <div className="cs-payment-error">{cardError}</div> : null}
-            <button className="cs-payment-form-action" type="submit">Add Credit/Debit Card</button>
-          </form>
+          <div className="cs-payment-dropdown" id={`cs-payment-form-${method.id}`}>
+            {(paymentStore.cards || []).map(card => {
+              const selection = cardSelection(card);
+              const selected = selectedPayment === selection;
+              return (
+                <React.Fragment key={card.id}>
+                  {renderSavedInstrument({
+                    title: `${card.brand || 'CARD'} ${card.last4}`,
+                    subtitle: `**** **** **** ${card.last4}`,
+                    selected,
+                    preferred: preferredSelection === selection,
+                    onClick: () => { selectPayment(selection); setAddingCard(false); },
+                  })}
+                  {selected && !addingCard ? (
+                    <div className="cs-payment-selected-actions">
+                      {renderPreferredControl(preferredSelection === selection, () => makePreferred(method), paymentApi.cardNote)}
+                      {renderRemoveCard(card)}
+                    </div>
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
+            {(paymentStore.cards || []).length > 0 && (paymentStore.cards || []).length < (paymentApi.maxCards || 5) && !showCardForm
+              ? renderAddInstrument('Add card', () => { setAddingCard(true); selectPayment('add-card'); })
+              : null}
+            {(paymentStore.cards || []).length >= (paymentApi.maxCards || 5) && !showCardForm ? (
+              <p className="cs-payment-helper">You can save up to 5 cards.</p>
+            ) : null}
+            {showCardForm ? (
+              <form className="cs-payment-inner-form" onSubmit={addCardFromForm} noValidate>
+                <div className="cs-payment-fields">
+                  <label className="cs-payment-field full">
+                    <span>Card number</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="cc-number"
+                      value={cardDraft.cardNumber}
+                      onChange={event => updateCardDraft('cardNumber', event.target.value)}
+                      placeholder="1234 5678 9012 3456"
+                    />
+                  </label>
+                  <label className="cs-payment-field full">
+                    <span>Name on card</span>
+                    <input
+                      type="text"
+                      autoComplete="cc-name"
+                      value={cardDraft.name}
+                      onChange={event => updateCardDraft('name', event.target.value)}
+                      placeholder="Kashif Farooqui"
+                    />
+                  </label>
+                  <label className="cs-payment-field">
+                    <span>Expiry</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="cc-exp"
+                      value={cardDraft.expiry}
+                      onChange={event => updateCardDraft('expiry', event.target.value)}
+                      placeholder="MM/YY"
+                    />
+                  </label>
+                  <label className="cs-payment-field">
+                    <span>CVV</span>
+                    <input
+                      type="password"
+                      inputMode="numeric"
+                      autoComplete="cc-csc"
+                      value={cardDraft.cvv}
+                      onChange={event => updateCardDraft('cvv', event.target.value)}
+                      placeholder="123"
+                    />
+                  </label>
+                  <label className="cs-payment-field full">
+                    <span>Nickname</span>
+                    <input
+                      type="text"
+                      value={cardDraft.nickname}
+                      onChange={event => updateCardDraft('nickname', event.target.value)}
+                      placeholder="Personal card"
+                    />
+                  </label>
+                </div>
+                {renderPreferredControl(false, () => makePreferred(method), paymentApi.cardNote)}
+                <button className="cs-payment-form-action" type="submit">Add card</button>
+              </form>
+            ) : null}
+          </div>
+        );
+      }
+      if (method.id === 'net-banking') {
+        return (
+          <div className="cs-payment-dropdown" id={`cs-payment-form-${method.id}`}>
+            <label className="cs-payment-field">
+              <span>Select bank</span>
+              <select className="cs-payment-select" defaultValue="HDFC Bank">
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>State Bank of India</option>
+                <option>Axis Bank</option>
+                <option>Kotak Mahindra Bank</option>
+              </select>
+            </label>
+            {renderPreferredControl(preferredSelection === 'net-banking', () => makePreferred(method))}
+          </div>
         );
       }
       return null;
     };
     return (
       <div className="cs-payment-page">
-        {paymentMethodGroups.map(group => (
+        {groups.map(group => (
           <section className="cs-payment-group" key={group.title} aria-label={group.title}>
             <h3>{group.title}</h3>
             <div className="cs-payment-list">
               {group.rows.map(method => {
                 const isOpen = openForm === method.id;
-                const canExpand = method.action === 'form';
+                const isActive = getGroup(selectedPayment) === method.id;
                 return (
                   <div className={`cs-payment-item ${isOpen ? 'open' : ''}`} key={method.id}>
                     <button
-                      className="cs-payment-row"
+                      className={`cs-payment-row${isActive ? ' is-selected' : ''}`}
                       type="button"
-                      aria-expanded={canExpand ? isOpen : undefined}
-                      aria-controls={canExpand ? `cs-payment-form-${method.id}` : undefined}
-                      onClick={() => canExpand ? setOpenForm(isOpen ? null : method.id) : null}
+                      aria-expanded={isOpen}
+                      aria-controls={`cs-payment-form-${method.id}`}
+                      onClick={() => openMethod(method)}
                     >
                       <span className={`cs-payment-logo ${method.kind}`}>{method.label}</span>
                       <span className="cs-payment-name">{method.name}</span>
-                      {canExpand ? (
-                        <span className="cs-payment-control" aria-hidden="true">{Icons.chevDown}</span>
-                      ) : method.action === 'add' ? (
-                        <span className="cs-payment-plus" aria-hidden="true">+</span>
-                      ) : null}
+                      <span className="cs-payment-control" aria-hidden="true">{Icons.chevDown}</span>
                     </button>
                     {isOpen ? renderPaymentForm(method) : null}
                   </div>
@@ -37444,7 +38473,7 @@ document.querySelectorAll('.cta-secondary').forEach(button => {
         ))}
         <div className="cs-payment-note">
           <strong>Secure payments</strong>
-          <span>Card numbers are never stored on MouthShut Eats.</span>
+          <span>Your payment details are saved securely by our payment partner in line with RBI guidelines.</span>
         </div>
       </div>
     );
@@ -71715,6 +72744,216 @@ body.eats-app-shell .app-tab svg {
 
   #customer-settings-modal-root .cs-payment-form-action {
     font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-inner-form,
+  #customer-settings-modal-root .cs-payment-selected-actions {
+    display: grid !important;
+    gap: 12px !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row {
+    width: 100% !important;
+    min-height: 54px !important;
+    border: 1px solid #e0e3e8 !important;
+    border-radius: 13px !important;
+    background: #fff !important;
+    padding: 9px 12px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #17181d !important;
+    text-align: left !important;
+    font: inherit !important;
+    cursor: pointer !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row.is-selected {
+    border-color: #111 !important;
+    box-shadow: 0 0 0 1px #111 inset !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row span {
+    min-width: 0 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row strong {
+    display: block !important;
+    color: #17181d !important;
+    font-size: 14px !important;
+    line-height: 1.15 !important;
+    font-weight: 560 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row small {
+    display: block !important;
+    margin-top: 4px !important;
+    color: #8d919a !important;
+    font-size: 11.5px !important;
+    line-height: 1.1 !important;
+    font-weight: 430 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row i {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #fff !important;
+    background: transparent !important;
+    font-style: normal !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row.is-selected i {
+    border-color: #111 !important;
+    background: #111 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-saved-row em {
+    border-radius: 999px !important;
+    background: #111 !important;
+    color: #fff !important;
+    padding: 4px 8px !important;
+    font-size: 10.5px !important;
+    line-height: 1 !important;
+    font-weight: 560 !important;
+    font-style: normal !important;
+    white-space: nowrap !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control {
+    display: grid !important;
+    gap: 5px !important;
+    padding-top: 4px !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control button {
+    width: 100% !important;
+    min-height: 34px !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #202329 !important;
+    font: inherit !important;
+    text-align: left !important;
+    cursor: pointer !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control button > span {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 6px !important;
+    border: 1px solid #e0e3e8 !important;
+    background: #fff !important;
+    color: transparent !important;
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 20px !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control button[aria-pressed="true"] > span {
+    border-color: #111 !important;
+    background: #111 !important;
+    color: #fff !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control strong {
+    color: #202329 !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-preferred-control p {
+    margin: 0 0 0 30px !important;
+    color: #8d919a !important;
+    font-size: 11.25px !important;
+    line-height: 1.35 !important;
+    font-weight: 430 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-add-instrument {
+    width: 100% !important;
+    min-height: 46px !important;
+    border: 1px dashed #e0e3e8 !important;
+    border-radius: 13px !important;
+    background: #fff !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #17181d !important;
+    font: inherit !important;
+    cursor: pointer !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-add-instrument span {
+    color: #636873 !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    font-weight: 360 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-add-instrument strong {
+    color: #17181d !important;
+    font-size: 13.5px !important;
+    line-height: 1 !important;
+    font-weight: 560 !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-remove-card {
+    width: fit-content !important;
+    min-height: 32px !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 0 0 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    color: #b42318 !important;
+    font: inherit !important;
+    font-size: 12.25px !important;
+    line-height: 1.1 !important;
+    font-weight: 560 !important;
+    cursor: pointer !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-remove-card svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-select {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    border: 1px solid #e0e3e8 !important;
+    border-radius: 13px !important;
+    padding: 0 14px !important;
+    background: #fff !important;
+    color: #15171d !important;
+    font: inherit !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    font-weight: 430 !important;
+    outline: none !important;
+  }
+
+  #customer-settings-modal-root .cs-payment-select:focus {
+    border-color: #111 !important;
+    box-shadow: 0 0 0 3px rgba(17,17,17,.08) !important;
   }
 </style>
 <style id="codex-address-empty-copy-size-20260604">
